@@ -3,7 +3,7 @@
 
 #include "Window.h"
 
-namespace Blackjack {
+namespace Core {
 
 	GLFWwindow* Window::s_primary = nullptr;
 	bool Window::s_glfw_setup = false;
@@ -17,7 +17,6 @@ namespace Blackjack {
 		}
 		if (s_glfw_setup) {
 			m_window = glfwCreateWindow(width, height, title.c_str(), nullptr, nullptr);
-			std::cout << "Create window: " << m_window << std::endl;
 		}	
 	}
 
@@ -67,6 +66,8 @@ namespace Blackjack {
 		glClear(GL_COLOR_BUFFER_BIT);
 	}
 
-
-
+	void Window::setSize(int width, int height) {
+		glfwSetWindowSize(m_window, width, height);
+		glViewport(0, 0, width, height);
+	}
 }

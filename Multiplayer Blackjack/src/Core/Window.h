@@ -4,7 +4,7 @@
 #include "GLFW/glfw3.h"
 
 
-namespace Blackjack {
+namespace Core {
 	class Window {
 	private:
 		static GLFWwindow* s_primary;
@@ -24,5 +24,7 @@ namespace Blackjack {
 		void show();
 		void hide();
 		void clear();
+
+		void setSize(int width, int height);
 	};
 }
