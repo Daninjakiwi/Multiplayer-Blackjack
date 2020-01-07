@@ -4,6 +4,7 @@
 #include <unordered_map>
 
 #include "Core/Render/Shader.h"
+#include "Core/Render/Meshes/Mesh.h"
 
 namespace Core {
 	class ResourceManager {

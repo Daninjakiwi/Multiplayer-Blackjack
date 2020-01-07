@@ -1,7 +1,10 @@
 #include <fstream>
 #include <sstream>
 
+#include "Log.h"
 #include "FileSystem.h"
+
+
 
 namespace Core {
 	std::string FileSystem::loadFile(const char* filepath) {
@@ -11,6 +14,9 @@ namespace Core {
 		if (!stream.fail()) {
 			ss << stream.rdbuf();
 			stream.close();
+		}
+		else {
+			LOG("Could not open file: " << filepath);
 		}
 		return ss.str();
 	}

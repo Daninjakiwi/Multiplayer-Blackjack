@@ -1,5 +1,7 @@
 #include "glad/glad.h"
+#include "glm/glm.hpp"
 
+#include "Core/Log.h"
 #include "Core/FileSystem.h"
 #include "Shader.h"
 
@@ -12,6 +14,8 @@ namespace Core {
 		std::string fragment_source = FileSystem::loadFile(filepath + ".frag");
 
 		unsigned int vert = compileShader(vertex_source.c_str(), GL_VERTEX_SHADER);
+
+
 		unsigned int frag = compileShader(fragment_source.c_str(), GL_FRAGMENT_SHADER);
 
 		if (vert != 0 && frag != 0) {
@@ -34,8 +38,14 @@ namespace Core {
 		glUseProgram(m_id);
 	}
 
-	void Shader::setColour(float r, float g, float b) {
-		glUniform3f(glGetUniformLocation(m_id, "u_colour"), r, g, b);
+	void Shader::setVec3(const std::string& name, float x, float y, float z) {
+		unsigned int loc = glGetUniformLocation(m_id, name.c_str());
+		glUniform3f(loc, x, y, z);
+	}
+
+	void Shader::setMat4(const std::string& name, glm::mat4& mat) {
+		unsigned int loc = glGetUniformLocation(m_id, name.c_str());
+		glUniformMatrix4fv(loc, 1, GL_FALSE, &mat[0][0]);
 	}
 
 	unsigned int Shader::compileShader(const char* source, unsigned int type) {
@@ -43,6 +53,7 @@ namespace Core {
 
 		glShaderSource(id, 1, &source, nullptr);
 		glCompileShader(id);
+
 
 		int result;
 		glGetShaderiv(id, GL_COMPILE_STATUS, &result);

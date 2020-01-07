@@ -1,4 +1,5 @@
 #pragma once
+#include "glm/glm.hpp"
 
 namespace Core {
 	class Shader {
@@ -11,7 +12,8 @@ namespace Core {
 
 		void bind() const;
 
-		void setColour(float r, float g, float b);
+		void setVec3(const std::string& name, float x, float y, float z);
+		void setMat4(const std::string& name, glm::mat4& mat);
 	private:
 		static unsigned int compileShader(const char* source, unsigned int type);
 	};

@@ -6,6 +6,7 @@
 
 namespace Core {
 	class Window {
+		friend class Input;
 	private:
 		static GLFWwindow* s_primary;
 		static bool s_glfw_setup;
