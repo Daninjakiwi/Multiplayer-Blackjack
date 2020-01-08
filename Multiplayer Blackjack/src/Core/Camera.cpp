@@ -23,6 +23,10 @@ namespace Core {
 		return m_view;
 	}
 
+	glm::vec3& Camera::getPosition() {
+		return m_position;
+	}
+
 	void Camera::translateX(float amount) {
 		m_position += m_right * amount;
 	}

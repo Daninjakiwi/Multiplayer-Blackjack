@@ -91,6 +91,7 @@
     <ClCompile Include="src\Core\Render\Renderer.cpp" />
     <ClCompile Include="src\Core\Render\RenderObject.cpp" />
     <ClCompile Include="src\Core\Render\Shader.cpp" />
+    <ClCompile Include="src\Core\Render\Texture.cpp" />
     <ClCompile Include="src\Core\ResourceManager.cpp" />
     <ClCompile Include="src\Core\Transform.cpp" />
     <ClCompile Include="src\Core\Window.cpp" />
@@ -117,6 +118,7 @@
     <ClInclude Include="src\Core\Render\Renderer.h" />
     <ClInclude Include="src\Core\Render\RenderObject.h" />
     <ClInclude Include="src\Core\Render\Shader.h" />
+    <ClInclude Include="src\Core\Render\Texture.h" />
     <ClInclude Include="src\Core\ResourceManager.h" />
     <ClInclude Include="src\Core\Transform.h" />
     <ClInclude Include="src\Core\Window.h" />

@@ -29,6 +29,8 @@ namespace Core {
 		void pitch(float amount);
 		void yaw(float amount);
 
+		glm::vec3& getPosition();
+
 	private:
 
 		void calculateDirectionalVectors();

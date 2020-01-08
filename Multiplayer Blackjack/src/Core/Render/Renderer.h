@@ -20,16 +20,6 @@ namespace Core {
 		virtual void flush() = 0;
 	};
 
-	class Renderer2D : public Renderer {
-	public:
-		Renderer2D();
-		~Renderer2D() = default;
-
-		void bind() const;
-		void draw(RenderObject& object);
-		void flush();
-	};
-
 	class Renderer3D : public Renderer {
 	public:
 		Renderer3D();

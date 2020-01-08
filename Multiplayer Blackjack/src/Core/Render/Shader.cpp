@@ -28,6 +28,7 @@ namespace Core {
 
 		glDeleteShader(vert);
 		glDeleteShader(frag);
+
 	}
 
 	Shader::~Shader() {
@@ -46,6 +47,16 @@ namespace Core {
 	void Shader::setMat4(const std::string& name, glm::mat4& mat) {
 		unsigned int loc = glGetUniformLocation(m_id, name.c_str());
 		glUniformMatrix4fv(loc, 1, GL_FALSE, &mat[0][0]);
+	}
+
+	void Shader::setUInt(const std::string& name, unsigned int value) {
+		unsigned int loc = glGetUniformLocation(m_id, name.c_str());
+		glUniform1ui(loc, value);
+	}
+
+	void Shader::setFloat(const std::string& name, float value) {
+		unsigned int loc = glGetUniformLocation(m_id, name.c_str());
+		glUniform1f(loc, value);
 	}
 
 	unsigned int Shader::compileShader(const char* source, unsigned int type) {

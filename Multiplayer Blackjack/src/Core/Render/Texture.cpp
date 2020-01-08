@@ -8,6 +8,7 @@
 namespace Core {
 
 	Texture::Texture(const std::string& filepath) : m_id(0) {
+		stbi_set_flip_vertically_on_load(true);
 		int width, height, bpp;
 		auto buffer = stbi_load(filepath.c_str(), &width, &height, &bpp, 4);
 

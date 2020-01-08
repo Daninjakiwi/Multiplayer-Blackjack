@@ -68,26 +68,44 @@ void updateCamera() {
 
 int main() {
 
-	Core::Texture t("Logo.png");
-
 	Core::Window window(width, height, "Test window");
 	window.makePrimary();
 
 	Core::Input::attachWindow(&window);
 
 	Core::Renderer3D renderer;
-	Core::Shader* s = Core::ResourceManager::createShader("Flat", "res/flat_colour");
+	Core::ResourceManager::createShader("Flat", "res/flat_colour");
+	Core::ResourceManager::createShader("Texture", "res/texture");
+	Core::Shader* s = Core::ResourceManager::getShader("Flat");
+
+	Core::Texture t("res/Logo.png");
 
 	renderer.bind();
 	s->bind();
 
-	s->setVec3("u_colour",0.2f, 0.35f, 0.43f);
+	t.bind();
+
+	camera.translateZ(-3);
+	camera.translateX(0.5f);
+
+	//s->setVec3("u_colour",1.0f,0.0f,0.0f);
+	//s->setUInt("u_texture", *t.getId());
+	s->setVec3("u_light.position", -1.2f, 1.5f, 1.2f);
+
+	s->setVec3("u_light.ambient", 0.2f, 0.2f, 0.2f);
+	s->setVec3("u_light.diffuse", 0.5f, 0.5f, 0.5f);
+	s->setVec3("u_light.specular", 1.0f, 1.0f, 1.0f);
+
+	s->setVec3("u_material.ambient", 1.0f, 0.0f, 0.0f);
+	s->setVec3("u_material.diffuse", 1.0f, 0.0f, 0.0f);
+	s->setVec3("u_material.specular", 0.5f, 0.5f, 0.5f);
+	s->setFloat("u_material.shininess", 1.0f);
 
 	Core::RenderObject obj;
 	Core::Cube table;
 	Core::CircleSegment c(1, 360);
 
-	obj.setMesh(&c);
+	obj.setMesh(&table);
 
 	while (!window.shouldClose()) {
 		updateDelta();
@@ -95,9 +113,12 @@ int main() {
 
 		updateCamera();
 
-		obj.getTransform().setRotation(0, 90, 0);
+		//obj.getTransform().setRotation(0, 90, 0);
 		obj.getTransform().setScale(2, 0.2f, 1);
 
+		glm::vec3 pos = camera.getPosition();
+
+		s->setVec3("u_view_pos", pos.x, pos.y, pos.z);
 
 		s->setMat4("u_camera", camera.getView());
 		s->setMat4("u_transform", obj.getTransform().getMatrix());
