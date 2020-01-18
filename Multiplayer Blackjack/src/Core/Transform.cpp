@@ -1,6 +1,6 @@
 #include "Transform.h"
 
-namespace Core {
+namespace Blackjack::Core {
 	Transform::Transform() : m_matrix(1.0f), m_position(0,0,0), m_rotation(0,0,0), m_scale(1,1,1) {
 	}
 
@@ -36,7 +36,7 @@ namespace Core {
 
 	}
 
-	glm::mat4& Transform::getMatrix() {
-		return m_matrix;
+	float* Transform::getMatrix() {
+		return &m_matrix[0][0];
 	}
 }

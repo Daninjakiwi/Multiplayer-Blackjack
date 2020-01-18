@@ -1,7 +1,7 @@
 #include "Camera.h"
 
-namespace Core {
-	Camera::Camera(float fov, float aspect_ratio) : m_proj(glm::perspective(glm::radians(fov), aspect_ratio, 0.1f, 100.0f)),m_view(), m_position(), m_yaw(0), m_pitch(0) {
+namespace Blackjack::Core {
+	Camera::Camera(float fov, float aspect_ratio) : m_proj(glm::perspective(glm::radians(fov), aspect_ratio, 0.1f, 100.0f)),m_view(1.0f), m_position(0,0,0), m_yaw(-90), m_pitch(0) {
 		calculateDirectionalVectors();
 	}
 
@@ -16,11 +16,13 @@ namespace Core {
 		//Calculate the other vectors using the new front vector
 		m_right = glm::normalize(glm::cross(m_front, glm::vec3(0,1,0)));
 		m_up = glm::normalize(glm::cross(m_right, m_front));
+
+		//m_front = -m_front;
 	}
 
-	glm::mat4& Camera::getView() {
+	float* Camera::getView() {
 		m_view = m_proj * glm::lookAt(m_position, m_position + m_front, m_up);
-		return m_view;
+		return &m_view[0][0];
 	}
 
 	glm::vec3& Camera::getPosition() {
@@ -36,7 +38,7 @@ namespace Core {
 	}
 
 	void Camera::translateZ(float amount) {
-		m_position += m_front * amount;
+		m_position -= m_front * amount;
 	}
 
 	void Camera::pitch(float amount) {

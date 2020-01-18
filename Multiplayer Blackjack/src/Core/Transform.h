@@ -2,7 +2,7 @@
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 
-namespace Core {
+namespace Blackjack::Core {
 	class Transform {
 	private:
 		glm::mat4 m_matrix;
@@ -19,7 +19,7 @@ namespace Core {
 
 		void reset();
 
-		glm::mat4& getMatrix();
+		float* getMatrix();
 	private:
 		void updateMatrix();
 	};

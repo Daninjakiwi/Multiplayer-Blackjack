@@ -2,8 +2,9 @@
 #include "glad/glad.h"
 
 #include "Window.h"
+#include "ResourceManager.h"
 
-namespace Core {
+namespace Blackjack::Core {
 
 	GLFWwindow* Window::s_primary = nullptr;
 	bool Window::s_glfw_setup = false;
@@ -16,6 +17,7 @@ namespace Core {
 				glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 				glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 				glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+				//glfwWindowHint(GLFW_SAMPLES, 4);
 			}
 		}
 		if (s_glfw_setup) {
@@ -43,11 +45,9 @@ namespace Core {
 		if (!s_glad_setup) {
 			if (gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
 				s_glad_setup = true;
-				//glEnable(GL_CULL_FACE);
-				//glCullFace(GL_FRONT);
 				glEnable(GL_DEPTH_TEST);
-
-				//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+				glEnable(GL_BLEND);
+				glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 			}
 		}
 	}

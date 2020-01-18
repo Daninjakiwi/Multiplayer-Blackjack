@@ -1,6 +1,6 @@
 #pragma once
 
-namespace Core {
+namespace Blackjack::Core {
 	class Mesh {
 	protected:
 		float* m_vertices;

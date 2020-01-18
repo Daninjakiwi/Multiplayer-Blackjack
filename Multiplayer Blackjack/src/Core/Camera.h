@@ -3,7 +3,7 @@
 #include "glm/gtc/matrix_transform.hpp"
 #include "glad/glad.h"
 
-namespace Core {
+namespace Blackjack::Core {
 	class Camera {
 	public:
 		// Camera Attributes
@@ -20,7 +20,7 @@ namespace Core {
 
 		Camera(float fov, float aspect_ratio);
 
-		glm::mat4& getView();
+		float* getView();
 
 		void translateX(float amount);
 		void translateY(float amount);

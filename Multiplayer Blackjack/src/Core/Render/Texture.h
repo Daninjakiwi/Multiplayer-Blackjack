@@ -1,7 +1,7 @@
 #pragma once
 #include <string>
 
-namespace Core {
+namespace Blackjack::Core {
 	class Texture {
 	private:
 		unsigned int m_id;

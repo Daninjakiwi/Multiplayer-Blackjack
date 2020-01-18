@@ -6,7 +6,7 @@
 
 
 
-namespace Core {
+namespace Blackjack::Core {
 	std::string FileSystem::loadFile(const char* filepath) {
 		std::ifstream stream(filepath);
 		std::stringstream ss;

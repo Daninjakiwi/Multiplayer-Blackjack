@@ -56,11 +56,14 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)GLFW\include;$(ProjectDir)dependencies\glad\include;$(ProjectDir)src;$(ProjectDir)dependencies\glm;$(ProjectDir)dependencies\stb_image\include;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)GLFW\include;$(ProjectDir)dependencies\glad\include;$(ProjectDir)src;$(ProjectDir)dependencies\glm;$(ProjectDir)dependencies\stb_image\include;$(ProjectDir)dependencies\curl\include;</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>GLFW_INCLUDE_NONE;</PreprocessorDefinitions>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
+      <AdditionalLibraryDirectories>$(ProjectDir)dependencies\curl\lib;</AdditionalLibraryDirectories>
+      <AdditionalDependencies>libcurl_a.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -71,19 +74,28 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)GLFW\include;$(ProjectDir)dependencies\glad\include;$(ProjectDir)src;$(ProjectDir)dependencies\glm;$(ProjectDir)dependencies\stb_image\include;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)GLFW\include;$(ProjectDir)dependencies\glad\include;$(ProjectDir)src;$(ProjectDir)dependencies\glm;$(ProjectDir)dependencies\stb_image\include;$(ProjectDir)dependencies\curl\include;</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>GLFW_INCLUDE_NONE;</PreprocessorDefinitions>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>$(ProjectDir)dependencies\curl\lib;</AdditionalLibraryDirectories>
+      <AdditionalDependencies>libcurl_a.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\Core\Camera.cpp" />
     <ClCompile Include="src\Core\FileSystem.cpp" />
+    <ClCompile Include="src\Core\gui\Button.cpp" />
+    <ClCompile Include="src\Core\gui\Colour.cpp" />
+    <ClCompile Include="src\Core\gui\GuiElement.cpp" />
     <ClCompile Include="src\Core\Input.cpp" />
+    <ClCompile Include="src\Core\Network\Network.cpp" />
+    <ClCompile Include="src\Core\Render\Light.cpp" />
+    <ClCompile Include="src\Core\Render\Material.cpp" />
     <ClCompile Include="src\Core\Render\Meshes\CircleSegment.cpp" />
     <ClCompile Include="src\Core\Render\Meshes\Cube.cpp" />
     <ClCompile Include="src\Core\Render\Meshes\Mesh.cpp" />
@@ -96,6 +108,7 @@
     <ClCompile Include="src\Core\Transform.cpp" />
     <ClCompile Include="src\Core\Window.cpp" />
     <ClCompile Include="dependencies\glad\glad.c" />
+    <ClCompile Include="src\Game\Card.cpp" />
     <ClCompile Include="src\Game\Main.cpp">
       <SubType>
       </SubType>
@@ -109,8 +122,14 @@
   <ItemGroup>
     <ClInclude Include="src\Core\Camera.h" />
     <ClInclude Include="src\Core\FileSystem.h" />
+    <ClInclude Include="src\Core\gui\Button.h" />
+    <ClInclude Include="src\Core\gui\Colour.h" />
+    <ClInclude Include="src\Core\gui\GuiElement.h" />
     <ClInclude Include="src\Core\Input.h" />
     <ClInclude Include="src\Core\Log.h" />
+    <ClInclude Include="src\Core\Network\Network.h" />
+    <ClInclude Include="src\Core\Render\Light.h" />
+    <ClInclude Include="src\Core\Render\Material.h" />
     <ClInclude Include="src\Core\Render\Meshes\CircleSegment.h" />
     <ClInclude Include="src\Core\Render\Meshes\Cube.h" />
     <ClInclude Include="src\Core\Render\Meshes\Mesh.h" />
@@ -122,6 +141,7 @@
     <ClInclude Include="src\Core\ResourceManager.h" />
     <ClInclude Include="src\Core\Transform.h" />
     <ClInclude Include="src\Core\Window.h" />
+    <ClInclude Include="src\Game\Card.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,6 +1,6 @@
 #include "Input.h"
 
-namespace Core {
+namespace Blackjack::Core {
 	std::vector<INPUT_CODE> Input::m_mouse_keys;
 	std::unordered_map<INPUT_CODE, unsigned int> Input::m_key;
 	int Input::m_mouse_x, Input::m_mouse_y;
@@ -35,11 +35,23 @@ namespace Core {
 	bool Input::mouseDown(INPUT_CODE code) {
 		for (int i = 0; i < m_mouse_keys.size(); i++) {
 			if (m_mouse_keys[i] == code) {
+				m_key[code] += 1;
 				return true;
 			}
 		}
 		return false;
 		return 0;
+	}
+
+	bool Input::mouseJustPressed(INPUT_CODE code) {
+		auto test = m_key.find(code);
+		if (test != m_key.end()) {
+			if (test->second == 0) {
+				test->second += 1;
+				return true;
+			}
+		}
+		return false;
 	}
 
 	int Input::getMouseX() {
@@ -86,12 +98,15 @@ namespace Core {
 		INPUT_CODE code = (INPUT_CODE)(button + 1000);
 		if (action == GLFW_PRESS) {
 			m_mouse_keys.push_back(code);
+			m_key[code] = 0;
 			return;
 		}
 		else if (action == GLFW_RELEASE) {
 			for (int i = 0; i < m_mouse_keys.size(); i++) {
 				if (m_mouse_keys[i] == code) {
 					m_mouse_keys.erase(m_mouse_keys.begin() + i);
+					auto test = m_key.find(code);
+					m_key.erase(test->first);
 					return;
 				}
 			}

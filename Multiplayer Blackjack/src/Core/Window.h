@@ -4,7 +4,8 @@
 #include "GLFW/glfw3.h"
 
 
-namespace Core {
+namespace Blackjack::Core {
+
 	class Window {
 		friend class Input;
 	private:

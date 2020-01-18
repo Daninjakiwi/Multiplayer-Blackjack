@@ -1,7 +1,17 @@
 #include "RenderObject.h"
 
-namespace Core {
-	RenderObject::RenderObject() : m_mesh(nullptr) {
+namespace Blackjack::Core {
+	RenderObject::RenderObject() : m_mesh(nullptr), m_material(nullptr) {
+
+	}
+
+	RenderObject::RenderObject(Mesh* mesh) : m_mesh(mesh), m_material(nullptr) {
+
+	}
+	RenderObject::RenderObject(Material* material) : m_mesh(nullptr), m_material(material) {
+
+	}
+	RenderObject::RenderObject(Mesh* mesh, Material* material) :m_mesh(mesh), m_material(material){
 
 	}
 
@@ -11,6 +21,10 @@ namespace Core {
 
 	Mesh* RenderObject::getMesh() const {
 		return m_mesh;
+	}
+
+	void RenderObject::setMaterial(Material* mat) {
+		m_material = mat;
 	}
 
 	Transform& RenderObject::getTransform() {

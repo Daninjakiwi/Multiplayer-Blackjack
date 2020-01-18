@@ -3,7 +3,7 @@
 #include "Core/Log.h"
 #include "Mesh.h"
 
-namespace Core {
+namespace Blackjack::Core {
 	Mesh::Mesh(unsigned int vertex_count, unsigned int indices_count) : m_vertices(nullptr), m_indices(nullptr), m_vertex_count(vertex_count), m_indices_count(indices_count){
 		m_vertices = (float*)malloc(vertex_count * sizeof(float));
 		m_indices = (unsigned int*)malloc(indices_count * sizeof(unsigned int));

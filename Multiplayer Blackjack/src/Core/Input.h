@@ -4,7 +4,7 @@
 #include <unordered_map>
 #include "Window.h"
 
-namespace Core {
+namespace Blackjack::Core {
 	enum INPUT_CODE {
 		VOLT_A = 65, VOLT_B = 66, VOLT_C = 67, VOLT_D = 68, VOLT_E = 69,
 		VOLT_F = 70, VOLT_G = 71, VOLT_H = 72, VOLT_I = 73, VOLT_J = 74,
@@ -26,6 +26,7 @@ namespace Core {
 		static bool keyDown(INPUT_CODE code);
 		static bool keyJustPressed(INPUT_CODE code);
 		static bool mouseDown(INPUT_CODE code);
+		static bool mouseJustPressed(INPUT_CODE code);
 		static int getMouseX();
 		static int getMouseY();
 		static bool mouseJustMoved();
