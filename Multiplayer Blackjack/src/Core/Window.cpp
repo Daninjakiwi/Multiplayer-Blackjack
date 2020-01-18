@@ -45,7 +45,9 @@ namespace Blackjack::Core {
 		if (!s_glad_setup) {
 			if (gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
 				s_glad_setup = true;
+				glClearColor(0, 0, 0, 0);
 				glEnable(GL_DEPTH_TEST);
+				//glEnable(GL_BLEND);
 				glEnable(GL_BLEND);
 				glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 			}
@@ -71,7 +73,7 @@ namespace Blackjack::Core {
 
 
 	void Window::clear() {
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
 	}
 
 	void Window::setSize(int width, int height) {

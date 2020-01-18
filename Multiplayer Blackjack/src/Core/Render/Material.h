@@ -55,6 +55,8 @@ namespace Blackjack::Core {
 		void setUniform3f(const std::string& name, glm::vec3& vec);
 		void setUniform1f(const std::string& name, const float f0);
 
+		void setUniform4f(const std::string& name, const float f0, const float f1, const float f2, const float f3);
+
 	};
 
 }

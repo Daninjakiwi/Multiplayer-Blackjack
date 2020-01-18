@@ -61,6 +61,11 @@ namespace Blackjack::Core {
 		setUniform(name, UniformType::FLOAT, &f0);
 	}
 
+	void Material::setUniform4f(const std::string& name, const float f0, const float f1, const float f2, const float f3) {
+		float data[] = { f0,f1,f2,f3};
+		setUniform(name, UniformType::FVEC4, &data);
+	}
+
 	void Material::setUniform(const std::string& name, UniformType type, const void* data) {
 		Uniform* uniform = m_uniform[name].get();
 

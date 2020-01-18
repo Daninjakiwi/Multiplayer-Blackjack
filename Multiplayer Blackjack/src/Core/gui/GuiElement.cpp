@@ -1,4 +1,5 @@
 #include "GuiElement.h"
+#include <iostream>
 
 namespace Blackjack::Core {
 	GuiElement::GuiElement(Material* material, float x, float y, float width, float height, unsigned int extra_vertices, unsigned int extra_indices) : Mesh(16+extra_vertices,6+extra_indices), m_material(material), m_x(x), m_y(y), m_width(width), m_height(height){
@@ -31,7 +32,40 @@ namespace Blackjack::Core {
 
 	}
 
+	void GuiElement::setTexCoords(float x, float y, int location) {
+		m_vertices[2 + (location * 4)] = x;
+		m_vertices[3 + (location * 4)] = y;
+	}
+
+	void GuiElement::setX(float x) {
+		m_vertices[0] = x;
+		m_vertices[4] = x + m_width;
+		m_vertices[8] = x + m_width;
+		m_vertices[12] = x;
+	}
+
+	void GuiElement::setY(float y) {
+		m_vertices[1] = y;
+		m_vertices[5] = y;
+		m_vertices[9] = y + m_height;
+		m_vertices[13] = y + m_height;
+	}
+
+	void GuiElement::update() {
+	}
+
+	void GuiElement::setWidth(float width) {
+		m_vertices[4] = m_x + width;
+		m_vertices[8] = m_x + width;
+	}
+
 	Material* GuiElement::getMaterial() {
 		return m_material;
+	}
+
+	std::vector<GuiElement*> GuiElement::getElements() {
+		std::vector<GuiElement*> elements;
+		elements.push_back(this);
+		return elements;
 	}
 }

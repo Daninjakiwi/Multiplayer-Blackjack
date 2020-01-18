@@ -121,15 +121,22 @@ namespace Blackjack::Core {
 	}
 
 	void RendererUI::draw(GuiElement& object) {
-		for (int i = 0; i < object.getIndicesCount(); i++) {
-			m_index.push_back(object.getIndicesData()[i] + (m_vert.size() / 8));
+		std::vector<GuiElement*> elements = object.getElements();
+
+		for (GuiElement* element : elements) {
+			for (int i = 0; i < element->getIndicesCount(); i++) {
+				m_index.push_back(element->getIndicesData()[i] + (m_vert.size() / 4));
+			}
+
+			for (int i = 0; i < element->getVertexCount(); i++) {
+				m_vert.push_back(element->getVertexData()[i]);
+			}
+
+			m_ui.push_back(element);
+
 		}
 
-		for (int i = 0; i < object.getVertexCount(); i++) {
-			m_vert.push_back(object.getVertexData()[i]);
-		}
-
-		m_ui.push_back(&object);
+		//m_ui.push_back(&object);
 	}
 
 	void RendererUI::flush() {

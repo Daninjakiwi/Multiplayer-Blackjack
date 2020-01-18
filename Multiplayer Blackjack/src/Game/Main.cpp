@@ -15,6 +15,9 @@
 #include "Card.h"
 #include "Core/gui/Colour.h"
 #include "Core/gui/Button.h"
+#include "Core/gui/Slider.h"
+#include "Core/gui/Font.h"
+#include "Core/gui/Text.h"
 
 #include <cstdlib>
 #include <thread>
@@ -200,11 +203,20 @@ int main() {
 
 	Colour yellow(255, 178, 0);
 	Colour red(255, 0, 0);
-	Colour blue(100, 220, 50);
+	Colour blue(100, 50, 220);
+
+	Colour gray(40, 40, 40);
 
 	Button btn(30, 30, 100, 100, yellow.getMaterial(), red.getMaterial(), blue.getMaterial());
 
+	Slider slider(200, 200, 300, 300, gray.getMaterial(), yellow.getMaterial());
+
 	btn.setOnClickFunc(&button_click);
+
+
+	Font f("res/test.fnt");
+
+	Text t("Hello World", 200,300,100, f);
 
 	while (!window.shouldClose()) {
 		updateDelta();
@@ -212,9 +224,15 @@ int main() {
 
 		updateCamera();
 
-		btn.update();
+		//btn.update();
 
-		ui.draw(btn);
+		//slider.update();
+
+		//ui.draw(btn);
+		//ui.draw(slider);
+
+		ui.draw(t);
+		//ui.draw(btn);
 
 		ui.flush();
 
