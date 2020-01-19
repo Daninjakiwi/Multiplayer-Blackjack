@@ -27,6 +27,8 @@ namespace Blackjack::Core {
 		void hide();
 		void clear();
 
+		void forceClose();
+
 		void setSize(int width, int height);
 	};
 }

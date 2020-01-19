@@ -17,6 +17,7 @@ namespace Blackjack::Core {
 		virtual void update();
 
 		void setWidth(float width);
+		void setHeight(float height);
 		void setX(float x);
 		void setY(float y);
 

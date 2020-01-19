@@ -16,12 +16,16 @@ namespace Blackjack::Core {
 	};
 
 	class Input {
+	public:
+		typedef void (*CallbackFunc)(unsigned int code);
 	private:
 		static std::unordered_map<INPUT_CODE, unsigned int> m_key;
 		static std::vector<INPUT_CODE> m_mouse_keys;
 		static int m_mouse_x, m_mouse_y;
 		static bool m_mouse_moved;
+		static CallbackFunc m_callback;
 	public:
+
 		static void attachWindow(Window* window);
 		static bool keyDown(INPUT_CODE code);
 		static bool keyJustPressed(INPUT_CODE code);
@@ -30,6 +34,7 @@ namespace Blackjack::Core {
 		static int getMouseX();
 		static int getMouseY();
 		static bool mouseJustMoved();
+		static void setInputCallback(CallbackFunc func);
 	private:
 		static void keyEvent(GLFWwindow* window, int key, int scancode, int action, int mods);
 		static void charEvent(GLFWwindow* window, unsigned int codepoint);

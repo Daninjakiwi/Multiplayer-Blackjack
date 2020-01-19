@@ -1,10 +1,12 @@
 #include "Input.h"
+#include <iostream>
 
 namespace Blackjack::Core {
 	std::vector<INPUT_CODE> Input::m_mouse_keys;
 	std::unordered_map<INPUT_CODE, unsigned int> Input::m_key;
 	int Input::m_mouse_x, Input::m_mouse_y;
 	bool Input::m_mouse_moved = false;
+	Input::CallbackFunc Input::m_callback = nullptr;
 
 	void Input::attachWindow(Window* window) {
 		glfwSetKeyCallback(window->m_window, keyEvent);
@@ -68,24 +70,34 @@ namespace Blackjack::Core {
 		return m_mouse_moved;
 	}
 
+	void Input::setInputCallback(CallbackFunc func) {
+		m_callback = func;
+	}
+
 
 	void Input::keyEvent(GLFWwindow* window, int key, int scancode, int action, int mods)
 	{
-		if (action == GLFW_PRESS) {
-			m_key[(INPUT_CODE)key] = 0;
-			return;
+		if (scancode == 14) {
+			charEvent(window, scancode);
 		}
-		else if (action == GLFW_REPEAT) {
-			auto test = m_key.find((INPUT_CODE)key);
-			test->second += 1;
-		}
-		else if (action == GLFW_RELEASE) {
-			auto test = m_key.find((INPUT_CODE)key);
-			m_key.erase(test->first);
+		else {
+			if (action == GLFW_PRESS) {
+				m_key[(INPUT_CODE)key] = 0;
+				return;
+			}
+			else if (action == GLFW_REPEAT) {
+				auto test = m_key.find((INPUT_CODE)key);
+				test->second += 1;
+			}
+			else if (action == GLFW_RELEASE) {
+				auto test = m_key.find((INPUT_CODE)key);
+				m_key.erase(test->first);
+			}
 		}
 	}
 
 	void Input::charEvent(GLFWwindow* window, unsigned int codepoint) {
+		m_callback(codepoint);
 	}
 
 	void Input::mouseMoveEvent(GLFWwindow* window, double xpos, double ypos) {

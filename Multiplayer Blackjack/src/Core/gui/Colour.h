@@ -10,6 +10,8 @@ namespace Blackjack::Core {
 	public:
 		Colour(int r, int g, int b, int a=255);
 
+		static Material* getColour(int r, int g, int b, int a = 255);
+
 		Material* getMaterial();
 	};
 }

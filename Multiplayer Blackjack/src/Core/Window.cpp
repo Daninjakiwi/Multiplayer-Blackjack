@@ -10,6 +10,10 @@ namespace Blackjack::Core {
 	bool Window::s_glfw_setup = false;
 	bool Window::s_glad_setup = false;
 
+	void Window::forceClose() {
+		glfwSetWindowShouldClose(m_window, true);
+	}
+
 	Window::Window(unsigned int width, unsigned int height, const std::string& title) : m_window(nullptr) {
 		if (!s_glfw_setup) {
 			if (glfwInit()) {

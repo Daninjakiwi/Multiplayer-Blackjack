@@ -59,6 +59,11 @@ namespace Blackjack::Core {
 		m_vertices[8] = m_x + width;
 	}
 
+	void GuiElement::setHeight(float height) {
+		m_vertices[9] = m_y + height;
+		m_vertices[13] = m_y + height;
+	}
+
 	Material* GuiElement::getMaterial() {
 		return m_material;
 	}
