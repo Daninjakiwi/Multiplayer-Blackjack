@@ -88,7 +88,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\Core\Camera.cpp" />
-    <ClCompile Include="src\Core\FileSystem.cpp" />
     <ClCompile Include="src\Core\gui\Button.cpp" />
     <ClCompile Include="src\Core\gui\Colour.cpp" />
     <ClCompile Include="src\Core\gui\Font.cpp" />
@@ -108,7 +107,7 @@
     <ClCompile Include="src\Core\Render\RenderObject.cpp" />
     <ClCompile Include="src\Core\Render\Shader.cpp" />
     <ClCompile Include="src\Core\Render\Texture.cpp" />
-    <ClCompile Include="src\Core\ResourceManager.cpp" />
+    <ClCompile Include="src\Core\Resources.cpp" />
     <ClCompile Include="src\Core\Scene.cpp" />
     <ClCompile Include="src\Core\Transform.cpp" />
     <ClCompile Include="src\Core\Window.cpp" />
@@ -128,9 +127,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\Core\Camera.h" />
-    <ClInclude Include="src\Core\Core.h" />
-    <ClInclude Include="src\Core\FileSystem.h" />
+    <ClInclude Include="src\Core\Camera.hpp" />
+    <ClInclude Include="src\Core\Core.hpp" />
     <ClInclude Include="src\Core\gui\Button.h" />
     <ClInclude Include="src\Core\gui\Colour.h" />
     <ClInclude Include="src\Core\gui\Font.h" />
@@ -138,8 +136,8 @@
     <ClInclude Include="src\Core\gui\Slider.h" />
     <ClInclude Include="src\Core\gui\Text.h" />
     <ClInclude Include="src\Core\gui\TextField.h" />
-    <ClInclude Include="src\Core\Input.h" />
-    <ClInclude Include="src\Core\Log.h" />
+    <ClInclude Include="src\Core\Input.hpp" />
+    <ClInclude Include="src\Core\Log.hpp" />
     <ClInclude Include="src\Core\Network\Network.h" />
     <ClInclude Include="src\Core\Render\Light.h" />
     <ClInclude Include="src\Core\Render\Material.h" />
@@ -151,10 +149,10 @@
     <ClInclude Include="src\Core\Render\RenderObject.h" />
     <ClInclude Include="src\Core\Render\Shader.h" />
     <ClInclude Include="src\Core\Render\Texture.h" />
-    <ClInclude Include="src\Core\ResourceManager.h" />
-    <ClInclude Include="src\Core\Scene.h" />
-    <ClInclude Include="src\Core\Transform.h" />
-    <ClInclude Include="src\Core\Window.h" />
+    <ClInclude Include="src\Core\Resources.hpp" />
+    <ClInclude Include="src\Core\Scene.hpp" />
+    <ClInclude Include="src\Core\Transform.hpp" />
+    <ClInclude Include="src\Core\Window.hpp" />
     <ClInclude Include="src\Game\Card.h" />
     <ClInclude Include="src\Game\Scenes\SceneGame.h" />
     <ClInclude Include="src\Game\Scenes\SceneLogin.h" />

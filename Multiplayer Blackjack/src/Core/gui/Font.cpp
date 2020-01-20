@@ -1,8 +1,7 @@
-#include "Font.h"
-#include "Core/ResourceManager.h"
-
 #include <fstream>
-#include "Core/Log.h"
+#include "Core/Log.hpp"
+#include "Core/Resources.hpp"
+#include "Font.h"
 
 namespace Blackjack::Core {
 
@@ -14,7 +13,7 @@ namespace Blackjack::Core {
 		return m_data[c];
 	}
 
-	Texture* Font::getTexture() {
+	Texture* Font::texture() {
 		return m_glyph;
 	}
 
@@ -48,7 +47,7 @@ namespace Blackjack::Core {
 
 			getline(file, line);
 
-			m_glyph = ResourceManager::createTexture(filepath, "res/"+line.substr(16, line.length() - 17));
+			m_glyph = Resources::CreateTexture(filepath, "res/"+line.substr(16, line.length() - 17));
 
 			getline(file, line);
 			int num_characters = std::stoi(line.substr(12, 2));

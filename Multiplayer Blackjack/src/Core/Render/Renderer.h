@@ -3,7 +3,7 @@
 #include "Light.h"
 
 #include "RenderObject.h"
-#include "Core/Camera.h"
+#include "Core/Camera.hpp"
 #include "Core/gui/GuiElement.h"
 
 namespace Blackjack::Core {

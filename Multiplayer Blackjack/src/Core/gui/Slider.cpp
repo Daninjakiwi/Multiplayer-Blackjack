@@ -1,7 +1,7 @@
-#include "Slider.h"
-#include "Core/Input.h"
 #include <algorithm> 
 #include <iostream>
+#include "Core/Input.hpp"
+#include "Slider.h"
 
 namespace Blackjack::Core {
 	Slider::Slider(float x, float y, float width, float height, Material* front, Material* back, float min, float max, float initial) 
@@ -10,10 +10,10 @@ namespace Blackjack::Core {
 	}
 
 	void Slider::update() {
-		if (Input::mouseDown(VOLT_MOUSE_LEFT)) {
-			if (m_change || (Input::getMouseX() >= m_x && Input::getMouseX() <= m_x + m_width && Input::getMouseY() >= m_y && Input::getMouseY() <= m_y + m_height)) {
+		if (Input::MouseDown(InputCode::MOUSE_LEFT)) {
+			if (m_change || (Input::GetMouseX() >= m_x && Input::GetMouseX() <= m_x + m_width && Input::GetMouseY() >= m_y && Input::GetMouseY() <= m_y + m_height)) {
 				m_change = true;
-				m_current = std::max(m_min, std::min(m_max, ((Input::getMouseX() - m_x) / m_width) * m_max));
+				m_current = std::max(m_min, std::min(m_max, ((Input::GetMouseX() - m_x) / m_width) * m_max));
 				m_slider.setWidth((m_current * m_width) / m_max);
 			}
 		}

@@ -1,6 +1,6 @@
 #include <memory>
 
-#include "Core/Log.h"
+#include "Core/Log.hpp"
 #include "Mesh.h"
 
 namespace Blackjack::Core {

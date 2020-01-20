@@ -1,5 +1,5 @@
 #pragma once
-#include "Core/ResourceManager.h"
+#include "Core/Resources.hpp"
 
 namespace Blackjack::Core {
 	class Colour {
@@ -12,6 +12,6 @@ namespace Blackjack::Core {
 
 		static Material* getColour(int r, int g, int b, int a = 255);
 
-		Material* getMaterial();
+		Material* material();
 	};
 }

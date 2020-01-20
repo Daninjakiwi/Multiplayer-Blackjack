@@ -1,6 +1,6 @@
 #pragma once
-#include "Core/Core.h"
-#include "Core/Scene.h"
+#include "Core/Core.hpp"
+#include "Core/Scene.hpp"
 #include "../Card.h"
 #include "Core/Render/Meshes/CircleSegment.h"
 
@@ -20,8 +20,8 @@ namespace Blackjack {
 	public:
 		SceneGame();
 
-		void update(float delta);
+		void Update(float delta);
 
-		void draw();
+		void Draw();
 	};
 }

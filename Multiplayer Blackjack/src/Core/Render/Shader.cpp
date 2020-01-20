@@ -1,8 +1,8 @@
 #include "glad/glad.h"
 #include "glm/glm.hpp"
 
-#include "Core/Log.h"
-#include "Core/FileSystem.h"
+#include "Core/Log.hpp"
+#include "Core/Resources.hpp"
 #include "Shader.h"
 
 
@@ -10,8 +10,8 @@ namespace Blackjack::Core {
 	Shader::Shader(const std::string& filepath) : m_id(0) {
 		m_id = glCreateProgram();
 
-		std::string vertex_source = FileSystem::loadFile(filepath + ".vert");
-		std::string fragment_source = FileSystem::loadFile(filepath + ".frag");
+		std::string vertex_source = Resources::LoadFile(filepath + ".vert");
+		std::string fragment_source = Resources::LoadFile(filepath + ".frag");
 
 		unsigned int vert = compileShader(vertex_source.c_str(), GL_VERTEX_SHADER);
 

@@ -1,87 +1,84 @@
 #include <iostream>
 #include "glad/glad.h"
-
-#include "Window.h"
-#include "ResourceManager.h"
+#include "Window.hpp"
+#include "Resources.hpp"
 
 namespace Blackjack::Core {
 
-	GLFWwindow* Window::s_primary = nullptr;
-	bool Window::s_glfw_setup = false;
-	bool Window::s_glad_setup = false;
+	GLFWwindow* Window::primary_ = nullptr;
+	bool Window::glfw_setup_ = false;
+	bool Window::glad_setup_ = false;
 
-	void Window::forceClose() {
-		glfwSetWindowShouldClose(m_window, true);
+	void Window::ForceClose() {
+		glfwSetWindowShouldClose(window_, true);
 	}
 
-	Window::Window(unsigned int width, unsigned int height, const std::string& title) : m_window(nullptr) {
-		if (!s_glfw_setup) {
+	Window::Window(int width, int height, const std::string& title) : window_(nullptr) {
+		if (!glfw_setup_) {
 			if (glfwInit()) {
-				s_glfw_setup = true;
+				glfw_setup_ = true;
 				glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 				glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 				glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-				//glfwWindowHint(GLFW_SAMPLES, 4);
 			}
 		}
-		if (s_glfw_setup) {
-			m_window = glfwCreateWindow(width, height, title.c_str(), nullptr, nullptr);
+		if (glfw_setup_) {
+			window_ = glfwCreateWindow(width, height, title.c_str(), nullptr, nullptr);
 		}	
 	}
 
 	Window::~Window() {
-		if (m_window == s_primary) {
-			s_primary = nullptr;
+		if (window_ == primary_) {
+			primary_ = nullptr;
 		}
-		glfwDestroyWindow(m_window);
+		glfwDestroyWindow(window_);
 	}
 
-	void Window::makePrimary() {
-		if (s_primary != m_window) {
-			if (s_primary != nullptr) {
+	void Window::MakePrimary() {
+		if (primary_ != window_) {
+			if (primary_ != nullptr) {
 				glClear(GL_COLOR_BUFFER_BIT);
-				glfwSwapBuffers(s_primary);
+				glfwSwapBuffers(primary_);
 				glClear(GL_COLOR_BUFFER_BIT);
 			}
-			glfwMakeContextCurrent(m_window);
-			s_primary = m_window;
+			glfwMakeContextCurrent(window_);
+			primary_ = window_;
 		}
-		if (!s_glad_setup) {
+		if (!glad_setup_) {
 			if (gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
-				s_glad_setup = true;
+				glad_setup_ = true;
 				glClearColor(0, 0, 0, 0);
 				glEnable(GL_DEPTH_TEST);
-				//glEnable(GL_BLEND);
 				glEnable(GL_BLEND);
 				glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 			}
 		}
 	}
 
-	void Window::update() {
+	void Window::Update() {
 		glfwPollEvents();
-		glfwSwapBuffers(m_window);
+		glfwSwapBuffers(window_);
 	}
 
-	bool Window::shouldClose() {
-		return glfwWindowShouldClose(m_window);
+	bool Window::ShouldClose() {
+		return glfwWindowShouldClose(window_);
 	}
 
-	void Window::show() {
-		glfwShowWindow(m_window);
+	void Window::Show() {
+		glfwShowWindow(window_);
 	}
 
-	void Window::hide() {
-		glfwHideWindow(m_window);
+	void Window::Hide() {
+		glfwHideWindow(window_);
 	}
 
 
-	void Window::clear() {
+	void Window::Clear() {
 		glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
 	}
 
-	void Window::setSize(int width, int height) {
-		glfwSetWindowSize(m_window, width, height);
+	void Window::SetSize(int width, int height) {
+		glfwSetWindowSize(window_, width, height);
 		glViewport(0, 0, width, height);
 	}
 }

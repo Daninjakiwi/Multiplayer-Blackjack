@@ -1,4 +1,4 @@
-#include "Core/Window.h"
+#include "Core/Window.hpp"
 #include "Core/Network/Network.h"
 #include "Scenes/TestScene.h"
 #include "Scenes/SceneLogin.h"
@@ -10,49 +10,49 @@ float lastFrame = 0.0f;
 CURL* curl;
 
 void updateDelta() {
-	float currentFrame = glfwGetTime();
+	float currentFrame = (float)glfwGetTime();
 	deltaTime = currentFrame - lastFrame;
 	lastFrame = currentFrame;
 }
 
 int main() {
-	float width = 1280;
-	float height = 720;
+	int width = 1280;
+	int height = 720;
 
 	curl = init();
 
 	Blackjack::Core::Window window(width, height, "Blackjack");
-	window.makePrimary();
+	window.MakePrimary();
 
-	Blackjack::Core::Input::attachWindow(&window);
+	Blackjack::Core::Input::AttachWindow(&window);
 
 	Blackjack::TestScene test;
 	Blackjack::SceneLogin login;
 	Blackjack::SceneGame game;
 
-	while (!window.shouldClose()) {
+	while (!window.ShouldClose()) {
 		updateDelta();
-		window.clear();
+		window.Clear();
 
-		switch (Blackjack::Core::Scene::state) {
+		switch (Blackjack::Core::Scene::GetState()) {
 		case 0:
-			test.update(deltaTime);
-			test.draw();
+			test.Update(deltaTime);
+			test.Draw();
 			break;
 		case 1:
-			login.update(deltaTime);
-			login.draw();
+			login.Update(deltaTime);
+			login.Draw();
 			break;
 		case 2:
-			game.update(deltaTime);
-			game.draw();
+			game.Update(deltaTime);
+			game.Draw();
 			break;
 		case -1:
-			window.forceClose();
+			window.ForceClose();
 			break;
 		}
 
-		window.update();
+		window.Update();
 	}
 
 	destroy(curl);

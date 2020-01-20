@@ -1,7 +1,7 @@
 #pragma once
 #include "Meshes/Mesh.h"
 #include "Material.h"
-#include "Core/Transform.h"
+#include "Core/Transform.hpp"
 
 namespace Blackjack::Core {
 	class RenderObject {

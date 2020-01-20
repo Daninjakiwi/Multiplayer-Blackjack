@@ -47,7 +47,7 @@ namespace Blackjack::Core {
 
 		void bind() const;
 
-		inline Shader* getShader() const { return m_shader; };
+		inline Shader* shader() const { return m_shader; };
 
 		void setUniform(const std::string& name, UniformType type, const void* data);
 

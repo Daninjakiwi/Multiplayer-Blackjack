@@ -1,42 +1,42 @@
-#include "Transform.h"
+#include "Transform.hpp"
 
 namespace Blackjack::Core {
-	Transform::Transform() : m_matrix(1.0f), m_position(0,0,0), m_rotation(0,0,0), m_scale(1,1,1) {
+	Transform::Transform() : matrix_(1.0f), position_(0,0,0), rotation_(0,0,0), scale_(1,1,1) {
 	}
 
-	void Transform::setPosition(float x, float y, float z) {
-		m_position = glm::vec3(x, y, z);
-		updateMatrix();
+	void Transform::SetPosition(float x, float y, float z) {
+		position_ = glm::vec3(x, y, z);
+		UpdateMatrix();
 	}
 
-	void Transform::setRotation(float x, float y, float z) {
-		m_rotation = glm::vec3(x, y, z);
-		updateMatrix();
+	void Transform::SetRotation(float x, float y, float z) {
+		rotation_ = glm::vec3(x, y, z);
+		UpdateMatrix();
 	}
 
-	void Transform::setScale(float x, float y, float z) {
-		m_scale = glm::vec3(x, y, z);
-		updateMatrix();
+	void Transform::SetScale(float x, float y, float z) {
+		scale_ = glm::vec3(x, y, z);
+		UpdateMatrix();
 	}
 
-	void Transform::reset() {
-		m_position = glm::vec3();
-		m_rotation = glm::vec3();
-		m_scale = glm::vec3(1,1,1);
-		updateMatrix();
+	void Transform::Reset() {
+		position_ = glm::vec3();
+		rotation_ = glm::vec3();
+		scale_ = glm::vec3(1,1,1);
+		UpdateMatrix();
 	}
 
-	void Transform::updateMatrix() {
-		m_matrix = glm::mat4(1.0f);
-		m_matrix = glm::translate(m_matrix, m_position);	
-		m_matrix = glm::rotate(m_matrix, glm::radians(m_rotation.x), glm::vec3(1, 0, 0));
-		m_matrix = glm::rotate(m_matrix, glm::radians(m_rotation.y), glm::vec3(0, 1, 0));
-		m_matrix = glm::rotate(m_matrix, glm::radians(m_rotation.z), glm::vec3(0, 0, 1));
-		m_matrix = glm::scale(m_matrix, m_scale);
+	void Transform::UpdateMatrix() {
+		matrix_ = glm::mat4(1.0f);
+		matrix_ = glm::translate(matrix_, position_);	
+		matrix_ = glm::rotate(matrix_, glm::radians(rotation_.x), glm::vec3(1, 0, 0));
+		matrix_ = glm::rotate(matrix_, glm::radians(rotation_.y), glm::vec3(0, 1, 0));
+		matrix_ = glm::rotate(matrix_, glm::radians(rotation_.z), glm::vec3(0, 0, 1));
+		matrix_ = glm::scale(matrix_, scale_);
 
 	}
 
-	float* Transform::getMatrix() {
-		return &m_matrix[0][0];
+	float* Transform::GetMatrix() {
+		return &matrix_[0][0];
 	}
 }

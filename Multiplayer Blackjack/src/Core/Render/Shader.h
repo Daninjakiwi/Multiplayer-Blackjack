@@ -4,7 +4,7 @@
 
 namespace Blackjack::Core {
 	class Shader {
-		friend class ResourceManager;
+		friend class Resources;
 	private:
 		unsigned int m_id;
 		std::unordered_map<unsigned int, void*> m_uniforms;

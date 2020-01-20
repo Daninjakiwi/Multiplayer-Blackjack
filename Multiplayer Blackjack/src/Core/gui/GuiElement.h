@@ -12,7 +12,7 @@ namespace Blackjack::Core {
 		GuiElement(Material* material, float x, float y, float width, float height, unsigned int extra_vertices=0, unsigned int extra_indices=0);
 		virtual ~GuiElement() = default;
 
-		Material* getMaterial();
+		Material* material();
 
 		virtual void update();
 

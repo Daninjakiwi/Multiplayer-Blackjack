@@ -1,6 +1,6 @@
-#include "Renderer.h"
 #include "glad/glad.h"
-#include "Core/Log.h"
+#include "Core/Log.hpp"
+#include "Renderer.h"
 
 namespace Blackjack::Core {
 	Renderer::Renderer() : m_va(0), m_vb(0), m_ib(0){
@@ -29,21 +29,19 @@ namespace Blackjack::Core {
 		glEnableVertexAttribArray(1);
 		glEnableVertexAttribArray(2);
 
-
 		glVertexAttribPointer(0, 3, GL_FLOAT, false, 8 * sizeof(float), nullptr);
-
 		glVertexAttribPointer(1, 3, GL_FLOAT, false, 8 * sizeof(float), (const void*)12);
-
 		glVertexAttribPointer(2, 2, GL_FLOAT, false, 8 * sizeof(float), (const void*)24);
-
 	}
 
 	void Renderer3D::draw(RenderObject& object) {
 		Mesh* mesh = object.getMesh();
+		m_index.reserve(m_index.size() + mesh->getIndicesCount());
 		for (int i = 0; i < mesh->getIndicesCount(); i++) {
 			m_index.push_back(mesh->getIndicesData()[i] + (m_vert.size() / 8));
 		}
 
+		m_vert.reserve(m_vert.size() + mesh->getVertexCount());
 		for (int i = 0; i < mesh->getVertexCount(); i++) {
 			m_vert.push_back(mesh->getVertexData()[i]);
 		}
@@ -68,10 +66,10 @@ namespace Blackjack::Core {
 				r->m_material->setUniform("u_light.specular", UniformType::FVEC3, &m_light->m_specular.x);
 				r->m_material->setUniform("u_light.position", UniformType::FVEC3, &m_light->m_position.x);
 
-				r->m_material->setUniform("u_view_pos", UniformType::FVEC3, &m_camera->m_position.x);
-				r->m_material->setUniform("u_camera", UniformType::MAT4, m_camera->getView());
+				r->m_material->setUniform("u_view_pos", UniformType::FVEC3, &m_camera->position_.x);
+				r->m_material->setUniform("u_camera", UniformType::MAT4, m_camera->GetView());
 
-				r->m_material->setUniform("u_transform", UniformType::MAT4, r->m_transform.getMatrix());
+				r->m_material->setUniform("u_transform", UniformType::MAT4, r->m_transform.GetMatrix());
 
 				r->m_material->bind();
 
@@ -114,9 +112,7 @@ namespace Blackjack::Core {
 		glEnableVertexAttribArray(0);
 		glEnableVertexAttribArray(1);
 
-
 		glVertexAttribPointer(0, 2, GL_FLOAT, false, 4 * sizeof(float), nullptr);
-
 		glVertexAttribPointer(1, 2, GL_FLOAT, false, 4 * sizeof(float), (const void*)8);
 	}
 
@@ -124,10 +120,12 @@ namespace Blackjack::Core {
 		std::vector<GuiElement*> elements = object.getElements();
 
 		for (GuiElement* element : elements) {
+			m_index.reserve(m_index.size() + element->getIndicesCount());
 			for (int i = 0; i < element->getIndicesCount(); i++) {
 				m_index.push_back(element->getIndicesData()[i] + (m_vert.size() / 4));
 			}
 
+			m_vert.reserve(m_vert.size() + element->getVertexCount());
 			for (int i = 0; i < element->getVertexCount(); i++) {
 				m_vert.push_back(element->getVertexData()[i]);
 			}
@@ -135,8 +133,6 @@ namespace Blackjack::Core {
 			m_ui.push_back(element);
 
 		}
-
-		//m_ui.push_back(&object);
 	}
 
 	void RendererUI::flush() {
@@ -150,14 +146,15 @@ namespace Blackjack::Core {
 
 			for (GuiElement* r : m_ui) {
 
-				r->getMaterial()->getShader()->bind();
+				r->material()->shader()->bind();
 
-				r->getMaterial()->setUniform("u_camera", UniformType::MAT4, &m_camera[0][0]);
-				r->getMaterial()->bind();
+				r->material()->setUniform("u_camera", UniformType::MAT4, &m_camera[0][0]);
+				r->material()->bind();
 
 				glDrawElements(GL_TRIANGLES, r->getIndicesCount(), GL_UNSIGNED_INT, start);
 				start += r->getIndicesCount();
 			}
+
 			m_ui.clear();
 			m_vert.clear();
 			m_index.clear();

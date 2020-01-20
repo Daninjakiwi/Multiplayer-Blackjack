@@ -21,7 +21,7 @@ namespace Blackjack::Core {
 		void load(const std::string& filepath);
 		Character& getCharacter(char c);
 
-		Texture* getTexture();
+		Texture* texture();
 
 		std::string& getName();
 

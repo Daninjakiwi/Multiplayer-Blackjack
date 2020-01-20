@@ -1,6 +1,6 @@
 #pragma once
-#include "Core/Scene.h"
-#include "Core/Core.h"
+#include "Core/Scene.hpp"
+#include "Core/Core.hpp"
 
 namespace Blackjack {
 	class SceneLogin : public Core::Scene {
@@ -10,10 +10,10 @@ namespace Blackjack {
 	public:
 		SceneLogin();
 
-		void update(float delta);
+		void Update(float delta);
 
-		void draw();
+		void Draw();
 
-		static void btnClick();
+		static void BtnClick();
 	};
 }

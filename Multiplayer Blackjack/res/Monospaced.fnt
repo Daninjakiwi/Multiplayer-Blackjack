@@ -1,6 +1,6 @@
 info face="Monospaced.plain" size=197 bold=0 italic=0 charset="" unicode=0 stretchH=100 smooth=1 aa=1 padding=3,3,3,3 spacing=0,0
 common lineHeight=265 base=199 scaleW=1024 scaleH=1024 pages=1 packed=0
-page id=0 file="test.png"
+page id=0 file="Monospaced.png"
 chars count=96
 char id=10      x=0    y=0    width=0    height=0    xoffset=-3   yoffset=0    xadvance=6    page=0    chnl=0 
 char id=32      x=0    y=0    width=0    height=0    xoffset=-3   yoffset=0    xadvance=124  page=0    chnl=0 

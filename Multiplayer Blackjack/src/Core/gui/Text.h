@@ -2,6 +2,7 @@
 #include "Core/Render/Meshes/Mesh.h"
 #include "GuiElement.h"
 #include "Font.h"
+#include "Colour.h"
 
 namespace Blackjack::Core {
 
@@ -15,11 +16,15 @@ namespace Blackjack::Core {
 		float m_offset;
 		std::vector<GuiElement*> m_text;
 	public:
-		Text(const std::string& text, float x, float y, float size, Font& font);
+		Text(const std::string& text, float x, float y, float size, Font& font, float r=0, float g=0, float b=0);
 
 		~Text();
 
 		void setText(const std::string& text);
+		void append(const std::string& text);
+		void append(const char& text);
+
+		void setTextColour(float r = 0, float g = 0, float b = 0);
 
 		std::vector<GuiElement*> getElements();
 	};
