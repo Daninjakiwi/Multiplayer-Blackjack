@@ -18,16 +18,16 @@ namespace Blackjack {
 		float row = floor(value / 10);
 		float col = value % 10;
 
-		m_vertices[6] = col * xstep;
-		m_vertices[7] = 1 - ((row+1) * ystep);
+		vertices_[6] = col * xstep;
+		vertices_[7] = 1 - ((row+1) * ystep);
 
-		m_vertices[14] = (col+1) * xstep;
-		m_vertices[15] = 1 - ((row + 1) * ystep);
+		vertices_[14] = (col+1) * xstep;
+		vertices_[15] = 1 - ((row + 1) * ystep);
 
-		m_vertices[22] = (col + 1) * xstep;
-		m_vertices[23] = 1 - (row * ystep);
+		vertices_[22] = (col + 1) * xstep;
+		vertices_[23] = 1 - (row * ystep);
 
-		m_vertices[30] = col * xstep;
-		m_vertices[31] = 1 - (row * ystep);
+		vertices_[30] = col * xstep;
+		vertices_[31] = 1 - (row * ystep);
 	}
 }

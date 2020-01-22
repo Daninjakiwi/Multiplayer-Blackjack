@@ -6,10 +6,6 @@ namespace Blackjack {
 	class TestScene : public Core::Scene {
 	private:
 		Core::RendererUI ui;
-		Core::Font font;
-
-		Core::Button btn;
-		Core::TextField field;
 
 	public:
 		TestScene();

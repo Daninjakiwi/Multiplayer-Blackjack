@@ -4,9 +4,17 @@
 
 #include "RenderObject.h"
 #include "Core/Camera.hpp"
-#include "Core/gui/GuiElement.h"
+#include "Core/gui/GuiElement.hpp"
 
 namespace Blackjack::Core {
+	struct Command {
+		Material* mat;
+		unsigned int start;
+		int count;
+		
+		Command(Material* material, unsigned int _start, int _end);
+	};
+
 	class Renderer {
 	protected:
 		unsigned int m_va, m_vb, m_ib;
@@ -41,13 +49,15 @@ namespace Blackjack::Core {
 	class RendererUI : public Renderer {
 	private:
 		glm::mat4 m_camera;
-		std::vector<GuiElement*> m_ui;
+		std::vector<GuiElement*> m_elements;
 	public:
 		RendererUI(float width, float height);
 		~RendererUI() = default;
 
 		void bind() const;
-		void draw(GuiElement& object);
 		void flush();
+
+		void push(GuiElement* element);
+		void render();
 	};
 }

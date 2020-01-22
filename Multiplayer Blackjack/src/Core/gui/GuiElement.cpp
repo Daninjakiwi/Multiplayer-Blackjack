@@ -1,76 +1,93 @@
-#include "GuiElement.h"
+#include "GuiElement.hpp"
 #include <iostream>
+#include "Core/Input.hpp"
+
 
 namespace Blackjack::Core {
-	GuiElement::GuiElement(Material* material, float x, float y, float width, float height, unsigned int extra_vertices, unsigned int extra_indices) : Mesh(16+extra_vertices,6+extra_indices), m_material(material), m_x(x), m_y(y), m_width(width), m_height(height){
-		m_vertices[0] = x;
-		m_vertices[1] = y;
-		m_vertices[2] = 0;
-		m_vertices[3] = 0;
-
-		m_vertices[4] = x+width;
-		m_vertices[5] = y;
-		m_vertices[6] = 1;
-		m_vertices[7] = 0;
-
-		m_vertices[8] = x + width;
-		m_vertices[9] = y + height;
-		m_vertices[10] = 1;
-		m_vertices[11] = 1;
-
-		m_vertices[12] = x;
-		m_vertices[13] = y + height;
-		m_vertices[14] = 0;
-		m_vertices[15] = 1;
-
-		m_indices[0] = 0;
-		m_indices[1] = 1;
-		m_indices[2] = 2;
-		m_indices[3] = 2;
-		m_indices[4] = 3;
-		m_indices[5] = 0;
-
+	GuiElement::GuiElement(const float x, const float y, const float width, const float height, const Colour colour) : Mesh(16, 6), x_(x), y_(y), width_(width), height_(height), material_(nullptr) {
+		material_ = Resources::CreateMaterial("gui_" + colour, Resources::GetShader("gui"));
+		material_->setUniform4f("u_colour", (float)colour.r / 255, (float)colour.g / 255, (float)colour.b / 255, (float)colour.a/255);
+		Initialise();
+	}
+	GuiElement::GuiElement(const float x, const float y, const float width, const float height, Material* material) : Mesh(16, 6), x_(x), y_(y), width_(width), height_(height), material_(material) {
+		Initialise();
 	}
 
-	void GuiElement::setTexCoords(float x, float y, int location) {
-		m_vertices[2 + (location * 4)] = x;
-		m_vertices[3 + (location * 4)] = y;
+	void GuiElement::Initialise() {
+		vertices_[0] = x_;
+		vertices_[1] = y_;
+		vertices_[2] = 0;
+		vertices_[3] = 0;
+
+		vertices_[4] = x_ + width_;
+		vertices_[5] = y_;
+		vertices_[6] = 1;
+		vertices_[7] = 0;
+
+		vertices_[8] = x_ + width_;
+		vertices_[9] = y_ + height_;
+		vertices_[10] = 1;
+		vertices_[11] = 1;
+
+		vertices_[12] = x_;
+		vertices_[13] = y_ + height_;
+		vertices_[14] = 0;
+		vertices_[15] = 1;
+
+		indices_[0] = 0;
+		indices_[1] = 1;
+		indices_[2] = 2;
+		indices_[3] = 2;
+		indices_[4] = 3;
+		indices_[5] = 0;
 	}
 
-	void GuiElement::setX(float x) {
-		m_vertices[0] = x;
-		m_vertices[4] = x + m_width;
-		m_vertices[8] = x + m_width;
-		m_vertices[12] = x;
+	void GuiElement::SetX(const float x) {
+		x_ = x;
+		vertices_[0] = x;
+		vertices_[4] = x + width_;
+		vertices_[8] = x + width_;
+		vertices_[12] = x;
+	}
+	void GuiElement::SetY(const float y) {
+		y_ = y;
+		vertices_[1] = y;
+		vertices_[5] = y;
+		vertices_[9] = y + height_;
+		vertices_[13] = y + height_;
+	}	
+	void GuiElement::SetWidth(const float width) {
+		width_ = width;
+		vertices_[4] = x_ + width;
+		vertices_[8] = x_ + width;
+	}
+	void GuiElement::SetHeight(const float height) {
+		height_ = height;
+		vertices_[9] = y_ + height;
+		vertices_[13] = y_ + height;
 	}
 
-	void GuiElement::setY(float y) {
-		m_vertices[1] = y;
-		m_vertices[5] = y;
-		m_vertices[9] = y + m_height;
-		m_vertices[13] = y + m_height;
+	Material* GuiElement::GetMaterial() {
+		return material_;
 	}
 
-	void GuiElement::update() {
+	void GuiElement::SetMaterial(const Colour colour) {
+		material_ = Resources::CreateMaterial("gui_" + colour, Resources::GetShader("gui"));
+		material_->setUniform4f("u_colour", (float)colour.r/255, (float)colour.g/255, (float)colour.b/255, (float)colour.a/255);
+	}
+	void GuiElement::SetMaterial(Material* material) {
+		material_ = material;
+	}
+	void GuiElement::Update() {}
+
+	void GuiElement::Draw(RendererUI& renderer) {
+		renderer.push(this);
 	}
 
-	void GuiElement::setWidth(float width) {
-		m_vertices[4] = m_x + width;
-		m_vertices[8] = m_x + width;
-	}
-
-	void GuiElement::setHeight(float height) {
-		m_vertices[9] = m_y + height;
-		m_vertices[13] = m_y + height;
-	}
-
-	Material* GuiElement::material() {
-		return m_material;
-	}
-
-	std::vector<GuiElement*> GuiElement::getElements() {
-		std::vector<GuiElement*> elements;
-		elements.push_back(this);
-		return elements;
+	bool GuiElement::MouseIntersect() {
+		if (Input::GetMouseX() >= x_ && Input::GetMouseX() <= x_ + width_ && Input::GetMouseY() >= y_ && Input::GetMouseY() <= y_ + height_) {
+			return true;
+		}
+		return false;
 	}
 }

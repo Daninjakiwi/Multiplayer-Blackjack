@@ -20,6 +20,7 @@ namespace Blackjack::Core {
 				glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 				glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 				glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+
 			}
 		}
 		if (glfw_setup_) {
@@ -46,11 +47,14 @@ namespace Blackjack::Core {
 		}
 		if (!glad_setup_) {
 			if (gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
+				//glfwSwapInterval(0);
 				glad_setup_ = true;
 				glClearColor(0, 0, 0, 0);
 				glEnable(GL_DEPTH_TEST);
 				glEnable(GL_BLEND);
 				glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+				//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 			}
 		}
 	}

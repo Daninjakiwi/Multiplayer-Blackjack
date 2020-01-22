@@ -8,6 +8,11 @@
 #include "Core/Render/Material.h"
 
 namespace Blackjack::Core {
+
+	constexpr auto FONT_PATH = "res/fonts/";
+	constexpr auto SHADER_PATH = "res/shaders/";
+	constexpr auto TEXTURE_PATH = "res/textures/";
+
 	class Resources {
 	private:
 		static std::unordered_map<std::string, std::unique_ptr<Shader>> shaders_;
@@ -18,6 +23,8 @@ namespace Blackjack::Core {
 		static Shader* GetShader(const std::string& name);
 
 		static Material* CreateMaterial(const std::string& name, Shader* shader);
+		static Material* CreateMaterial(Shader* shader);
+		static void UpdateMaterial(const std::string& name, const std::string& new_name);
 		static Material* GetMaterial(const std::string& name);
 
 		static Texture* CreateTexture(const std::string& name, const std::string& filepath);

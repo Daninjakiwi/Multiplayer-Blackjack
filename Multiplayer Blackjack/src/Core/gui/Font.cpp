@@ -1,53 +1,26 @@
 #include <fstream>
+#include <sstream>
 #include "Core/Log.hpp"
-#include "Core/Resources.hpp"
-#include "Font.h"
+#include "Font.hpp"
 
 namespace Blackjack::Core {
+	std::unordered_map<std::string, std::unique_ptr<FontData>> Font::fonts_;
 
-	Font::Font(const std::string& filepath) : m_glyph(nullptr), m_name(filepath) {
-		load(filepath);
-	}
-
-	Character& Font::getCharacter(char c) {
-		return m_data[c];
-	}
-
-	Texture* Font::texture() {
-		return m_glyph;
-	}
-
-	std::string& Font::getName() {
-		return m_name;
-	}
-
-	float Font::getWidth() {
-		return m_width;
-	}
-
-	float Font::getHeight() {
-		return m_height;
-	}
-
-	float Font::getSize() {
-		return m_size;
-	}
-
-	void Font::load(const std::string& filepath) {
-		std::ifstream file(filepath);
+	FontData::FontData(const std::string& font_name) : texture(nullptr), base_size(0), name(font_name) {
+		std::ifstream file(FONT_PATH + font_name + ".fnt");
 		if (file.is_open()) {
 			std::string line;
 
 			getline(file, line);
 			getline(file, line);
 
-			m_size = std::stoi(line.substr(27, 4));
-			m_width = std::stoi(line.substr(38, 4));
-			m_height = std::stoi(line.substr(50, 4));
+			base_size = std::stoi(line.substr(27, 4));
 
 			getline(file, line);
 
-			m_glyph = Resources::CreateTexture(filepath, "res/"+line.substr(16, line.length() - 17));
+			std::string t = FONT_PATH + line.substr(16, line.length() - 17);
+
+			texture = Resources::CreateTexture(font_name, t);
 
 			getline(file, line);
 			int num_characters = std::stoi(line.substr(12, 2));
@@ -56,8 +29,10 @@ namespace Blackjack::Core {
 				getline(file, line);
 				Character c;
 
-				c.x = std::stoi(line.substr(18, 4));
-				c.y = std::stoi(line.substr(25, 4));
+				c.x = (float)(std::stoi(line.substr(18, 4))) / texture->getWidth();
+				c.y =  1.0f - ((float)(std::stoi(line.substr(25, 4))) / texture->getHeight());
+				c.wratio = (float)(std::stoi(line.substr(36, 4))) / texture->getWidth();
+				c.hratio = (float)(std::stoi(line.substr(48, 4))) / texture->getHeight();
 				c.width = std::stoi(line.substr(36, 4));
 				c.height = std::stoi(line.substr(48, 4));
 				c.xoffset = std::stoi(line.substr(61, 4));
@@ -66,10 +41,75 @@ namespace Blackjack::Core {
 
 				int code = std::stoi(line.substr(8, 4));
 
-				m_data[(char)code] = c;
+				characters[(char)code] = c;
 			}
 
 			file.close();
 		}
+	}
+
+
+	void Font::Load(const std::string& font_name) {
+		FontData f2(font_name);
+
+		if (f2.texture != nullptr) {
+			fonts_[font_name] = std::make_unique<FontData>(f2);
+		}
+
+	}
+
+	Font Font::Get(const std::string& font_name, const int size) {
+		FontData* f = fonts_[font_name].get();
+		if (f == nullptr) {
+			f = fonts_["Monospaced"].get();
+		}
+		Colour c;
+		return { f,size,c };
+	}
+
+	Font Font::Get(const std::string& font_name, const int size, const Colour colour) {
+		FontData* f = fonts_[font_name].get();
+		if (f == nullptr) {
+			f = fonts_["Monospaced"].get();
+		}
+		return { f,size,colour };
+	}
+
+	std::string operator+(const std::string& str, int i) {
+		std::stringstream ss;
+		ss << i;
+		return str + ss.str();
+	}
+
+	Font::Font(FontData* font, int size, const Colour colour) : font_(font), size_(size), material_(nullptr) {
+		std::string name = font->name + "_" + size + "_" + colour;
+		material_ = Resources::CreateMaterial(name, Resources::GetShader("text"));
+		material_->setUniform("u_texture", UniformType::TEXTURE2D, font->texture);
+		material_->setUniform3f("u_colour", colour.r, colour.g, colour.b);
+	}
+
+	Material* Font::GetMaterial() const {
+		return material_;
+	}
+
+	const float Font::GetScale() const {
+		return (float)size_ / font_->base_size;
+	}
+
+	FontData* Font::GetBaseFont() const {
+		return font_;
+	}
+
+	const int Font::GetSize() const {
+		return size_;
+	}
+
+	Character operator*(const float scale, Character& character) {
+		character.xoffset *= scale;
+		character.yoffset *= scale;
+		character.width *= scale;
+		character.height *= scale;
+		character.advance *= scale;
+		return character;
 	}
 }

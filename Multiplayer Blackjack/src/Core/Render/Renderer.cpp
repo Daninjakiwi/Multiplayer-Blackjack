@@ -36,14 +36,14 @@ namespace Blackjack::Core {
 
 	void Renderer3D::draw(RenderObject& object) {
 		Mesh* mesh = object.getMesh();
-		m_index.reserve(m_index.size() + mesh->getIndicesCount());
-		for (int i = 0; i < mesh->getIndicesCount(); i++) {
-			m_index.push_back(mesh->getIndicesData()[i] + (m_vert.size() / 8));
+		m_index.reserve(m_index.size() + mesh->GetIndicesCount());
+		for (int i = 0; i < mesh->GetIndicesCount(); i++) {
+			m_index.push_back(mesh->GetIndexAt(i) + (m_vert.size() / 8));
 		}
 
-		m_vert.reserve(m_vert.size() + mesh->getVertexCount());
-		for (int i = 0; i < mesh->getVertexCount(); i++) {
-			m_vert.push_back(mesh->getVertexData()[i]);
+		m_vert.reserve(m_vert.size() + mesh->GetVertexCount());
+		for (int i = 0; i < mesh->GetVertexCount(); i++) {
+			m_vert.push_back(mesh->GetVertexAt(i));
 		}
 
 		m_obj.push_back(&object);
@@ -73,8 +73,8 @@ namespace Blackjack::Core {
 
 				r->m_material->bind();
 
-				glDrawElements(GL_TRIANGLES, r->m_mesh->getIndicesCount(), GL_UNSIGNED_INT, start);
-				start += r->m_mesh->getIndicesCount();
+				glDrawElements(GL_TRIANGLES, r->m_mesh->GetIndicesCount(), GL_UNSIGNED_INT, start);
+				start += r->m_mesh->GetIndicesCount();
 			}
 			m_obj.clear();
 			m_vert.clear();
@@ -116,48 +116,44 @@ namespace Blackjack::Core {
 		glVertexAttribPointer(1, 2, GL_FLOAT, false, 4 * sizeof(float), (const void*)8);
 	}
 
-	void RendererUI::draw(GuiElement& object) {
-		std::vector<GuiElement*> elements = object.getElements();
 
-		for (GuiElement* element : elements) {
-			m_index.reserve(m_index.size() + element->getIndicesCount());
-			for (int i = 0; i < element->getIndicesCount(); i++) {
-				m_index.push_back(element->getIndicesData()[i] + (m_vert.size() / 4));
-			}
-
-			m_vert.reserve(m_vert.size() + element->getVertexCount());
-			for (int i = 0; i < element->getVertexCount(); i++) {
-				m_vert.push_back(element->getVertexData()[i]);
-			}
-
-			m_ui.push_back(element);
-
+	void RendererUI::push(GuiElement* element) {
+		m_index.reserve(m_index.size() + element->GetIndicesCount());
+		for (int i = 0; i < element->GetIndicesCount(); i++) {
+			m_index.push_back(element->GetIndexAt(i) + (m_vert.size() / 4));
 		}
+
+		m_vert.reserve(m_vert.size() + element->GetVertexCount());
+		for (int i = 0; i < element->GetVertexCount(); i++) {
+			m_vert.push_back(element->GetVertexAt(i));
+		}
+
+		m_elements.push_back(element);
 	}
 
-	void RendererUI::flush() {
-		if (m_ui.size() > 0) {
+	void RendererUI::render() {
+		if (m_elements.size() > 0) {
 			bind();
 
 			glBufferData(GL_ARRAY_BUFFER, m_vert.size() * sizeof(float), &m_vert[0], GL_STATIC_DRAW);
 			glBufferData(GL_ELEMENT_ARRAY_BUFFER, m_index.size() * sizeof(unsigned int), &m_index[0], GL_STATIC_DRAW);
-
 			unsigned int* start = nullptr;
+			for (auto element : m_elements) {
+				element->material_->shader()->bind();
+				element->material_->setUniform("u_camera", UniformType::MAT4, &m_camera[0][0]);
+				element->material_->bind();
 
-			for (GuiElement* r : m_ui) {
-
-				r->material()->shader()->bind();
-
-				r->material()->setUniform("u_camera", UniformType::MAT4, &m_camera[0][0]);
-				r->material()->bind();
-
-				glDrawElements(GL_TRIANGLES, r->getIndicesCount(), GL_UNSIGNED_INT, start);
-				start += r->getIndicesCount();
+				glDrawElements(GL_TRIANGLES, element->GetIndicesCount(), GL_UNSIGNED_INT, start);
+				start += element->GetIndicesCount();
 			}
 
-			m_ui.clear();
 			m_vert.clear();
 			m_index.clear();
+			m_elements.clear();
 		}
+	}
+
+	void RendererUI::flush() {
+
 	}
 }

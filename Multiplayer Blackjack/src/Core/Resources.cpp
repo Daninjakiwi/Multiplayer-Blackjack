@@ -1,12 +1,14 @@
 #include <fstream>
 #include <sstream>
+#include <random>
 #include "glad/glad.h"
 #include "Resources.hpp"
+#include "Log.hpp"
 
 namespace Blackjack::Core {
-	std::unordered_map<std::string, std::unique_ptr<Shader>> Resources::shaders_;
-	std::unordered_map<std::string, std::unique_ptr<Material>> Resources::materials_;
-	std::unordered_map<std::string, std::unique_ptr<Texture>> Resources::textures_;
+	std::unordered_map<std::string, std::unique_ptr<Shader> > Resources::shaders_;
+	std::unordered_map<std::string, std::unique_ptr<Material> > Resources::materials_;
+	std::unordered_map<std::string, std::unique_ptr<Texture> > Resources::textures_;
 
 	Shader* Resources::CreateShader(const std::string& name, const std::string& filepath) {
 		Shader* s = shaders_[name].get();
@@ -26,6 +28,10 @@ namespace Blackjack::Core {
 	}
 
 	Shader* Resources::GetShader(const std::string& name) {
+		Shader* s = shaders_[name].get();
+		if (s == nullptr) {
+			CORE_LOG(name + " is null");
+		}
 		return shaders_[name].get();
 	}
 
@@ -33,12 +39,31 @@ namespace Blackjack::Core {
 		Material* m = materials_[name].get();
 		if (m == nullptr) {
 			materials_[name] = std::make_unique<Material>(shader);
-
+			CORE_LOG("Created:" + name);
 			return materials_[name].get();
 		}
 		else {
+			CORE_LOG("Found:" + name);
 			return m;
 		}
+	}
+
+	void Resources::UpdateMaterial(const std::string& name, const std::string& new_name) {
+		auto m = materials_.extract(name);
+		m.key() = new_name;
+		materials_.insert(move(m));
+	}
+
+	Material* Resources::CreateMaterial(Shader* shader) {
+		std::string str("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz");
+
+		std::random_device rd;
+		std::mt19937 generator(rd());
+
+		std::shuffle(str.begin(), str.end(), generator);
+
+		materials_[str.substr(0, 20)] = std::make_unique<Material>(shader);
+		return materials_[str.substr(0, 20)].get();
 	}
 
 	Material* Resources::GetMaterial(const std::string& name) {
@@ -54,7 +79,6 @@ namespace Blackjack::Core {
 	Texture* Resources::GetTexture(const std::string& name) {
 		return textures_[name].get();
 	}
-
 	std::string Resources::LoadFile(const char* filepath) {
 		std::ifstream stream(filepath);
 		std::stringstream ss;

@@ -1,7 +1,7 @@
 #include "SceneGame.h"
 
 namespace Blackjack {
-	SceneGame::SceneGame() : Scene(), renderer(), light(), camera(45.0f, 16.0f/9.0f), table(), card(), table_mesh(1,180), card_mesh(0){
+	SceneGame::SceneGame() : Scene(), renderer(), light(), camera(45.0f, 16.0f/9.0f), table(), card(), card_mesh(0) {//table_mesh(1,180)
 		renderer.setCamera(camera);
 		renderer.setLight(light);
 
@@ -29,7 +29,7 @@ namespace Blackjack {
 		table_material->setUniform("u_material.diffuse", Core::UniformType::TEXTURE2D, Core::Resources::CreateTexture("felt", "res/table.png"));
 		table_material->setUniform1f("u_material.shininess", 64.0f);
 
-		table.setMesh(&table_mesh);
+		table.setMesh(&card_mesh);
 		table.setMaterial(table_material);
 
 		table.getTransform().SetPosition(2, 0, 0);

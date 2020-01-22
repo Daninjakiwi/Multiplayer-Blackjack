@@ -2,19 +2,27 @@
 
 namespace Blackjack::Core {
 	class Mesh {
+		friend class RendererUI;
+		friend class GuiElement;
 	protected:
-		float* m_vertices;
-		unsigned int* m_indices;
-		unsigned int m_vertex_count;
-		unsigned int m_indices_count;
+		float* vertices_;
+		unsigned int* indices_;
+		int vertex_count_;
+		int indices_count_;
 	public:
-		Mesh(unsigned int vertex_count, unsigned int indices_count);
+		Mesh(int vertex_count, int indices_count);
 		virtual ~Mesh();
 
-		unsigned int getVertexCount() const;
-		unsigned int getIndicesCount() const;
+		int GetVertexCount() const;
+		int GetIndicesCount() const;
 
-		const float* getVertexData() const;
-		const unsigned int* getIndicesData() const;
+		const float& GetVertexAt(int index) const;
+		const unsigned int& GetIndexAt(int index) const;
+		
+		float* GetVertices();
+		unsigned int* GetIndices();
+
+		void ResizeVertices(int new_size);
+		void ResizeIndices(int new_size);
 	};
 }

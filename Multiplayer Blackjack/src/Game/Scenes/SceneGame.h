@@ -15,7 +15,7 @@ namespace Blackjack {
 		Core::RenderObject card;
 
 
-		Core::CircleSegment table_mesh;
+		//Core::CircleSegment table_mesh;
 		Card card_mesh;
 	public:
 		SceneGame();

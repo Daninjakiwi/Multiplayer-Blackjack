@@ -1,8 +1,10 @@
 #include "Core/Window.hpp"
 #include "Core/Network/Network.h"
 #include "Scenes/TestScene.h"
-#include "Scenes/SceneLogin.h"
 #include "Scenes/SceneGame.h"
+#include "Core/gui/Label.hpp"
+#include "Core/gui/InputBox.hpp"
+#include "Core/gui/Colour.hpp"
 
 float deltaTime = 0.0f;
 float lastFrame = 0.0f;
@@ -15,9 +17,15 @@ void updateDelta() {
 	lastFrame = currentFrame;
 }
 
+void btnClick() {
+	CORE_LOG("Clicked");
+}
+
 int main() {
 	int width = 1280;
 	int height = 720;
+
+	bool flag = false;
 
 	curl = init();
 
@@ -27,30 +35,36 @@ int main() {
 	Blackjack::Core::Input::AttachWindow(&window);
 
 	Blackjack::TestScene test;
-	Blackjack::SceneLogin login;
 	Blackjack::SceneGame game;
+
+	Blackjack::Core::Resources::CreateShader("text", "res/text");
+	Blackjack::Core::Resources::CreateShader("gui", "res/ui");
+
+	Blackjack::Core::Font::Load("Monospaced");
+	Blackjack::Core::Font font = Blackjack::Core::Font::Get("Monospaced", 40, { 0,0,0 });
+
+	Blackjack::Core::InputBox box = Blackjack::Core::InputBox(200, 300, 500, 200, &font, { 0,150,0 }, 10);
+
+	Blackjack::Core::Label label(0, 0, 200, 100, "Test", &font);
+
+	Blackjack::Core::Slider2 slider(100, 100, 200, 100);
+
+	Blackjack::Core::GuiElement element(100, 100, 100, 100);
+
+	Blackjack::Core::Button btn(100, 100, 300, 50, "Click me", &font);
+
+	Blackjack::Core::RendererUI ui(width,height);
+
+	btn.SetOnClick(btnClick);
 
 	while (!window.ShouldClose()) {
 		updateDelta();
 		window.Clear();
 
-		switch (Blackjack::Core::Scene::GetState()) {
-		case 0:
-			test.Update(deltaTime);
-			test.Draw();
-			break;
-		case 1:
-			login.Update(deltaTime);
-			login.Draw();
-			break;
-		case 2:
-			game.Update(deltaTime);
-			game.Draw();
-			break;
-		case -1:
-			window.ForceClose();
-			break;
-		}
+		box.Update();
+
+		box.Draw(ui);
+		ui.render();
 
 		window.Update();
 	}

@@ -5,13 +5,17 @@
 
 #include "Texture.h"
 #include <iostream>
+#include "Core/Log.hpp"
 
 namespace Blackjack::Core {
 
-	Texture::Texture(const std::string& filepath) : m_id(0) {
+	Texture::Texture(const std::string& filepath) : m_id(0), width_(0), height_(0) {
 		stbi_set_flip_vertically_on_load(true);
 		int width, height, bpp;
 		auto buffer = stbi_load(filepath.c_str(), &width, &height, &bpp, 4);
+
+		width_ = width;
+		height_ = height;
 
 		glGenTextures(1, &m_id);
 		glBindTexture(GL_TEXTURE_2D, m_id);
@@ -22,8 +26,6 @@ namespace Blackjack::Core {
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, buffer);
-		
-		//glGenerateMipmap(GL_TEXTURE_2D);
 
 		if (buffer) {
 			stbi_image_free(buffer);
@@ -42,5 +44,13 @@ namespace Blackjack::Core {
 
 	unsigned int* Texture::getId() {
 		return &m_id;
+	}
+
+	const int Texture::getWidth() const {
+		return width_;
+	}
+
+	const int Texture::getHeight() const {
+		return height_;
 	}
 }

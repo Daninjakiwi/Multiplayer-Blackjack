@@ -92,9 +92,9 @@
     <ClCompile Include="src\Core\gui\Colour.cpp" />
     <ClCompile Include="src\Core\gui\Font.cpp" />
     <ClCompile Include="src\Core\gui\GuiElement.cpp" />
+    <ClCompile Include="src\Core\gui\InputBox.cpp" />
+    <ClCompile Include="src\Core\gui\Label.cpp" />
     <ClCompile Include="src\Core\gui\Slider.cpp" />
-    <ClCompile Include="src\Core\gui\Text.cpp" />
-    <ClCompile Include="src\Core\gui\TextField.cpp" />
     <ClCompile Include="src\Core\Input.cpp" />
     <ClCompile Include="src\Core\Network\Network.cpp" />
     <ClCompile Include="src\Core\Render\Light.cpp" />
@@ -118,7 +118,6 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="src\Game\Scenes\SceneGame.cpp" />
-    <ClCompile Include="src\Game\Scenes\SceneLogin.cpp" />
     <ClCompile Include="src\Game\Scenes\TestScene.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -129,13 +128,13 @@
   <ItemGroup>
     <ClInclude Include="src\Core\Camera.hpp" />
     <ClInclude Include="src\Core\Core.hpp" />
-    <ClInclude Include="src\Core\gui\Button.h" />
-    <ClInclude Include="src\Core\gui\Colour.h" />
-    <ClInclude Include="src\Core\gui\Font.h" />
-    <ClInclude Include="src\Core\gui\GuiElement.h" />
-    <ClInclude Include="src\Core\gui\Slider.h" />
-    <ClInclude Include="src\Core\gui\Text.h" />
-    <ClInclude Include="src\Core\gui\TextField.h" />
+    <ClInclude Include="src\Core\gui\Button.hpp" />
+    <ClInclude Include="src\Core\gui\Colour.hpp" />
+    <ClInclude Include="src\Core\gui\Font.hpp" />
+    <ClInclude Include="src\Core\gui\GuiElement.hpp" />
+    <ClInclude Include="src\Core\gui\InputBox.hpp" />
+    <ClInclude Include="src\Core\gui\Label.hpp" />
+    <ClInclude Include="src\Core\gui\Slider.hpp" />
     <ClInclude Include="src\Core\Input.hpp" />
     <ClInclude Include="src\Core\Log.hpp" />
     <ClInclude Include="src\Core\Network\Network.h" />
@@ -155,7 +154,6 @@
     <ClInclude Include="src\Core\Window.hpp" />
     <ClInclude Include="src\Game\Card.h" />
     <ClInclude Include="src\Game\Scenes\SceneGame.h" />
-    <ClInclude Include="src\Game\Scenes\SceneLogin.h" />
     <ClInclude Include="src\Game\Scenes\TestScene.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

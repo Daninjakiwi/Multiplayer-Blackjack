@@ -1,40 +1,60 @@
 #include <iostream>
 #include "Core/Input.hpp"
-#include "Button.h"
+#include "Button.hpp"
 
 namespace Blackjack::Core {
-	Button::Button(float x, float y, float width, float height, Material* default_material, Material* hover_material, Material* click_material) 
-		: GuiElement(default_material, x,y,width,height), m_default(default_material), m_hover(hover_material), m_click(click_material), m_clicked(false), m_onClick(nullptr) {
+	Button::Button(float x, float y, float width, float height, const std::string& text, Font* font) : Label(x,y,width,height, text,font), default_(nullptr), hover_(nullptr), click_(nullptr), is_clicked_(false), on_click_(nullptr) {
+		SetMaterial({255,255,255});
+		SetHoverMaterial({ 200,200,200 });
+		SetClickMaterial({ 120,120,120 });
 	}
 
-	Button::Button(float x, float y, float width, float height, Colour default_material, Colour hover_material, Colour click_material) 
-		: GuiElement(default_material.material(), x, y, width, height), m_default(default_material.material()), m_hover(hover_material.material()), m_click(click_material.material()), m_clicked(false), m_onClick(nullptr) {
-	
-	}
-
-	void Button::setOnClickFunc(CallbackFunc onClick) {
-		m_onClick = onClick;
-	}
-
-	void Button::update() {
-		if (Input::GetMouseX() >= m_x && Input::GetMouseX() <= m_x + m_width && Input::GetMouseY() >= m_y && Input::GetMouseY() <= m_y + m_height) {
-			m_material = m_hover;
+	void Button::Update() {
+		if (MouseIntersect()) {
+			material_ = hover_;
 			if (Input::MouseDown(InputCode::MOUSE_LEFT)) {
-				m_material = m_click;
-				if (!m_clicked) {
-					if (m_onClick != nullptr) {
-						m_onClick();
+				material_ = click_;
+				if (!is_clicked_) {
+					if (on_click_ != nullptr) {
+						on_click_();
 					}
-					m_clicked = true;
+					is_clicked_ = true;
 				}
 			}
 			else {
-				m_clicked = false;
+				is_clicked_ = false;
 			}
-
 		}
 		else {
-			m_material = m_default;
+			material_ = default_;
 		}
+	}
+
+	void Button::SetMaterial(const Colour colour) {
+		default_ = Resources::CreateMaterial("gui_" + colour, Resources::GetShader("gui"));
+		default_->setUniform4f("u_colour", (float)colour.r / 255, (float)colour.g / 255, (float)colour.b / 255, (float)colour.a / 255);
+	}
+	void Button::SetMaterial(Material* material) {
+		default_ = material;
+	}
+	void Button::SetHoverMaterial(const Colour colour) {
+		hover_ = Resources::CreateMaterial("gui_" + colour, Resources::GetShader("gui"));
+		hover_->setUniform4f("u_colour", (float)colour.r / 255, (float)colour.g / 255, (float)colour.b / 255, (float)colour.a / 255);
+	}
+
+	void Button::SetHoverMaterial(Material* material) {
+		hover_ = material;
+	}
+
+	void Button::SetClickMaterial(const Colour colour) {
+		click_ = Resources::CreateMaterial("gui_" + colour, Resources::GetShader("gui"));
+		click_->setUniform4f("u_colour", (float)colour.r / 255, (float)colour.g / 255, (float)colour.b / 255, (float)colour.a / 255);
+	}
+
+	void Button::SetClickMaterial(Material* material) {
+		click_ = material;
+	}
+	void Button::SetOnClick(CallbackFunction function) {
+		on_click_ = function;
 	}
 }

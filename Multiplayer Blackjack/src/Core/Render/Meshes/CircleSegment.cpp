@@ -11,32 +11,32 @@ namespace Blackjack::Core {
 	}
 
 	void CircleSegment::setVertexPos(int vert_num, float x, float y, float z) {
-		m_vertices[8 * vert_num] = x;
-		m_vertices[(8 * vert_num) + 1] = y;
-		m_vertices[(8 * vert_num) + 2] = z;
+		vertices_[8 * vert_num] = x;
+		vertices_[(8 * vert_num) + 1] = y;
+		vertices_[(8 * vert_num) + 2] = z;
 	}
 	void CircleSegment::setVertexNormal(int vert_num, float nx, float ny, float nz) {
-		m_vertices[(8 * vert_num) + 3] = nx;
-		m_vertices[(8 * vert_num) + 4] = ny;
-		m_vertices[(8 * vert_num) + 5] = nz;
+		vertices_[(8 * vert_num) + 3] = nx;
+		vertices_[(8 * vert_num) + 4] = ny;
+		vertices_[(8 * vert_num) + 5] = nz;
 	}
 	void CircleSegment::setVertexUv(int vert_num, float uvx, float uvy) {
-		m_vertices[(8 * vert_num) + 6] = uvx;
-		m_vertices[(8 * vert_num) + 7] = uvy;
+		vertices_[(8 * vert_num) + 6] = uvx;
+		vertices_[(8 * vert_num) + 7] = uvy;
 	}
 
 	Vertex CircleSegment::getVertex(int vert_num) {
 		Vertex v;
-		v.x = m_vertices[8 * vert_num];
-		v.y = m_vertices[(8 * vert_num) + 1];
-		v.z = m_vertices[(8 * vert_num) + 2];
+		v.x = vertices_[8 * vert_num];
+		v.y = vertices_[(8 * vert_num) + 1];
+		v.z = vertices_[(8 * vert_num) + 2];
 
-		v.nx = m_vertices[(8 * vert_num) + 3];
-		v.ny = m_vertices[(8 * vert_num) + 4];
-		v.nz = m_vertices[(8 * vert_num) + 5];
+		v.nx = vertices_[(8 * vert_num) + 3];
+		v.ny = vertices_[(8 * vert_num) + 4];
+		v.nz = vertices_[(8 * vert_num) + 5];
 
-		v.uvx = m_vertices[(8 * vert_num) + 6];
-		v.uvy = m_vertices[(8 * vert_num) + 7];
+		v.uvx = vertices_[(8 * vert_num) + 6];
+		v.uvy = vertices_[(8 * vert_num) + 7];
 
 		return v;
 	}
@@ -52,35 +52,35 @@ namespace Blackjack::Core {
 
 		//Bottom plate
 
-		m_vertices[0] = 0;
-		m_vertices[1] = 0;
-		m_vertices[2] = 0;
-		m_vertices[3] = 0;
-		m_vertices[4] = -1;
-		m_vertices[5] = 0;
-		m_vertices[6] = 0.5f;
-		m_vertices[7] = 0.5f;
+		vertices_[0] = 0;
+		vertices_[1] = 0;
+		vertices_[2] = 0;
+		vertices_[3] = 0;
+		vertices_[4] = -1;
+		vertices_[5] = 0;
+		vertices_[6] = 0.5f;
+		vertices_[7] = 0.5f;
 
 		for (int i = 1; i < segments + 2; i++) {
-			m_vertices[8 * i] = -radius * cos(d * (i - 1));
-			m_vertices[(8 * i) + 1] = 0;
-			m_vertices[(8 * i) + 2] = -radius * sin(d * (i - 1));
-			m_vertices[(8 * i) + 3] = 0;
-			m_vertices[(8 * i) + 4] = -1;
-			m_vertices[(8 * i) + 5] = 0;
-			m_vertices[(8 * i) + 6] = mapx * (cos(d * (i - 1)) - 1);
-			m_vertices[(8 * i) + 7] = mapy * (sin(d * (i - 1)) + 1);
+			vertices_[8 * i] = -radius * cos(d * (i - 1));
+			vertices_[(8 * i) + 1] = 0;
+			vertices_[(8 * i) + 2] = -radius * sin(d * (i - 1));
+			vertices_[(8 * i) + 3] = 0;
+			vertices_[(8 * i) + 4] = -1;
+			vertices_[(8 * i) + 5] = 0;
+			vertices_[(8 * i) + 6] = mapx * (cos(d * (i - 1)) - 1);
+			vertices_[(8 * i) + 7] = mapy * (sin(d * (i - 1)) + 1);
 		}
 
 		for (int i = 0; i < segments * 3; i++) {
 			if (i % 3 == 0) {
-				m_indices[i] = 0;
+				indices_[i] = 0;
 			}
 			if (i % 3 == 1) {
-				m_indices[i] = ceil(((float)i) / 3);
+				indices_[i] = ceil(((float)i) / 3);
 			}
 			if (i % 3 == 2) {
-				m_indices[i] = 1 + ceil(((float)i) / 3);
+				indices_[i] = 1 + ceil(((float)i) / 3);
 			}
 		}
 
@@ -88,38 +88,38 @@ namespace Blackjack::Core {
 
 		int offset = (segments + 2) * 8;
 
-		m_vertices[offset] = 0;
-		m_vertices[offset+1] = 1;
-		m_vertices[offset+2] = 0;
-		m_vertices[offset+3] = 0;
-		m_vertices[offset+4] = 1;
-		m_vertices[offset+5] = 0;
-		m_vertices[offset+6] = 0.5f;
-		m_vertices[offset+7] = 0.4f;
+		vertices_[offset] = 0;
+		vertices_[offset+1] = 1;
+		vertices_[offset+2] = 0;
+		vertices_[offset+3] = 0;
+		vertices_[offset+4] = 1;
+		vertices_[offset+5] = 0;
+		vertices_[offset+6] = 0.5f;
+		vertices_[offset+7] = 0.4f;
 
 		for (int i = 1; i < segments + 2; i++) {
-			m_vertices[(8 * i) + offset] = -radius * cos(d * (i - 1));
-			m_vertices[(8 * i) + 1 + offset] = 1;
-			m_vertices[(8 * i) + 2 + offset] = -radius * sin(d * (i - 1));
-			m_vertices[(8 * i) + 3 + offset] = 0;
-			m_vertices[(8 * i) + 4 + offset] = 1;
-			m_vertices[(8 * i) + 5 + offset] = 0;
-			m_vertices[(8 * i) + 6 + offset] = mapx * (cos(d * (i - 1)) - 1);//abs(cos(d * (i - 1)));//abs((d * (i - 1)) / (d * segments / 2) - 1);
-			m_vertices[(8 * i) + 7 + offset] = mapy * (sin(d * (i - 1)) + 1);//(sin(d * (i - 1)) / 2) + 0.5f;
+			vertices_[(8 * i) + offset] = -radius * cos(d * (i - 1));
+			vertices_[(8 * i) + 1 + offset] = 1;
+			vertices_[(8 * i) + 2 + offset] = -radius * sin(d * (i - 1));
+			vertices_[(8 * i) + 3 + offset] = 0;
+			vertices_[(8 * i) + 4 + offset] = 1;
+			vertices_[(8 * i) + 5 + offset] = 0;
+			vertices_[(8 * i) + 6 + offset] = mapx * (cos(d * (i - 1)) - 1);//abs(cos(d * (i - 1)));//abs((d * (i - 1)) / (d * segments / 2) - 1);
+			vertices_[(8 * i) + 7 + offset] = mapy * (sin(d * (i - 1)) + 1);//(sin(d * (i - 1)) / 2) + 0.5f;
 		}
 
-		int num_vertices = segments + 2;
+		int nuvertices_ = segments + 2;
 		offset = segments * 3;
 
 		for (int i = 0; i < segments * 3; i++) {
 			if (i % 3 == 0) {
-				m_indices[offset+i] = num_vertices;
+				indices_[offset+i] = nuvertices_;
 			}
 			if (i % 3 == 1) {
-				m_indices[offset+i] = num_vertices + ceil(((float)i) / 3);
+				indices_[offset+i] = nuvertices_ + ceil(((float)i) / 3);
 			}
 			if (i % 3 == 2) {
-				m_indices[offset + i] = num_vertices + 1 + ceil(((float)i) / 3);
+				indices_[offset + i] = nuvertices_ + 1 + ceil(((float)i) / 3);
 			}
 		}
 
@@ -170,12 +170,12 @@ namespace Blackjack::Core {
 
 		for (int i = 0; i < segments + 2; i++) {
 			int pos = (6 * i) + offset;
-			m_indices[pos] = vert_start + (2*i);
-			m_indices[pos+1] = vert_start + (2*i) + 1;
-			m_indices[pos+2] = (2*vert_start) + (2*i);
-			m_indices[pos+3] = (2*vert_start) + (2*i);
-			m_indices[pos+4] = (2*vert_start) + (2*i) + 1;
-			m_indices[pos + 5] = vert_start + (2 * i) + 1;
+			indices_[pos] = vert_start + (2*i);
+			indices_[pos+1] = vert_start + (2*i) + 1;
+			indices_[pos+2] = (2*vert_start) + (2*i);
+			indices_[pos+3] = (2*vert_start) + (2*i);
+			indices_[pos+4] = (2*vert_start) + (2*i) + 1;
+			indices_[pos + 5] = vert_start + (2 * i) + 1;
 		}
 	}
 }

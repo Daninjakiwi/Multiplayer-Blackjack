@@ -1,5 +1,6 @@
 #include "Material.h"
 #include <iostream>
+#include "Core/Log.hpp"
 
 namespace Blackjack::Core {
 	Material::Material(Shader* s) : m_shader(s) {
@@ -13,6 +14,7 @@ namespace Blackjack::Core {
 
 	void Material::bind() const {
 		int tex_slot = 0;
+		m_shader->bind();
 
 		for (auto& it : m_uniform) {
 			Uniform* u = it.second.get();

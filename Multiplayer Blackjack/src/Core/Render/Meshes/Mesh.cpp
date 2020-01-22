@@ -4,29 +4,104 @@
 #include "Mesh.h"
 
 namespace Blackjack::Core {
-	Mesh::Mesh(unsigned int vertex_count, unsigned int indices_count) : m_vertices(nullptr), m_indices(nullptr), m_vertex_count(vertex_count), m_indices_count(indices_count){
-		m_vertices = (float*)malloc(vertex_count * sizeof(float));
-		m_indices = (unsigned int*)malloc(indices_count * sizeof(unsigned int));
+	Mesh::Mesh(int vertex_count, int indices_count) : vertices_(nullptr), indices_(nullptr), vertex_count_(vertex_count), indices_count_(indices_count){
+		vertices_ = (float*)malloc(vertex_count * sizeof(float));
+		indices_ = (unsigned int*)malloc(indices_count * sizeof(unsigned int));
 	}
 
 	Mesh::~Mesh() {
-		free(m_vertices);
-		free(m_indices);
+		if (vertex_count_ != 0) {
+			free(vertices_);
+		}
+		if (indices_count_ != 0) {
+			free(indices_);
+		}
+
 	}
 
-	unsigned int Mesh::getVertexCount() const {
-		return m_vertex_count;
+	float* Mesh::GetVertices() {
+		return vertices_;
 	}
 
-	unsigned int Mesh::getIndicesCount() const {
-		return m_indices_count;
+	unsigned int* Mesh::GetIndices() {
+		return indices_;
 	}
 
-	const float* Mesh::getVertexData() const {
-		return m_vertices;
+	int Mesh::GetVertexCount() const {
+		return vertex_count_;
 	}
 
-	const unsigned int* Mesh::getIndicesData() const {
-		return m_indices;
+	int Mesh::GetIndicesCount() const {
+		return indices_count_;
+	}
+
+
+	const float& Mesh::GetVertexAt(int index) const {
+		if (index < vertex_count_) {
+			return vertices_[index];
+		}
+		else {
+			CORE_LOG(INVALID_ARGUMENT_ERROR);
+		}
+	}
+
+	const unsigned int& Mesh::GetIndexAt(int index) const {
+		if (index < indices_count_) {
+			return indices_[index];
+		}
+		else {
+			CORE_LOG(INVALID_ARGUMENT_ERROR);
+		}
+	}
+
+	void Mesh::ResizeVertices(int new_size) {
+		if (new_size < 0) {
+			CORE_LOG(INVALID_ARGUMENT_ERROR);
+		}
+		else {
+			if (new_size == 0) {
+				free(vertices_);
+				vertex_count_ = 0;
+			}
+			else {
+				void* temp;
+				if (vertex_count_ == 0) {
+					temp = malloc(sizeof(float) * new_size);
+				}
+				else {
+					temp = realloc(vertices_, sizeof(float) * new_size);
+				}
+				if (temp != nullptr) {
+					vertices_ = (float*)temp;
+					vertex_count_ = new_size;
+				}
+			}
+
+		}
+	}
+
+	void Mesh::ResizeIndices(int new_size) {
+		if (new_size < 0) {
+			CORE_LOG(INVALID_ARGUMENT_ERROR);
+		}
+		else {
+			if (new_size == 0) {
+				free(indices_);
+				indices_count_ = 0;
+			}
+			else {
+				void* temp;
+				if (indices_count_ == 0) {
+					temp = malloc(sizeof(unsigned int) * new_size);
+				}
+				else {
+					temp = realloc(indices_, sizeof(unsigned int) * new_size);
+				}
+				if (temp != nullptr) {
+					indices_ = (unsigned int*)temp;
+					indices_count_ = new_size;
+				}
+			}
+		}
 	}
 }
