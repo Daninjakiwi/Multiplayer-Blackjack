@@ -1,6 +1,6 @@
 #include "Scene.hpp"
 
-namespace Blackjack::Core {
+namespace blackjack::core {
 	int Scene::state_ = 0;
 
 	Scene::Scene()  {

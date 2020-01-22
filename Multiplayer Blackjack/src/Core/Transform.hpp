@@ -2,7 +2,7 @@
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 
-namespace Blackjack::Core {
+namespace blackjack::core {
 	class Transform {
 	private:
 		glm::mat4 matrix_;

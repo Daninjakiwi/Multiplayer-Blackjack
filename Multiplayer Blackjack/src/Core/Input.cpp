@@ -1,11 +1,11 @@
 #include <iostream>
 #include "Input.hpp"
 
-namespace Blackjack::Core {
+namespace blackjack::core {
 	std::vector<InputCode> Input::mouse_buttons_;
 	std::unordered_map<InputCode, int> Input::keys_;
 	int Input::mouse_x_, Input::mouse_y_;
-	Input::CallbackFuncion Input::input_callback_ = nullptr;
+	Input::CallbackFunction Input::input_callback_ = nullptr;
 
 	void Input::AttachWindow(Window* window) {
 		glfwSetKeyCallback(window->window_, KeyEvent);
@@ -51,7 +51,7 @@ namespace Blackjack::Core {
 		return mouse_y_;
 	}
 
-	void Input::SetInputCallback(CallbackFuncion function) {
+	void Input::SetInputCallback(CallbackFunction function) {
 		input_callback_ = function;
 	}
 

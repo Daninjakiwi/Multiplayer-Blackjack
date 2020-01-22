@@ -1,15 +1,15 @@
 #pragma once
-#include "Meshes/Mesh.h"
-#include "Material.h"
 #include "Core/Transform.hpp"
+#include "Meshes/Mesh.hpp"
+#include "Material.hpp"
 
-namespace Blackjack::Core {
+namespace blackjack::core {
 	class RenderObject {
 		friend class Renderer3D;
 	private:
-		Mesh* m_mesh;
-		Material* m_material;
-		Transform m_transform;
+		Mesh* mesh_;
+		Material* material_;
+		Transform transform_;
 	public:
 		RenderObject();
 		RenderObject(Mesh* mesh);
@@ -17,11 +17,10 @@ namespace Blackjack::Core {
 		RenderObject(Mesh* mesh, Material* material);
 		~RenderObject() = default;
 
-		void setMesh(Mesh* mesh);
-		Mesh* getMesh() const;
+		Mesh* GetMesh() const;
+		Transform& GetTransform();
 
-		void setMaterial(Material* mat);
-
-		Transform& getTransform();
+		void SetMesh(Mesh* mesh);
+		void SetMaterial(Material* mat);
 	};
 }

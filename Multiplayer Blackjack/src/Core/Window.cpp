@@ -2,8 +2,9 @@
 #include "glad/glad.h"
 #include "Window.hpp"
 #include "Resources.hpp"
+#include "Log.hpp"
 
-namespace Blackjack::Core {
+namespace blackjack::core {
 
 	GLFWwindow* Window::primary_ = nullptr;
 	bool Window::glfw_setup_ = false;
@@ -20,7 +21,9 @@ namespace Blackjack::Core {
 				glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 				glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 				glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-
+			}
+			else {
+				COREFATAL("Failed to initialise glfw.");
 			}
 		}
 		if (glfw_setup_) {
@@ -55,6 +58,9 @@ namespace Blackjack::Core {
 				glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 				//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+			}
+			else {
+				COREFATAL("Failed to initialise glad.");
 			}
 		}
 	}

@@ -1,33 +1,34 @@
-#include "RenderObject.h"
+#include "RenderObject.hpp"
 
-namespace Blackjack::Core {
-	RenderObject::RenderObject() : m_mesh(nullptr), m_material(nullptr) {
-
-	}
-
-	RenderObject::RenderObject(Mesh* mesh) : m_mesh(mesh), m_material(nullptr) {
-
-	}
-	RenderObject::RenderObject(Material* material) : m_mesh(nullptr), m_material(material) {
-
-	}
-	RenderObject::RenderObject(Mesh* mesh, Material* material) :m_mesh(mesh), m_material(material){
+namespace blackjack::core {
+	RenderObject::RenderObject() : mesh_(nullptr), material_(nullptr) {
 
 	}
 
-	void RenderObject::setMesh(Mesh* mesh) {
-		m_mesh = mesh;
+	RenderObject::RenderObject(Mesh* mesh) : mesh_(mesh), material_(nullptr) {
+
 	}
 
-	Mesh* RenderObject::getMesh() const {
-		return m_mesh;
+	RenderObject::RenderObject(Material* material) : mesh_(nullptr), material_(material) {
+
+	}
+	RenderObject::RenderObject(Mesh* mesh, Material* material) :mesh_(mesh), material_(material){
+
 	}
 
-	void RenderObject::setMaterial(Material* mat) {
-		m_material = mat;
+	Mesh* RenderObject::GetMesh() const {
+		return mesh_;
 	}
 
-	Transform& RenderObject::getTransform() {
-		return m_transform;
+	Transform& RenderObject::GetTransform() {
+		return transform_;
+	}
+
+	void RenderObject::SetMesh(Mesh* mesh) {
+		mesh_ = mesh;
+	}
+
+	void RenderObject::SetMaterial(Material* mat) {
+		material_ = mat;
 	}
 }

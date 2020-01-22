@@ -1,6 +1,6 @@
-#include "Cube.h"
+#include "Cube.hpp"
 
-namespace Blackjack::Core {
+namespace blackjack::core {
 	Cube::Cube() : Mesh(192, 36) {
 		float vert[] = {
 			0,0,0,0,0,-1,0,0,

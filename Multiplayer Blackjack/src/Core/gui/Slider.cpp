@@ -3,7 +3,7 @@
 #include "Core/Input.hpp"
 #include "Slider.hpp"
 
-namespace Blackjack::Core {
+namespace blackjack::core {
 	Slider2::Slider2(float x, float y, float width, float height, float min, float max) : GuiElement(x, y, width, height), slider_(x, y, 0, height, { 60,60,60 }), min_(min), max_(max), current_(0.0f), is_changing_(false) {
 
 	}
@@ -30,7 +30,7 @@ namespace Blackjack::Core {
 
 	void Slider2::Draw(RendererUI& renderer) {
 		slider_.Draw(renderer);
-		renderer.push(this);
+		renderer.Push(this);
 	}
 
 

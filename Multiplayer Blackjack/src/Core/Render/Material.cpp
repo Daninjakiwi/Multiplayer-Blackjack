@@ -1,47 +1,41 @@
-#include "Material.h"
+#include "Material.hpp"
 #include <iostream>
 #include "Core/Log.hpp"
 
-namespace Blackjack::Core {
-	Material::Material(Shader* s) : m_shader(s) {
+namespace blackjack::core {
+	Material::Material(Shader* s) : shader_(s) {
 	}
 
-	Material::~Material() {
-		for (Uniform* u : m_uniforms) {
-			delete u;
-		}
-	}
-
-	void Material::bind() const {
+	void Material::Bind() const {
 		int tex_slot = 0;
-		m_shader->bind();
+		shader_->Bind();
 
-		for (auto& it : m_uniform) {
+		for (auto& it : uniform_) {
 			Uniform* u = it.second.get();
-			switch (u->m_type) {
+			switch (u->type_) {
 				case UniformType::FLOAT:
-					m_shader->setFloat(u->getLocation(), (float*)u->m_buffer);
+					shader_->SetFloat(u->GetLocation(), (float*)u->buffer_);
 					break;
 				case UniformType::FVEC2:
-					m_shader->setFVec2(u->getLocation(), (float*)u->m_buffer);
+					shader_->SetFVec2(u->GetLocation(), (float*)u->buffer_);
 					break;
 				case UniformType::FVEC3:
-					m_shader->setFVec3(u->getLocation(), (float*)u->m_buffer);
+					shader_->SetFVec3(u->GetLocation(), (float*)u->buffer_);
 					break;
 				case UniformType::FVEC4:
-					m_shader->setFVec4(u->getLocation(), (float*)u->m_buffer);
+					shader_->SetFVec4(u->GetLocation(), (float*)u->buffer_);
 					break;
 				case UniformType::MAT4:
-					m_shader->setMat4(u->getLocation(), (float*)u->m_buffer);
+					shader_->SetMat4(u->GetLocation(), (float*)u->buffer_);
 					break;
 				case UniformType::BOOL:
-					m_shader->setInt(u->getLocation(), (int*)u->m_buffer);
+					shader_->SetInt(u->GetLocation(), (int*)u->buffer_);
 					break;
 				case UniformType::TEXTURE2D:
-					Texture* tex = (Texture*)u->m_buffer;
+					Texture* tex = (Texture*)u->buffer_;
 
-					tex->bind(tex_slot);
-					m_shader->setInt(u->getLocation(), tex_slot);
+					tex->Bind(tex_slot);
+					shader_->SetInt(u->GetLocation(), tex_slot);
 
 					tex_slot += 1;
 					break;
@@ -49,62 +43,61 @@ namespace Blackjack::Core {
 		}
 	}
 
-	void Material::setUniform3f(const std::string& name, const float f0, const float f1, const float f2) {
+	void Material::SetUniform3f(const std::string& name, const float f0, const float f1, const float f2) {
 		float data[] = { f0,f1,f2 };
-		setUniform(name, UniformType::FVEC3, &data);
+		SetUniform(name, UniformType::FVEC3, &data);
 	}
 
-	void Material::setUniform3f(const std::string& name, glm::vec3& vec) {
-		float data[] = { vec.x, vec.y, vec.z };
-		setUniform(name, UniformType::FVEC3, &data);
+	void Material::SetUniform3f(const std::string& name, const glm::vec3& vec) {
+		SetUniform(name, UniformType::FVEC3, &vec.x);
 	}
 
-	void Material::setUniform1f(const std::string& name, const float f0) {
-		setUniform(name, UniformType::FLOAT, &f0);
+	void Material::SetUniform1f(const std::string& name, const float f0) {
+		SetUniform(name, UniformType::FLOAT, &f0);
 	}
 
-	void Material::setUniform4f(const std::string& name, const float f0, const float f1, const float f2, const float f3) {
+	void Material::SetUniform4f(const std::string& name, const float f0, const float f1, const float f2, const float f3) {
 		float data[] = { f0,f1,f2,f3};
-		setUniform(name, UniformType::FVEC4, &data);
+		SetUniform(name, UniformType::FVEC4, &data);
 	}
 
-	void Material::setUniform(const std::string& name, UniformType type, const void* data) {
-		Uniform* uniform = m_uniform[name].get();
+	void Material::SetUniform(const std::string& name, UniformType type, const void* data) {
+		Uniform* uniform = uniform_[name].get();
 
 		if (uniform == nullptr) {			
-			int loc = m_shader->getLocation(name);
+			int loc = shader_->GetLocation(name);
 			if (loc == -1) {
 				return;
 			}
 
-			m_uniform[name] = std::make_unique<Uniform>(type, loc, data);
+			uniform_[name] = std::make_unique<Uniform>(type, loc, data);
 		}
 		else {
-			uniform->setData(data);
+			uniform->SetData(data);
 		}
 	}
 
 
-	void Uniform::setData(const void* data) {
-		if (m_buffer) {
-			memcpy(m_buffer, data, getSizeOf(m_type));
+	void Uniform::SetData(const void* data) {
+		if (buffer_) {
+			memcpy(buffer_, data, GetSizeOf(type_));
 		}
 	}
 
-	Uniform::Uniform(UniformType type, int location, const void* data) : m_type(type), m_location(location), m_buffer(nullptr) {
-		m_buffer = malloc(getSizeOf(type));
-		if (m_buffer) {
-			memcpy(m_buffer, data, getSizeOf(m_type));
+	Uniform::Uniform(UniformType type, int location, const void* data) : type_(type), location_(location), buffer_(nullptr) {
+		buffer_ = malloc(GetSizeOf(type));
+		if (buffer_) {
+			memcpy(buffer_, data, GetSizeOf(type_));
 		}
 	}
 
 	Uniform::~Uniform() {
-		if (m_buffer != nullptr) {
-			free(m_buffer);
+		if (buffer_ != nullptr) {
+			free(buffer_);
 		}
 	}
 
-	unsigned int Uniform::getSizeOf(UniformType type) {
+	unsigned int Uniform::GetSizeOf(UniformType type) {
 		switch (type) {
 		case UniformType::FLOAT:
 			return sizeof(float);

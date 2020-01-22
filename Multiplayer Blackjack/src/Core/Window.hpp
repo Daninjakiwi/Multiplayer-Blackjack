@@ -2,7 +2,7 @@
 #include <string>
 #include "GLFW/glfw3.h"
 
-namespace Blackjack::Core {
+namespace blackjack::core {
 
 	class Window {
 		friend class Input;

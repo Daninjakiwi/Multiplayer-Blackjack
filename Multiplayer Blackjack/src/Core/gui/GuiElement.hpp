@@ -1,11 +1,11 @@
 #pragma once
-#include "Core/Render/Meshes/Mesh.h"
-#include "Core/Render/Material.h"
+#include "Core/Render/Meshes/Mesh.hpp"
+#include "Core/Render/Material.hpp"
 #include "Colour.hpp"
 #include <vector>
-#include "Core/Render/Renderer.h"
+#include "Core/Render/Renderer.hpp"
 
-namespace Blackjack::Core {
+namespace blackjack::core {
 	class GuiElement : public Mesh {
 	protected:
 		float x_, y_, width_, height_;

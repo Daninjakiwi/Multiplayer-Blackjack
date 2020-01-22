@@ -4,7 +4,7 @@
 #include "Colour.hpp"
 #include "Label.hpp"
 
-namespace Blackjack::Core {
+namespace blackjack::core {
 	class Button : public Label {
 	public:
 		typedef void(*CallbackFunction)();

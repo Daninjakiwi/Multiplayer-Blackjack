@@ -3,10 +3,10 @@
 #include "Core/Input.hpp"
 
 
-namespace Blackjack::Core {
+namespace blackjack::core {
 	GuiElement::GuiElement(const float x, const float y, const float width, const float height, const Colour colour) : Mesh(16, 6), x_(x), y_(y), width_(width), height_(height), material_(nullptr) {
 		material_ = Resources::CreateMaterial("gui_" + colour, Resources::GetShader("gui"));
-		material_->setUniform4f("u_colour", (float)colour.r / 255, (float)colour.g / 255, (float)colour.b / 255, (float)colour.a/255);
+		material_->SetUniform4f("u_colour", (float)colour.r / 255, (float)colour.g / 255, (float)colour.b / 255, (float)colour.a/255);
 		Initialise();
 	}
 	GuiElement::GuiElement(const float x, const float y, const float width, const float height, Material* material) : Mesh(16, 6), x_(x), y_(y), width_(width), height_(height), material_(material) {
@@ -73,7 +73,7 @@ namespace Blackjack::Core {
 
 	void GuiElement::SetMaterial(const Colour colour) {
 		material_ = Resources::CreateMaterial("gui_" + colour, Resources::GetShader("gui"));
-		material_->setUniform4f("u_colour", (float)colour.r/255, (float)colour.g/255, (float)colour.b/255, (float)colour.a/255);
+		material_->SetUniform4f("u_colour", (float)colour.r/255, (float)colour.g/255, (float)colour.b/255, (float)colour.a/255);
 	}
 	void GuiElement::SetMaterial(Material* material) {
 		material_ = material;
@@ -81,7 +81,7 @@ namespace Blackjack::Core {
 	void GuiElement::Update() {}
 
 	void GuiElement::Draw(RendererUI& renderer) {
-		renderer.push(this);
+		renderer.Push(this);
 	}
 
 	bool GuiElement::MouseIntersect() {

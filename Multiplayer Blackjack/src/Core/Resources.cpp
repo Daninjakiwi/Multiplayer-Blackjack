@@ -5,7 +5,7 @@
 #include "Resources.hpp"
 #include "Log.hpp"
 
-namespace Blackjack::Core {
+namespace blackjack::core {
 	std::unordered_map<std::string, std::unique_ptr<Shader> > Resources::shaders_;
 	std::unordered_map<std::string, std::unique_ptr<Material> > Resources::materials_;
 	std::unordered_map<std::string, std::unique_ptr<Texture> > Resources::textures_;
@@ -16,13 +16,16 @@ namespace Blackjack::Core {
 
 			shaders_[name] = std::make_unique<Shader>(filepath);
 
-			if (shaders_[name].get()->m_id == 0) {
+			if (shaders_[name].get()->id_ == 0) {
 				shaders_.erase(name);
+				COREERROR("Shader '" + name + "' failed to load.");
 				return nullptr;
 			}
+			COREINFO("Shader '" + name + "' created.");
 			return shaders_[name].get();
 		}
 		else {
+			COREWARN("Shader '" + name + "' already exists.");
 			return s;
 		}
 	}
@@ -30,7 +33,7 @@ namespace Blackjack::Core {
 	Shader* Resources::GetShader(const std::string& name) {
 		Shader* s = shaders_[name].get();
 		if (s == nullptr) {
-			CORE_LOG(name + " is null");
+			COREERROR("Shader '" + name + "' does not exist.");
 		}
 		return shaders_[name].get();
 	}
@@ -39,31 +42,13 @@ namespace Blackjack::Core {
 		Material* m = materials_[name].get();
 		if (m == nullptr) {
 			materials_[name] = std::make_unique<Material>(shader);
-			CORE_LOG("Created:" + name);
+			COREINFO("Created Material '" + name + "'.");
 			return materials_[name].get();
 		}
 		else {
-			CORE_LOG("Found:" + name);
+			COREWARN("Material '" + name + "' already exists.");
 			return m;
 		}
-	}
-
-	void Resources::UpdateMaterial(const std::string& name, const std::string& new_name) {
-		auto m = materials_.extract(name);
-		m.key() = new_name;
-		materials_.insert(move(m));
-	}
-
-	Material* Resources::CreateMaterial(Shader* shader) {
-		std::string str("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz");
-
-		std::random_device rd;
-		std::mt19937 generator(rd());
-
-		std::shuffle(str.begin(), str.end(), generator);
-
-		materials_[str.substr(0, 20)] = std::make_unique<Material>(shader);
-		return materials_[str.substr(0, 20)].get();
 	}
 
 	Material* Resources::GetMaterial(const std::string& name) {
@@ -72,6 +57,8 @@ namespace Blackjack::Core {
 
 	Texture* Resources::CreateTexture(const std::string& name, const std::string& filepath) {
 		textures_[name] = std::make_unique<Texture>(filepath);
+
+		COREINFO("Texture '" + name + "' created.");
 
 		return textures_[name].get();
 	}

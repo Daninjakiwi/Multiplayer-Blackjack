@@ -1,24 +1,24 @@
-#include "Light.h"
+#include "Light.hpp"
 
-namespace Blackjack::Core {
-	Light::Light() : m_ambient(1.0f), m_diffuse(1.0f), m_specular(1.0f), m_position(0.0f) {
+namespace blackjack::core {
+	Light::Light() : ambient_(1.0f), diffuse_(1.0f), specular_(1.0f), position_(0.0f) {
 
-	}
-
-	void Light::setAmbient(float f0, float f1, float f2) {
-		m_ambient = glm::vec3(f0, f1, f2);
-	}
-	void Light::setDiffuse(float f0, float f1, float f2) {
-		m_diffuse = glm::vec3(f0, f1, f2);
-	}
-	void Light::setSpecular(float f0, float f1, float f2) {
-		m_specular = glm::vec3(f0, f1, f2);
-	}
-	void Light::setPosition(float f0, float f1, float f2) {
-		m_position = glm::vec3(f0, f1, f2);
 	}
 
-	void Light::setPosition(glm::vec3& position) {
-		m_position = position;
+	void Light::SetAmbient(const float f0, const float f1, const float f2) {
+		ambient_ = glm::vec3(f0, f1, f2);
+	}
+	void Light::SetDiffuse(const float f0, const float f1, const float f2) {
+		diffuse_ = glm::vec3(f0, f1, f2);
+	}
+	void Light::SetSpecular(const float f0, const float f1, const float f2) {
+		specular_ = glm::vec3(f0, f1, f2);
+	}
+	void Light::SetPosition(const float f0, const float f1, const float f2) {
+		position_ = glm::vec3(f0, f1, f2);
+	}
+
+	void Light::SetPosition(const glm::vec3& position) {
+		position_ = position;
 	}
 }

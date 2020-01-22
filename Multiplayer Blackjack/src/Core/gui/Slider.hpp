@@ -1,7 +1,7 @@
 #pragma once
 #include "GuiElement.hpp"
 
-namespace Blackjack::Core {
+namespace blackjack::core {
 	class Slider2 : public GuiElement {
 	private:
 		GuiElement slider_;

@@ -4,7 +4,7 @@
 #include "GLFW/glfw3.h"
 #include "Window.hpp"
 
-namespace Blackjack::Core {
+namespace blackjack::core {
 	enum class InputCode {
 		A = 65, B = 66, C = 67, D = 68, E = 69,
 		F = 70, G = 71, H = 72, I = 73, J = 74,
@@ -17,12 +17,12 @@ namespace Blackjack::Core {
 
 	class Input {
 	public:
-		typedef void (*CallbackFuncion)(unsigned int code);
+		typedef void (*CallbackFunction)(unsigned int code);
 	private:
 		static std::unordered_map<InputCode, int> keys_;
 		static std::vector<InputCode> mouse_buttons_;
 		static int mouse_x_, mouse_y_;
-		static CallbackFuncion input_callback_;
+		static CallbackFunction input_callback_;
 	public:
 
 		static void AttachWindow(Window* window);
@@ -31,7 +31,7 @@ namespace Blackjack::Core {
 		static bool MouseDown(InputCode code);
 		static int GetMouseX();
 		static int GetMouseY();
-		static void SetInputCallback(CallbackFuncion function);
+		static void SetInputCallback(CallbackFunction function);
 	private:
 		static void KeyEvent(GLFWwindow* window, int key, int scancode, int action, int mods);
 		static void CharEvent(GLFWwindow* window, unsigned int codepoint);

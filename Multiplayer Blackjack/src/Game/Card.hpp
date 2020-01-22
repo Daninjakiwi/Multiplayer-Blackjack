@@ -1,8 +1,8 @@
 #pragma once
-#include "Core/Render/Meshes/Quad.h"
+#include "Core/Render/Meshes/Quad.hpp"
 
-namespace Blackjack {
-	class Card : public Core::Quad {
+namespace blackjack {
+	class Card : public core::Quad {
 	public:
 		Card(unsigned int value);
 		Card();

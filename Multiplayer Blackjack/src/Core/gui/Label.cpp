@@ -1,7 +1,7 @@
 #include "Label.hpp"
 #include "Core/Log.hpp"
 
-namespace Blackjack::Core {
+namespace blackjack::core {
 	Text::Text(const float x, const float y, const std::string& text, Font* font, bool hidden) : GuiElement(x,y,100,100, font->GetMaterial()),text_(text), display_text_() ,font_(font), offset_(0), hidden_(hidden) {
 		SetText(text);
 	}
@@ -172,8 +172,8 @@ namespace Blackjack::Core {
 	}
 
 	void Label::Draw(RendererUI& renderer) {
-		renderer.push(&text_);
-		renderer.push(this);
+		renderer.Push(&text_);
+		renderer.Push(this);
 	}
 
 	void Label::SetTextHidden(bool value) {

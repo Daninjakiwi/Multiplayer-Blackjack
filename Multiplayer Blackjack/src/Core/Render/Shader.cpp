@@ -1,39 +1,35 @@
 #include "glad/glad.h"
-#include "glm/glm.hpp"
 
 #include "Core/Log.hpp"
 #include "Core/Resources.hpp"
-#include "Shader.h"
+#include "Shader.hpp"
 
-
-namespace Blackjack::Core {
-	Shader::Shader(const std::string& filepath) : m_id(0) {
-		m_id = glCreateProgram();
+namespace blackjack::core {
+	Shader::Shader(const std::string& filepath) : id_(0) {
+		id_ = glCreateProgram();
 
 		std::string vertex_source = Resources::LoadFile(filepath + ".vert");
 		std::string fragment_source = Resources::LoadFile(filepath + ".frag");
 
-		unsigned int vert = compileShader(vertex_source.c_str(), GL_VERTEX_SHADER);
+		unsigned int vert = CompileShader(vertex_source.c_str(), GL_VERTEX_SHADER);
 
 
-		unsigned int frag = compileShader(fragment_source.c_str(), GL_FRAGMENT_SHADER);
+		unsigned int frag = CompileShader(fragment_source.c_str(), GL_FRAGMENT_SHADER);
 
 		if (vert != 0 && frag != 0) {
-			glAttachShader(m_id, vert);
-			glAttachShader(m_id, frag);
+			glAttachShader(id_, vert);
+			glAttachShader(id_, frag);
 
-			glLinkProgram(m_id);
-			glValidateProgram(m_id);
+			glLinkProgram(id_);
+			glValidateProgram(id_);
 		}
-
 		glDeleteShader(vert);
 		glDeleteShader(frag);
-
 	}
 
 	Shader::~Shader() {
-		glDeleteProgram(m_id);
-		for (auto& it : m_uniforms) {
+		glDeleteProgram(id_);
+		for (auto& it : uniforms_) {
 			void* i = it.second;
 			if (i!= nullptr) {
 				free(i);
@@ -41,18 +37,22 @@ namespace Blackjack::Core {
 		}
 	}
 
-	void Shader::bind() const {
-		glUseProgram(m_id);
+	void Shader::Bind() const {
+		glUseProgram(id_);
 	}
 
-	void Shader::setFloat(unsigned int location, float* data) {
-		float* n = (float*)m_uniforms[location];
+	int Shader::GetLocation(const std::string& name) const {
+		return glGetUniformLocation(id_, name.c_str());
+	}
+
+	void Shader::SetFloat(unsigned int location, float* data) {
+		float* n = (float*)uniforms_[location];
 		if (n == nullptr) {
 			glUniform1fv(location, 1, data);
 			void* next = malloc(1 * sizeof(float));
 			if (next) {
 				memcpy(next, data, 1 * sizeof(float));
-				m_uniforms[location] = next;
+				uniforms_[location] = next;
 			}
 		}
 		else {
@@ -63,22 +63,22 @@ namespace Blackjack::Core {
 		}
 	}
 
-	void Shader::setFloat(unsigned int location, float& data) {
+	void Shader::SetFloat(unsigned int location, float& data) {
 		glUniform1f(location, data);
 	}
 
-	void Shader::setFVec2(unsigned int location, float* data) {
+	void Shader::SetFVec2(unsigned int location, float* data) {
 		glUniform2fv(location, 1, data);
 	}
 
-	void Shader::setFVec3(unsigned int location, float* data) {
-		float* n = (float*)m_uniforms[location];
+	void Shader::SetFVec3(unsigned int location, float* data) {
+		float* n = (float*)uniforms_[location];
 		if (n == nullptr) {
 			glUniform3fv(location, 1, data);
 			void* next = malloc(3 * sizeof(float));
 			if (next) {
 				memcpy(next, data, 3 * sizeof(float));
-				m_uniforms[location] = next;
+				uniforms_[location] = next;
 			}
 		}
 		else {
@@ -89,30 +89,30 @@ namespace Blackjack::Core {
 		}
 	}
 
-	void Shader::setFVec4(unsigned int location, float* data) {
+	void Shader::SetFVec4(unsigned int location, float* data) {
 		glUniform4fv(location, 1, data);
 	}
 
-	void Shader::setUInt(unsigned int location, unsigned int* data) {
+	void Shader::SetUInt(unsigned int location, unsigned int* data) {
 		glUniform1uiv(location, 1, data);
 	}
 
-	void Shader::setUInt(unsigned int location, unsigned int data) {
+	void Shader::SetUInt(unsigned int location, unsigned int data) {
 		glUniform1ui(location, data);
 	}
 
-	void Shader::setInt(unsigned int location, int data) {
+	void Shader::SetInt(unsigned int location, int data) {
 		glUniform1i(location, data);
 	}
 
-	void Shader::setInt(unsigned int location, int* data) {
-		int* n = (int*)m_uniforms[location];
+	void Shader::SetInt(unsigned int location, int* data) {
+		int* n = (int*)uniforms_[location];
 		if (n == nullptr) {
 			glUniform1iv(location, 1, data);
 			void* next = malloc(sizeof(int));
 			if (next) {
 				memcpy(next, data, sizeof(int));
-				m_uniforms[location] = next;
+				uniforms_[location] = next;
 			}
 		}
 		else {
@@ -123,14 +123,14 @@ namespace Blackjack::Core {
 		}
 	}
 
-	void Shader::setMat4(unsigned int location, float* data) {
-		float* n = (float*)m_uniforms[location];
+	void Shader::SetMat4(unsigned int location, float* data) {
+		float* n = (float*)uniforms_[location];
 		if (n == nullptr) {
 			glUniformMatrix4fv(location, 1, false, data);
 			void* next = malloc(16 * sizeof(float));
 			if (next) {
 				memcpy(next, data, 16 * sizeof(float));
-				m_uniforms[location] = next;
+				uniforms_[location] = next;
 			}
 		}
 		else {
@@ -141,11 +141,7 @@ namespace Blackjack::Core {
 		}	
 	}
 
-	int Shader::getLocation(const std::string& name) {
-		return glGetUniformLocation(m_id, name.c_str());
-	}
-
-	unsigned int Shader::compileShader(const char* source, unsigned int type) {
+	unsigned int Shader::CompileShader(const char* source, unsigned int type) {
 		unsigned int id = glCreateShader(type);
 
 		glShaderSource(id, 1, &source, nullptr);

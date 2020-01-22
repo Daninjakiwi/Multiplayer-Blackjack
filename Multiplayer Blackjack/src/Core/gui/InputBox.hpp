@@ -1,7 +1,7 @@
 #pragma once
 #include "Label.hpp"
 
-namespace Blackjack::Core {
+namespace blackjack::core {
 	class InputBox : public Label {
 	private:
 		static InputBox* current_;

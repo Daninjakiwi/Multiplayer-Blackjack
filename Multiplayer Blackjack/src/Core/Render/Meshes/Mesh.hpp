@@ -1,6 +1,6 @@
 #pragma once
 
-namespace Blackjack::Core {
+namespace blackjack::core {
 	class Mesh {
 		friend class RendererUI;
 		friend class GuiElement;

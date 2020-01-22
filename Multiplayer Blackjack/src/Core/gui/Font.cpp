@@ -3,7 +3,7 @@
 #include "Core/Log.hpp"
 #include "Font.hpp"
 
-namespace Blackjack::Core {
+namespace blackjack::core {
 	std::unordered_map<std::string, std::unique_ptr<FontData>> Font::fonts_;
 
 	FontData::FontData(const std::string& font_name) : texture(nullptr), base_size(0), name(font_name) {
@@ -29,10 +29,10 @@ namespace Blackjack::Core {
 				getline(file, line);
 				Character c;
 
-				c.x = (float)(std::stoi(line.substr(18, 4))) / texture->getWidth();
-				c.y =  1.0f - ((float)(std::stoi(line.substr(25, 4))) / texture->getHeight());
-				c.wratio = (float)(std::stoi(line.substr(36, 4))) / texture->getWidth();
-				c.hratio = (float)(std::stoi(line.substr(48, 4))) / texture->getHeight();
+				c.x = (float)(std::stoi(line.substr(18, 4))) / texture->GetWidth();
+				c.y =  1.0f - ((float)(std::stoi(line.substr(25, 4))) / texture->GetHeight());
+				c.wratio = (float)(std::stoi(line.substr(36, 4))) / texture->GetWidth();
+				c.hratio = (float)(std::stoi(line.substr(48, 4))) / texture->GetHeight();
 				c.width = std::stoi(line.substr(36, 4));
 				c.height = std::stoi(line.substr(48, 4));
 				c.xoffset = std::stoi(line.substr(61, 4));
@@ -84,8 +84,8 @@ namespace Blackjack::Core {
 	Font::Font(FontData* font, int size, const Colour colour) : font_(font), size_(size), material_(nullptr) {
 		std::string name = font->name + "_" + size + "_" + colour;
 		material_ = Resources::CreateMaterial(name, Resources::GetShader("text"));
-		material_->setUniform("u_texture", UniformType::TEXTURE2D, font->texture);
-		material_->setUniform3f("u_colour", colour.r, colour.g, colour.b);
+		material_->SetUniform("u_texture", UniformType::TEXTURE2D, font->texture);
+		material_->SetUniform3f("u_colour", colour.r, colour.g, colour.b);
 	}
 
 	Material* Font::GetMaterial() const {

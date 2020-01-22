@@ -1,6 +1,6 @@
 #pragma once
 
-namespace Blackjack::Core {
+namespace blackjack::core {
 	class Scene {
 	private:
 		static int state_;

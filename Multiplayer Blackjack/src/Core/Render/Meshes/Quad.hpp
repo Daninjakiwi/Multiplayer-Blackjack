@@ -1,7 +1,7 @@
 #pragma once
-#include "Mesh.h"
+#include "Mesh.hpp"
 
-namespace Blackjack::Core {
+namespace blackjack::core {
 	class Quad : public Mesh {
 	public:
 		Quad(float x, float y, float z, float width, float height);

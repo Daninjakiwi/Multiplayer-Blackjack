@@ -1,7 +1,7 @@
 #include "Core/Window.hpp"
 #include "Core/Network/Network.h"
-#include "Scenes/TestScene.h"
-#include "Scenes/SceneGame.h"
+#include "Scenes/TestScene.hpp"
+#include "Scenes/SceneGame.hpp"
 #include "Core/gui/Label.hpp"
 #include "Core/gui/InputBox.hpp"
 #include "Core/gui/Colour.hpp"
@@ -18,7 +18,7 @@ void updateDelta() {
 }
 
 void btnClick() {
-	CORE_LOG("Clicked");
+	CORETRACE("clicked");
 }
 
 int main() {
@@ -29,31 +29,31 @@ int main() {
 
 	curl = init();
 
-	Blackjack::Core::Window window(width, height, "Blackjack");
+	blackjack::core::Window window(width, height, "Blackjack");
 	window.MakePrimary();
 
-	Blackjack::Core::Input::AttachWindow(&window);
+	blackjack::core::Input::AttachWindow(&window);
 
-	Blackjack::TestScene test;
-	Blackjack::SceneGame game;
+	blackjack::TestScene test;
+	blackjack::SceneGame game;
 
-	Blackjack::Core::Resources::CreateShader("text", "res/text");
-	Blackjack::Core::Resources::CreateShader("gui", "res/ui");
+	blackjack::core::Resources::CreateShader("text", "res/text");
+	blackjack::core::Resources::CreateShader("gui", "res/ui");
 
-	Blackjack::Core::Font::Load("Monospaced");
-	Blackjack::Core::Font font = Blackjack::Core::Font::Get("Monospaced", 40, { 0,0,0 });
+	blackjack::core::Font::Load("Monospaced");
+	blackjack::core::Font font = blackjack::core::Font::Get("Monospaced", 40, { 0,0,0 });
 
-	Blackjack::Core::InputBox box = Blackjack::Core::InputBox(200, 300, 500, 200, &font, { 0,150,0 }, 10);
+	blackjack::core::InputBox box = blackjack::core::InputBox(200, 300, 500, 200, &font, { 0,150,0 }, 10);
 
-	Blackjack::Core::Label label(0, 0, 200, 100, "Test", &font);
+	blackjack::core::Label label(0, 0, 200, 100, "Test", &font);
 
-	Blackjack::Core::Slider2 slider(100, 100, 200, 100);
+	blackjack::core::Slider2 slider(100, 100, 200, 100);
 
-	Blackjack::Core::GuiElement element(100, 100, 100, 100);
+	blackjack::core::GuiElement element(100, 100, 100, 100);
 
-	Blackjack::Core::Button btn(100, 100, 300, 50, "Click me", &font);
+	blackjack::core::Button btn(100, 100, 300, 50, "Click me", &font);
 
-	Blackjack::Core::RendererUI ui(width,height);
+	blackjack::core::RendererUI ui(width,height);
 
 	btn.SetOnClick(btnClick);
 
@@ -62,9 +62,11 @@ int main() {
 		window.Clear();
 
 		box.Update();
+		btn.Update();
 
 		box.Draw(ui);
-		ui.render();
+		btn.Draw(ui);
+		ui.Render();
 
 		window.Update();
 	}

@@ -2,7 +2,7 @@
 #include "GuiElement.hpp"
 #include "Font.hpp"
 
-namespace Blackjack::Core {
+namespace blackjack::core {
 	class Text : public GuiElement {
 	private:
 		std::string text_;

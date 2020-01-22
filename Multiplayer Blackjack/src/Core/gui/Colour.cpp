@@ -1,7 +1,7 @@
 #include "Colour.hpp"
 #include <sstream>
 
-namespace Blackjack::Core {
+namespace blackjack::core {
 	std::string operator+(const std::string& str, const Colour& col) {
 		std::stringstream ss;
 		ss << (int)col.r << "_" << (int)col.g << "_" << (int)col.b << "_" << (int)col.a;

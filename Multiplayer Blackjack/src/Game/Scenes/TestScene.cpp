@@ -1,7 +1,7 @@
-#include "TestScene.h"
+#include "TestScene.hpp"
 
 
-namespace Blackjack {
+namespace blackjack {
 	TestScene::TestScene() 
 		:Scene(), ui(1280, 720) {
 	}

@@ -1,8 +1,8 @@
-#include "Quad.h"
+#include "Quad.hpp"
 
-namespace Blackjack::Core {
+namespace blackjack::core {
 
-	Quad::Quad(float x, float y, float z, float width, float height) : Mesh(4 * 8,6){
+	Quad::Quad(float x, float y, float z, float width, float height) : Mesh(32,6){
 		vertices_[0] = x;
 		vertices_[1] = y;
 		vertices_[2] = z;

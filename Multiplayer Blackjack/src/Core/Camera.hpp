@@ -1,9 +1,9 @@
 #pragma once
+#include "glad/glad.h"
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
-#include "glad/glad.h"
 
-namespace Blackjack::Core {
+namespace blackjack::core {
 	class Camera {
 	public:
 		// Camera Attributes

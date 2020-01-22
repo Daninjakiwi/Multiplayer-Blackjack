@@ -1,8 +1,8 @@
-#include "Card.h"
+#include "Card.hpp"
 #include <math.h>
 #include <iostream>
 
-namespace Blackjack {
+namespace blackjack {
 	Card::Card(unsigned int value) : Quad(0,0,0,1,1.53f) {
 		setValue(value);
 	}

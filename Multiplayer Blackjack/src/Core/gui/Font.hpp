@@ -1,10 +1,10 @@
 #pragma once
 #include <string>
 #include <unordered_map>
-#include "Core/Render/Texture.h"
+#include "Core/Render/Texture.hpp"
 #include "Colour.hpp"
 
-namespace Blackjack::Core {
+namespace blackjack::core {
 	struct Character {
 		float x, y, width, height, xoffset, yoffset, advance, wratio,hratio;
 	};

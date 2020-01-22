@@ -3,11 +3,11 @@
 #include <memory>
 #include <unordered_map>
 
-#include "Core/Render/Meshes/Mesh.h"
-#include "Core/Render/Shader.h"
-#include "Core/Render/Material.h"
+#include "Core/Render/Meshes/Mesh.hpp"
+#include "Core/Render/Shader.hpp"
+#include "Core/Render/Material.hpp"
 
-namespace Blackjack::Core {
+namespace blackjack::core {
 
 	constexpr auto FONT_PATH = "res/fonts/";
 	constexpr auto SHADER_PATH = "res/shaders/";
@@ -23,8 +23,6 @@ namespace Blackjack::Core {
 		static Shader* GetShader(const std::string& name);
 
 		static Material* CreateMaterial(const std::string& name, Shader* shader);
-		static Material* CreateMaterial(Shader* shader);
-		static void UpdateMaterial(const std::string& name, const std::string& new_name);
 		static Material* GetMaterial(const std::string& name);
 
 		static Texture* CreateTexture(const std::string& name, const std::string& filepath);

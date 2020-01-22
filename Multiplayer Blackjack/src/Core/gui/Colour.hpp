@@ -1,7 +1,7 @@
 #pragma once
 #include "Core/Resources.hpp"
 
-namespace Blackjack::Core {
+namespace blackjack::core {
 	struct Colour {
 		unsigned char r, g, b, a;
 

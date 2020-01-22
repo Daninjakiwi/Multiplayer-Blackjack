@@ -1,6 +1,6 @@
 #include "Transform.hpp"
 
-namespace Blackjack::Core {
+namespace blackjack::core {
 	Transform::Transform() : matrix_(1.0f), position_(0,0,0), rotation_(0,0,0), scale_(1,1,1) {
 	}
 

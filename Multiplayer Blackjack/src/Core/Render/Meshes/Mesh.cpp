@@ -1,9 +1,9 @@
 #include <memory>
 
 #include "Core/Log.hpp"
-#include "Mesh.h"
+#include "Mesh.hpp"
 
-namespace Blackjack::Core {
+namespace blackjack::core {
 	Mesh::Mesh(int vertex_count, int indices_count) : vertices_(nullptr), indices_(nullptr), vertex_count_(vertex_count), indices_count_(indices_count){
 		vertices_ = (float*)malloc(vertex_count * sizeof(float));
 		indices_ = (unsigned int*)malloc(indices_count * sizeof(unsigned int));
@@ -41,7 +41,7 @@ namespace Blackjack::Core {
 			return vertices_[index];
 		}
 		else {
-			CORE_LOG(INVALID_ARGUMENT_ERROR);
+			COREERROR(INVALID_ARGUMENT_ERROR);
 		}
 	}
 
@@ -50,13 +50,13 @@ namespace Blackjack::Core {
 			return indices_[index];
 		}
 		else {
-			CORE_LOG(INVALID_ARGUMENT_ERROR);
+			COREERROR(INVALID_ARGUMENT_ERROR);
 		}
 	}
 
 	void Mesh::ResizeVertices(int new_size) {
 		if (new_size < 0) {
-			CORE_LOG(INVALID_ARGUMENT_ERROR);
+			COREERROR(INVALID_ARGUMENT_ERROR);
 		}
 		else {
 			if (new_size == 0) {
@@ -75,6 +75,9 @@ namespace Blackjack::Core {
 					vertices_ = (float*)temp;
 					vertex_count_ = new_size;
 				}
+				else {
+					COREFATAL(HEAP_ALLOCATION_ERROR);
+				}
 			}
 
 		}
@@ -82,7 +85,7 @@ namespace Blackjack::Core {
 
 	void Mesh::ResizeIndices(int new_size) {
 		if (new_size < 0) {
-			CORE_LOG(INVALID_ARGUMENT_ERROR);
+			COREERROR(INVALID_ARGUMENT_ERROR);
 		}
 		else {
 			if (new_size == 0) {
@@ -100,6 +103,9 @@ namespace Blackjack::Core {
 				if (temp != nullptr) {
 					indices_ = (unsigned int*)temp;
 					indices_count_ = new_size;
+				}
+				else {
+					COREFATAL(HEAP_ALLOCATION_ERROR);
 				}
 			}
 		}

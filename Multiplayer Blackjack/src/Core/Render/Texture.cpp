@@ -1,24 +1,26 @@
 #define STB_IMAGE_IMPLEMENTATION
 
-#include "stb_image/stb_image.h"
-#include "glad/glad.h"
-
-#include "Texture.h"
 #include <iostream>
+
+#include "glad/glad.h"
+#include "stb_image/stb_image.h"
+
 #include "Core/Log.hpp"
+#include "Texture.hpp"
 
-namespace Blackjack::Core {
 
-	Texture::Texture(const std::string& filepath) : m_id(0), width_(0), height_(0) {
+namespace blackjack::core {
+
+	Texture::Texture(const std::string& file_path) : id_(0), width_(0), height_(0) {
 		stbi_set_flip_vertically_on_load(true);
 		int width, height, bpp;
-		auto buffer = stbi_load(filepath.c_str(), &width, &height, &bpp, 4);
+		auto buffer = stbi_load(file_path.c_str(), &width, &height, &bpp, 4);
 
 		width_ = width;
 		height_ = height;
 
-		glGenTextures(1, &m_id);
-		glBindTexture(GL_TEXTURE_2D, m_id);
+		glGenTextures(1, &id_);
+		glBindTexture(GL_TEXTURE_2D, id_);
 
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
@@ -33,24 +35,24 @@ namespace Blackjack::Core {
 	}
 
 	Texture::~Texture() {
-		glDeleteTextures(1, &m_id);
+		glDeleteTextures(1, &id_);
 	}
 
-	void Texture::bind(unsigned int slot) const {
+	void Texture::Bind(unsigned int slot) const {
 		glActiveTexture(GL_TEXTURE0 + slot);
-		glBindTexture(GL_TEXTURE_2D, m_id);
+		glBindTexture(GL_TEXTURE_2D, id_);
 	}
 
 
-	unsigned int* Texture::getId() {
-		return &m_id;
+	unsigned int* Texture::GetId() {
+		return &id_;
 	}
 
-	const int Texture::getWidth() const {
+	const int Texture::GetWidth() const {
 		return width_;
 	}
 
-	const int Texture::getHeight() const {
+	const int Texture::GetHeight() const {
 		return height_;
 	}
 }

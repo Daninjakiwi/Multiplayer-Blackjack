@@ -2,10 +2,10 @@
 #include "Core/Scene.hpp"
 #include "Core/Core.hpp"
 
-namespace Blackjack {
-	class TestScene : public Core::Scene {
+namespace blackjack {
+	class TestScene : public core::Scene {
 	private:
-		Core::RendererUI ui;
+		core::RendererUI ui;
 
 	public:
 		TestScene();

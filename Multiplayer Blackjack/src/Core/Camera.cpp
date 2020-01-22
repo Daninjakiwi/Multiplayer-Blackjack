@@ -1,6 +1,6 @@
 #include "Camera.hpp"
 
-namespace Blackjack::Core {
+namespace blackjack::core {
 	Camera::Camera(float fov, float aspect_ratio) : proj_(glm::perspective(glm::radians(fov), aspect_ratio, 0.1f, 100.0f)),view_(1.0f), position_(0,0,0), yaw_(-90), pitch_(0) {
 		CalculateDirectionalVectors();
 	}

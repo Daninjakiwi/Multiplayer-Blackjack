@@ -2,7 +2,7 @@
 #include "Core/Input.hpp"
 #include "Core/Log.hpp"
 
-namespace Blackjack::Core {
+namespace blackjack::core {
 	InputBox* InputBox::current_ = nullptr;
 	std::unique_ptr<GuiElement> InputBox::cursor_ = nullptr;
 
@@ -48,7 +48,7 @@ namespace Blackjack::Core {
 	void InputBox::Draw(RendererUI& renderer) {
 		if (is_selected_) {
 			if (frame_count_ < 30) {
-				renderer.push(cursor_.get());
+				renderer.Push(cursor_.get());
 			}
 		}
 		Label::Draw(renderer);
