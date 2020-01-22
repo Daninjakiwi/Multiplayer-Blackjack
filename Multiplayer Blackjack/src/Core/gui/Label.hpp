@@ -41,6 +41,10 @@ namespace blackjack::core {
 
 		void Draw(RendererUI& renderer);
 
+		void SetText(const std::string& text);
+
 		void SetTextHidden(bool value);
+
+		const std::string& GetText() const;
 	};
 }

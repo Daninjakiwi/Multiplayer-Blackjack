@@ -167,7 +167,7 @@ namespace blackjack::core {
 		}
 	}
 
-	Label::Label(const float x, const float y, const float width, const float height, const std::string& text, Font* font, const Colour colour) : GuiElement(x, y, width, height, colour), text_(x + (width/5), y + ((height/2) - font->GetSize()) + (font->GetSize() /2),  text, font) {
+	Label::Label(const float x, const float y, const float width, const float height, const std::string& text, Font* font, const Colour colour) : GuiElement(x, y, width, height, colour), text_(x + (width/5), y + ((height - font->GetSize()) / 2) - (font->GetSize()/5),  text, font) {
 
 	}
 
@@ -178,5 +178,13 @@ namespace blackjack::core {
 
 	void Label::SetTextHidden(bool value) {
 		text_.SetHidden(value);
+	}
+
+	void Label::SetText(const std::string& text) {
+		text_.SetText(text);
+	}
+
+	const std::string& Label::GetText() const {
+		return text_.text_;
 	}
 }

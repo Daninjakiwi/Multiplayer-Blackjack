@@ -63,7 +63,7 @@ namespace blackjack::core {
 		if (f == nullptr) {
 			f = fonts_["Monospaced"].get();
 		}
-		Colour c;
+		Colour c(0,0,0);
 		return { f,size,c };
 	}
 

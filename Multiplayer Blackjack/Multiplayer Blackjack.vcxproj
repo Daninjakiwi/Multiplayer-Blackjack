@@ -113,11 +113,14 @@
     <ClCompile Include="src\Core\Window.cpp" />
     <ClCompile Include="dependencies\glad\glad.c" />
     <ClCompile Include="src\Game\Card.cpp" />
+    <ClCompile Include="src\Game\Environment.cpp" />
     <ClCompile Include="src\Game\Main.cpp">
       <SubType>
       </SubType>
     </ClCompile>
     <ClCompile Include="src\Game\Scenes\SceneGame.cpp" />
+    <ClCompile Include="src\Game\Scenes\SceneLogin.cpp" />
+    <ClCompile Include="src\Game\Scenes\SceneMainMenu.cpp" />
     <ClCompile Include="src\Game\Scenes\TestScene.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -153,7 +156,10 @@
     <ClInclude Include="src\Core\Transform.hpp" />
     <ClInclude Include="src\Core\Window.hpp" />
     <ClInclude Include="src\Game\Card.hpp" />
+    <ClInclude Include="src\Game\Environment.hpp" />
     <ClInclude Include="src\Game\Scenes\SceneGame.hpp" />
+    <ClInclude Include="src\Game\Scenes\SceneLogin.hpp" />
+    <ClInclude Include="src\Game\Scenes\SceneMainMenu.hpp" />
     <ClInclude Include="src\Game\Scenes\TestScene.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

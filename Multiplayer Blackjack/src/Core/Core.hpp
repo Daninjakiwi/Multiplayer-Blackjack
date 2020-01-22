@@ -13,3 +13,5 @@
 #include "gui/Button.hpp"
 #include "gui/Slider.hpp"
 #include "gui/Colour.hpp"
+#include "gui/InputBox.hpp"
+#include "gui/Font.hpp"

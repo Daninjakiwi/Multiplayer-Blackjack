@@ -1,25 +1,19 @@
 #pragma once
 #include "Core/Scene.hpp"
 #include "Core/Core.hpp"
+#include "../Environment.hpp"
 
 namespace blackjack {
-	class TestScene : public core::Scene {
+	class SceneMainMenu : core::Scene {
 	private:
+		Environment& env;
 		core::RendererUI ui;
 		core::Font font;
-		core::InputBox box;
-		core::Button btn;
-		core::Button btn2;
+		core::Label name;
 	public:
-		TestScene();
+		SceneMainMenu(Environment& e);
 
 		void Update(float delta);
-
 		void Draw();
-
-		void onClick();
-		void onClick2();
-
-		static void BtnClick();
 	};
 }

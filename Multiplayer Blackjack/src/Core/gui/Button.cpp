@@ -54,7 +54,11 @@ namespace blackjack::core {
 	void Button::SetClickMaterial(Material* material) {
 		click_ = material;
 	}
-	void Button::SetOnClick(CallbackFunction function) {
+	//void Button::SetOnClick(CallbackFunction function) {
+	//	on_click_ = function;
+	//}
+
+	void Button::SetOnClick(std::function<void()> function) {
 		on_click_ = function;
 	}
 }

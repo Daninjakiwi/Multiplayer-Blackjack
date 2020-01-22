@@ -1,7 +1,7 @@
 #include "SceneGame.hpp"
 
 namespace blackjack {
-	SceneGame::SceneGame() : Scene(), renderer(), light(), camera(45.0f, 16.0f/9.0f), table(), card(), card_mesh(0),table_mesh(1,180) {
+	SceneGame::SceneGame() : Scene(), renderer(), light(), camera(45.0f, 16.0f/9.0f), table(), card(), card_mesh(0) {
 		renderer.SetCamera(camera);
 		renderer.SetLight(light);
 
@@ -10,10 +10,10 @@ namespace blackjack {
 		camera.TranslateZ(14.7f);
 		camera.Pitch(-40);
 
-		light.setAmbient(0.2f, 0.2f, 0.2f);
-		light.setDiffuse(0.4f, 0.4f, 0.4f);
-		light.setSpecular(0.3f, 0.3f, 0.3f);
-		light.setPosition(2.5f, 10, -10.0f);
+		light.SetAmbient(0.2f, 0.2f, 0.2f);
+		light.SetDiffuse(0.4f, 0.4f, 0.4f);
+		light.SetSpecular(0.3f, 0.3f, 0.3f);
+		light.SetPosition(2.5f, 10, -10.0f);
 
 		core::Material* card_material = core::Resources::CreateMaterial("CardMaterial", core::Resources::CreateShader("Texture", "res/texture"));
 		card_material->SetUniform("u_material.diffuse", core::UniformType::TEXTURE2D, core::Resources::CreateTexture("cards", "res/Cards.png"));

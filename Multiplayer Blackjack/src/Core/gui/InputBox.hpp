@@ -13,7 +13,7 @@ namespace blackjack::core {
 
 		
 	public:
-		InputBox(float x, float y, float width, float height, Font* font, const Colour colour = {}, int max_length = 0, bool hidden = false);
+		InputBox(float x, float y, float width, float height, Font* font, int max_length = 0, const Colour colour = {},  bool hidden = false);
 	
 		static void ProccessKey(unsigned int code);
 

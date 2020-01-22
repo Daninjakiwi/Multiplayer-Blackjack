@@ -62,10 +62,10 @@ namespace blackjack::core {
 			for (RenderObject* r : objects_) {
 				r->material_->shader_->Bind();
 
-				r->material_->SetUniform("u_light.ambient", UniformType::FVEC3, &light_->m_ambient.x);
-				r->material_->SetUniform("u_light.diffuse", UniformType::FVEC3, &light_->m_diffuse.x);
-				r->material_->SetUniform("u_light.specular", UniformType::FVEC3, &light_->m_specular.x);
-				r->material_->SetUniform("u_light.position", UniformType::FVEC3, &light_->m_position.x);
+				r->material_->SetUniform("u_light.ambient", UniformType::FVEC3, &light_->ambient_.x);
+				r->material_->SetUniform("u_light.diffuse", UniformType::FVEC3, &light_->diffuse_.x);
+				r->material_->SetUniform("u_light.specular", UniformType::FVEC3, &light_->specular_.x);
+				r->material_->SetUniform("u_light.position", UniformType::FVEC3, &light_->position_.x);
 
 				r->material_->SetUniform("u_view_pos", UniformType::FVEC3, &camera_->position_.x);
 				r->material_->SetUniform("u_camera", UniformType::MAT4, camera_->GetView());

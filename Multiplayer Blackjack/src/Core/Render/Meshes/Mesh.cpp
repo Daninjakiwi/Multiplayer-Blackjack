@@ -60,7 +60,10 @@ namespace blackjack::core {
 		}
 		else {
 			if (new_size == 0) {
-				free(vertices_);
+				if (vertices_ != nullptr) {
+					free(vertices_);
+					vertices_ = nullptr;
+				}
 				vertex_count_ = 0;
 			}
 			else {
@@ -89,7 +92,10 @@ namespace blackjack::core {
 		}
 		else {
 			if (new_size == 0) {
-				free(indices_);
+				if (indices_ != nullptr) {
+					free(indices_);
+					indices_ = nullptr;
+				}
 				indices_count_ = 0;
 			}
 			else {
