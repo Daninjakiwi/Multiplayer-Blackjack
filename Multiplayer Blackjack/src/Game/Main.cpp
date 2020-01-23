@@ -1,10 +1,6 @@
 #include "Core/Window.hpp"
 #include "Core/Network/Network.h"
-#include "Scenes/TestScene.hpp"
 #include "Scenes/SceneGame.hpp"
-#include "Core/gui/Label.hpp"
-#include "Core/gui/InputBox.hpp"
-#include "Core/gui/Colour.hpp"
 #include "Scenes/SceneLogin.hpp"
 #include "Scenes/SceneMainMenu.hpp"
 
@@ -18,24 +14,24 @@ void updateDelta() {
 }
 
 int main() {
-	int width = 1280;
-	int height = 720;
+	blackjack::Environment e;
+	e.window_width = 1280;
+	e.window_height = 720;
 
-
-	blackjack::core::Window window(width, height, "Blackjack");
+	blackjack::core::Window window(e.window_width, e.window_height, "Blackjack");
 	window.MakePrimary();
 
 	blackjack::core::Input::AttachWindow(&window);
 
-	blackjack::core::Resources::CreateShader("text", "res/text");
-	blackjack::core::Resources::CreateShader("gui", "res/ui");
+	blackjack::core::Resources::LoadShader("text");
+	blackjack::core::Resources::LoadShader("gui");
+	blackjack::core::Resources::LoadShader("gui_texture");
 
 	blackjack::core::Font::Load("Monospaced");
 
-	blackjack::Environment e;
-
 	blackjack::SceneLogin login(e);
 	blackjack::SceneMainMenu menu(e);
+	blackjack::SceneGame game;
 
 	blackjack::core::Network net;
 	net.SetUrl("https://student.csc.liv.ac.uk/~sgkbaker/blackjack/blackjack.php");
@@ -56,9 +52,11 @@ int main() {
 			e.token = net.MakeRequest(r);
 			if (e.token.compare("invlogin")) {
 				blackjack::core::Scene::SetState(2);
+				COREINFO("Logged in as '" + e.username + "'.");
 			}
 			else {
 				blackjack::core::Scene::SetState(0);
+				COREERROR("Invalid login entered.");
 			}
 		}
 		else if (blackjack::core::Scene::GetState() == 2) {

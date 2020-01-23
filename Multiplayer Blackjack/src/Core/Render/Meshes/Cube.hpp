@@ -1,5 +1,4 @@
 #pragma once
-#include "Core/Transform.hpp"
 #include "Mesh.hpp"
 
 namespace blackjack::core {

@@ -19,6 +19,11 @@ namespace blackjack::core {
 		UpdateMatrix();
 	}
 
+	void Transform::Rotate(float x, float y, float z) {
+		rotation_ += glm::vec3(x, y, z);
+		UpdateMatrix();
+	}
+
 	void Transform::Reset() {
 		position_ = glm::vec3();
 		rotation_ = glm::vec3();

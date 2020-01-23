@@ -1,8 +1,11 @@
 #include "Label.hpp"
-#include "Core/Log.hpp"
 
 namespace blackjack::core {
-	Text::Text(const float x, const float y, const std::string& text, Font* font, bool hidden) : GuiElement(x,y,100,100, font->GetMaterial()),text_(text), display_text_() ,font_(font), offset_(0), hidden_(hidden) {
+	Text::Text(const float x, const float y, const std::string& text, Font* font, bool hidden) : GuiElement(x,y,100,100, font->GetMaterial()),text_(text), display_text_() ,font_(*font), offset_(0), hidden_(hidden) {
+		SetText(text);
+	}
+
+	Text::Text(const float x, const float y, const std::string& text, Font font, bool hidden) : GuiElement(x, y, 100, 100, font.GetMaterial()), text_(text), display_text_(), font_(font), offset_(0), hidden_(hidden) {
 		SetText(text);
 	}
 
@@ -20,10 +23,10 @@ namespace blackjack::core {
 		}
 
 
-		ResizeVertices(display_text_.length() * 16);
-		ResizeIndices(display_text_.length() * 6);
+		ResizeVertices((int)display_text_.length() * 16);
+		ResizeIndices((int)display_text_.length() * 6);
 
-		float ratio = font_->GetScale();
+		float ratio = font_.GetScale();
 
 		for (int i = 0; i < display_text_.length(); i++) {
 			char c;
@@ -38,7 +41,7 @@ namespace blackjack::core {
 				offset_ += 80 * ratio;
 			}
 			else {
-				Character ch = font_->GetBaseFont()->characters[c];
+				Character ch = font_.GetBaseFont()->characters[c];
 				CreateQuad(i, ch);
 				offset_ += ch.advance;
 			}
@@ -56,11 +59,11 @@ namespace blackjack::core {
 		}
 
 
-		ResizeVertices(text_.length() * 16);
-		ResizeIndices(text_.length() * 6);
+		ResizeVertices((int)text_.length() * 16);
+		ResizeIndices((int)text_.length() * 6);
 
-		float ratio = font_->GetScale();
-		for (int i = display_text_.length() - text.length(); i < display_text_.length(); i++) {
+		float ratio = font_.GetScale();
+		for (int i = (int)display_text_.length() - (int)text.length(); i < display_text_.length(); i++) {
 			char c;
 			if (hidden_) {
 				c = '*';
@@ -72,7 +75,7 @@ namespace blackjack::core {
 				offset_ += 80 * ratio;
 			}
 			else {
-				Character ch = font_->GetBaseFont()->characters[c];
+				Character ch = font_.GetBaseFont()->characters[c];
 				CreateQuad(i, ch);
 				offset_ += ch.advance;
 			}
@@ -85,22 +88,22 @@ namespace blackjack::core {
 		}
 		display_text_ += c;
 
-		ResizeVertices(text_.length() * 16);
-		ResizeIndices(text_.length() * 6);
+		ResizeVertices((int)text_.length() * 16);
+		ResizeIndices((int)text_.length() * 6);
 
-		float ratio = font_->GetScale();
+		float ratio = font_.GetScale();
 		if (c == ' ') {
 			offset_ += 80 * ratio;
 		}
 		else {
-			Character ch = font_->GetBaseFont()->characters[c];
-			CreateQuad(text_.length() - 1, ch);
+			Character ch = font_.GetBaseFont()->characters[c];
+			CreateQuad((int)text_.length() - 1, ch);
 			offset_ += ch.advance;
 		}
 	}
 	void Text::Remove(int num_characters) {
-		int val = text_.length() - 1;
-		int val2 = text_.length() - num_characters - 1;
+		int val = (int)text_.length() - 1;
+		int val2 = (int)text_.length() - num_characters - 1;
 		for (int i = val; i > val2; i--) {
 			char c;
 			if (hidden_) {
@@ -110,19 +113,19 @@ namespace blackjack::core {
 				c = display_text_.at(i);
 			}
 			if (c == ' ') {
-				offset_ -= 80 * font_->GetScale();
+				offset_ -= 80 * font_.GetScale();
 			}
 			else {
-				Character ch = font_->GetBaseFont()->characters[c];
-				ch = font_->GetScale() * ch;
+				Character ch = font_.GetBaseFont()->characters[c];
+				ch = font_.GetScale() * ch;
 				offset_ -= ch.advance;
 			}
 
 		}
 		text_ = text_.substr(0, text_.length() - num_characters);
 		display_text_ = display_text_.substr(0, display_text_.length() - num_characters);
-		ResizeVertices(text_.length() * 16);
-		ResizeIndices(text_.length() * 6);
+		ResizeVertices((int)text_.length() * 16);
+		ResizeIndices((int)text_.length() * 6);
 	}
 
 	void Text::CreateQuad(const int char_num, Character& character) {
@@ -136,7 +139,7 @@ namespace blackjack::core {
 		vertices_[14 + (16 * char_num)] = character.x;
 		vertices_[15 + (16 * char_num)] = character.y - character.hratio;
 
-		character = font_->GetScale() * character;
+		character = font_.GetScale() * character;
 
 		vertices_[16 * char_num] = x_ + offset_ + character.xoffset;
 		vertices_[1 + (16 * char_num)] = y_ + character.yoffset;
@@ -182,6 +185,16 @@ namespace blackjack::core {
 
 	void Label::SetText(const std::string& text) {
 		text_.SetText(text);
+	}
+
+	void Label::SetX(const float x) {
+		text_.SetX(x + (width_ / 5));
+		GuiElement::SetX(x);
+	}
+
+	void Label::SetY(const float y) {	
+		text_.SetY(y + ((height_ - text_.GetFont()->GetSize()) / 2) - (text_.GetFont()->GetSize() / 5));
+		GuiElement::SetY(y);
 	}
 
 	const std::string& Label::GetText() const {

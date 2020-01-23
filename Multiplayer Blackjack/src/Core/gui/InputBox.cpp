@@ -1,6 +1,6 @@
+#include "Core/Log.hpp"
 #include "InputBox.hpp"
 #include "Core/Input.hpp"
-#include "Core/Log.hpp"
 
 namespace blackjack::core {
 	InputBox* InputBox::current_ = nullptr;
@@ -11,9 +11,31 @@ namespace blackjack::core {
 		if (cursor_ == nullptr) {
 			Colour col(0, 0, 0);
 
-			cursor_ = std::make_unique<GuiElement>(0, 0, 10, 40, col);
+			cursor_ = std::make_unique<GuiElement>(0.0f, 0.0f, 10.0f, 40.0f, col);
 		}
 		text_.SetHidden(hidden);
+	}
+
+	void InputBox::SetSelected(bool selected) {
+		if (selected) {
+			if (!is_selected_) {
+				Input::SetInputCallback(ProccessKey);
+				cursor_.get()->SetHeight((float)text_.GetFont()->GetSize());
+				cursor_.get()->SetX(x_ + text_.GetOffset() + (width_ / 5));
+				cursor_.get()->SetY(y_ + ((height_ - text_.GetFont()->GetSize()) / 2));// + (text_.GetFont()->GetSize() / 5));
+				current_ = this;
+				is_selected_ = true;
+				frame_count_ = 0;
+			}
+		}
+		else {
+			is_selected_ = false;
+			frame_count_ = 0;
+		}
+	}
+
+	const bool InputBox::GetSelected() const {
+		return is_selected_;
 	}
 
 	void InputBox::Update() {
@@ -21,7 +43,7 @@ namespace blackjack::core {
 			if (Input::MouseDown(InputCode::MOUSE_LEFT)) {
 				if (!is_selected_) {	
 					Input::SetInputCallback(ProccessKey);
-					cursor_.get()->SetHeight(text_.GetFont()->GetSize());
+					cursor_.get()->SetHeight((float)text_.GetFont()->GetSize());
 					cursor_.get()->SetX(x_ + text_.GetOffset() + (width_/5));
 					cursor_.get()->SetY(y_ + ((height_ - text_.GetFont()->GetSize()) / 2));// + (text_.GetFont()->GetSize() / 5));
 					current_ = this;

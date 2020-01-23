@@ -1,8 +1,8 @@
 #pragma once
 #include <vector>
 
-#include "Core/Camera.hpp"
 #include "Core/gui/GuiElement.hpp"
+#include "Camera.hpp"
 #include "Light.hpp"
 #include "RenderObject.hpp"
 

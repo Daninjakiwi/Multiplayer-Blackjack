@@ -85,8 +85,8 @@ namespace blackjack::core {
 	}
 
 	void Input::MouseMoveEvent(GLFWwindow* window, double xpos, double ypos) {
-		mouse_x_ = xpos;
-		mouse_y_ = ypos;
+		mouse_x_ = (int)xpos;
+		mouse_y_ = (int)ypos;
 	}
 
 	void Input::MouseButtonEvent(GLFWwindow* window, int button, int action, int mods) {

@@ -16,8 +16,8 @@ namespace blackjack::core {
 		int GetVertexCount() const;
 		int GetIndicesCount() const;
 
-		const float& GetVertexAt(int index) const;
-		const unsigned int& GetIndexAt(int index) const;
+		const float GetVertexAt(int index) const;
+		const unsigned int GetIndexAt(int index) const;
 		
 		float* GetVertices();
 		unsigned int* GetIndices();

@@ -39,12 +39,6 @@
     <ClCompile Include="dependencies\glad\glad.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Core\Camera.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Core\Transform.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\Core\Render\Meshes\Cube.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -87,9 +81,6 @@
     <ClCompile Include="src\Core\Scene.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Game\Scenes\TestScene.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\Game\Scenes\SceneGame.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -105,10 +96,13 @@
     <ClCompile Include="src\Game\Scenes\SceneLogin.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Game\Environment.cpp">
+    <ClCompile Include="src\Game\Scenes\SceneMainMenu.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Game\Scenes\SceneMainMenu.cpp">
+    <ClCompile Include="src\Core\Render\Transform.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\Render\Camera.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -117,9 +111,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Core\Window.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Core\Transform.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Core\Scene.hpp">
@@ -132,9 +123,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Core\Core.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Core\Camera.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Core\Resources.hpp">
@@ -194,9 +182,6 @@
     <ClInclude Include="src\Game\Card.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Game\Scenes\TestScene.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\Game\Scenes\SceneGame.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -207,6 +192,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Game\Scenes\SceneMainMenu.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Core\Render\Transform.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Core\Render\Camera.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

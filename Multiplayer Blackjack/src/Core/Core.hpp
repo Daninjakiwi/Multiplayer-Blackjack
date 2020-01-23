@@ -1,10 +1,10 @@
 #pragma once
 
-#include "Camera.hpp"
+#include "Render/Camera.hpp"
 #include "Input.hpp"
 #include "Resources.hpp"
 #include "Log.hpp"
-#include "Transform.hpp"
+#include "Render/Transform.hpp"
 #include "Render/Light.hpp"
 #include "Render/Material.hpp"
 #include "Render/Renderer.hpp"

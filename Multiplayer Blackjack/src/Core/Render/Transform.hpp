@@ -17,6 +17,8 @@ namespace blackjack::core {
 		void SetRotation(float x, float y, float z);
 		void SetScale(float x, float y, float z);
 
+		void Rotate(float x, float y, float z);
+
 		void Reset();
 
 		float* GetMatrix();

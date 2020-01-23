@@ -17,10 +17,15 @@ namespace blackjack::core {
 
 		virtual ~GuiElement() = default;
 
-		void SetX(const float x);
-		void SetY(const float y);
+		virtual void SetX(const float x);
+		virtual void SetY(const float y);
 		void SetWidth(const float width);
 		void SetHeight(const float height);
+
+		const float GetX() const;
+		const float GetY() const;
+		const float GetWidth() const;
+		const float GetHeight() const;
 
 		bool MouseIntersect();
 

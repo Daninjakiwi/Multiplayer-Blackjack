@@ -15,7 +15,7 @@ namespace blackjack::core {
 
 	class CircleSegment : public Mesh {
 	public:
-		CircleSegment(float radius, float degrees, unsigned int segments = 64);
+		CircleSegment(float radius, float degrees, int segments = 64);
 
 		void SetVertexPos(int vert_num, float x, float y, float z);
 		void SetVertexNormal(int vert_num, float nx, float ny, float nz);

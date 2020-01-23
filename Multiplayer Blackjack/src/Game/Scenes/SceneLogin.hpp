@@ -11,6 +11,8 @@ namespace blackjack {
 		core::Font btn_font;
 		core::InputBox username;
 		core::InputBox password;
+		core::GuiElement background;
+		core::Text title;
 		core::Button submit;
 		Environment& env_;
 	public:

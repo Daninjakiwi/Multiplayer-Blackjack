@@ -115,6 +115,8 @@ namespace blackjack::core {
 			return sizeof(Texture*);
 		case UniformType::BOOL:
 			return sizeof(bool);
+		default:
+			return 0;
 		}
 	}
 }

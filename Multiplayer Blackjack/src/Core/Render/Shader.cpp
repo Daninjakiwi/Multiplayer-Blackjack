@@ -1,6 +1,6 @@
+#include "Core/Log.hpp"
 #include "glad/glad.h"
 
-#include "Core/Log.hpp"
 #include "Core/Resources.hpp"
 #include "Shader.hpp"
 

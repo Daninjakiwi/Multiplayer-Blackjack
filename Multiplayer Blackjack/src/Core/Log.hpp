@@ -2,7 +2,9 @@
 #include <iostream>
 #include <ctime>
 #include <string>
+#ifdef _DEBUG
 #include <Windows.h>
+#endif
 
 constexpr auto INVALID_ARGUMENT_ERROR = "invalid argument.";
 constexpr auto HEAP_ALLOCATION_ERROR = "heap allocation error.";

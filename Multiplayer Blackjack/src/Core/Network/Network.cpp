@@ -58,7 +58,7 @@ namespace blackjack::core {
 
 		for (auto it = data.begin(); it != data.end(); ++it) {
 			encoded += it->first + "=";
-			char* d = curl_easy_escape(handler, it->second.c_str(), it->second.length());
+			char* d = curl_easy_escape(handler, it->second.c_str(), (int)it->second.length());
 			encoded += d;
 			encoded += "&";
 			curl_free(d);

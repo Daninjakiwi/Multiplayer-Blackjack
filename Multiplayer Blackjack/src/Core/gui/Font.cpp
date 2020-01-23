@@ -33,15 +33,15 @@ namespace blackjack::core {
 				c.y =  1.0f - ((float)(std::stoi(line.substr(25, 4))) / texture->GetHeight());
 				c.wratio = (float)(std::stoi(line.substr(36, 4))) / texture->GetWidth();
 				c.hratio = (float)(std::stoi(line.substr(48, 4))) / texture->GetHeight();
-				c.width = std::stoi(line.substr(36, 4));
-				c.height = std::stoi(line.substr(48, 4));
-				c.xoffset = std::stoi(line.substr(61, 4));
-				c.yoffset = std::stoi(line.substr(74, 4));
-				c.advance = std::stoi(line.substr(88, 4));
+				c.width = (float)std::stoi(line.substr(36, 4));
+				c.height = (float)std::stoi(line.substr(48, 4));
+				c.xoffset = (float)std::stoi(line.substr(61, 4));
+				c.yoffset = (float)std::stoi(line.substr(74, 4));
+				c.advance = (float)std::stoi(line.substr(88, 4));
 
-				int code = std::stoi(line.substr(8, 4));
+				//int code = ;
 
-				characters[(char)code] = c;
+				characters[(char)std::stoi(line.substr(8, 4))] = c;
 			}
 
 			file.close();

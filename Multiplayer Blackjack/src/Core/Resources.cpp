@@ -1,9 +1,10 @@
 #include <fstream>
 #include <sstream>
-#include <random>
-#include "glad/glad.h"
-#include "Resources.hpp"
+
 #include "Log.hpp"
+#include "glad/glad.h"
+
+#include "Resources.hpp"
 
 namespace blackjack::core {
 	std::unordered_map<std::string, std::unique_ptr<Shader> > Resources::shaders_;
@@ -28,6 +29,16 @@ namespace blackjack::core {
 			COREWARN("Shader '" + name + "' already exists.");
 			return s;
 		}
+	}
+
+	void Resources::LoadShader(const std::string& name) {
+		shaders_[name] = std::make_unique<Shader>(SHADER_PATH + name);
+
+		if (shaders_[name].get()->id_ == 0) {
+			shaders_.erase(name);
+			COREERROR("Shader '" + name + "' failed to load.");
+		}
+		COREINFO("Shader '" + name + "' created.");
 	}
 
 	Shader* Resources::GetShader(const std::string& name) {

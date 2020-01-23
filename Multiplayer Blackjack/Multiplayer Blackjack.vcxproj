@@ -87,7 +87,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\Core\Camera.cpp" />
     <ClCompile Include="src\Core\gui\Button.cpp" />
     <ClCompile Include="src\Core\gui\Colour.cpp" />
     <ClCompile Include="src\Core\gui\Font.cpp" />
@@ -97,6 +96,7 @@
     <ClCompile Include="src\Core\gui\Slider.cpp" />
     <ClCompile Include="src\Core\Input.cpp" />
     <ClCompile Include="src\Core\Network\Network.cpp" />
+    <ClCompile Include="src\Core\Render\Camera.cpp" />
     <ClCompile Include="src\Core\Render\Light.cpp" />
     <ClCompile Include="src\Core\Render\Material.cpp" />
     <ClCompile Include="src\Core\Render\Meshes\CircleSegment.cpp" />
@@ -107,13 +107,12 @@
     <ClCompile Include="src\Core\Render\RenderObject.cpp" />
     <ClCompile Include="src\Core\Render\Shader.cpp" />
     <ClCompile Include="src\Core\Render\Texture.cpp" />
+    <ClCompile Include="src\Core\Render\Transform.cpp" />
     <ClCompile Include="src\Core\Resources.cpp" />
     <ClCompile Include="src\Core\Scene.cpp" />
-    <ClCompile Include="src\Core\Transform.cpp" />
     <ClCompile Include="src\Core\Window.cpp" />
     <ClCompile Include="dependencies\glad\glad.c" />
     <ClCompile Include="src\Game\Card.cpp" />
-    <ClCompile Include="src\Game\Environment.cpp" />
     <ClCompile Include="src\Game\Main.cpp">
       <SubType>
       </SubType>
@@ -121,7 +120,6 @@
     <ClCompile Include="src\Game\Scenes\SceneGame.cpp" />
     <ClCompile Include="src\Game\Scenes\SceneLogin.cpp" />
     <ClCompile Include="src\Game\Scenes\SceneMainMenu.cpp" />
-    <ClCompile Include="src\Game\Scenes\TestScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\GLFW\GLFW.vcxproj">
@@ -129,7 +127,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\Core\Camera.hpp" />
     <ClInclude Include="src\Core\Core.hpp" />
     <ClInclude Include="src\Core\gui\Button.hpp" />
     <ClInclude Include="src\Core\gui\Colour.hpp" />
@@ -141,6 +138,7 @@
     <ClInclude Include="src\Core\Input.hpp" />
     <ClInclude Include="src\Core\Log.hpp" />
     <ClInclude Include="src\Core\Network\Network.h" />
+    <ClInclude Include="src\Core\Render\Camera.hpp" />
     <ClInclude Include="src\Core\Render\Light.hpp" />
     <ClInclude Include="src\Core\Render\Material.hpp" />
     <ClInclude Include="src\Core\Render\Meshes\CircleSegment.hpp" />
@@ -151,16 +149,15 @@
     <ClInclude Include="src\Core\Render\RenderObject.hpp" />
     <ClInclude Include="src\Core\Render\Shader.hpp" />
     <ClInclude Include="src\Core\Render\Texture.hpp" />
+    <ClInclude Include="src\Core\Render\Transform.hpp" />
     <ClInclude Include="src\Core\Resources.hpp" />
     <ClInclude Include="src\Core\Scene.hpp" />
-    <ClInclude Include="src\Core\Transform.hpp" />
     <ClInclude Include="src\Core\Window.hpp" />
     <ClInclude Include="src\Game\Card.hpp" />
     <ClInclude Include="src\Game\Environment.hpp" />
     <ClInclude Include="src\Game\Scenes\SceneGame.hpp" />
     <ClInclude Include="src\Game\Scenes\SceneLogin.hpp" />
     <ClInclude Include="src\Game\Scenes\SceneMainMenu.hpp" />
-    <ClInclude Include="src\Game\Scenes\TestScene.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

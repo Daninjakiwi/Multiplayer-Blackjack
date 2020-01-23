@@ -1,8 +1,9 @@
 #include <iostream>
+#include "Log.hpp"
 #include "glad/glad.h"
+
 #include "Window.hpp"
 #include "Resources.hpp"
-#include "Log.hpp"
 
 namespace blackjack::core {
 

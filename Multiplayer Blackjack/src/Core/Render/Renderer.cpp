@@ -1,6 +1,5 @@
 #include "glad/glad.h"
 
-#include "Core/Log.hpp"
 #include "Renderer.hpp"
 
 namespace blackjack::core {
@@ -39,7 +38,7 @@ namespace blackjack::core {
 		Mesh* mesh = object.GetMesh();
 		indices_.reserve(indices_.size() + mesh->GetIndicesCount());
 		for (int i = 0; i < mesh->GetIndicesCount(); i++) {
-			indices_.push_back(mesh->GetIndexAt(i) + (vertices_.size() / 8));
+			indices_.push_back(mesh->GetIndexAt(i) + ((int)vertices_.size() / 8));
 		}
 
 		vertices_.reserve(vertices_.size() + mesh->GetVertexCount());
@@ -121,7 +120,7 @@ namespace blackjack::core {
 	void RendererUI::Push(GuiElement* element) {
 		indices_.reserve(indices_.size() + element->GetIndicesCount());
 		for (int i = 0; i < element->GetIndicesCount(); i++) {
-			indices_.push_back(element->GetIndexAt(i) + (vertices_.size() / 4));
+			indices_.push_back(element->GetIndexAt(i) + ((int)vertices_.size() / 4));
 		}
 
 		vertices_.reserve(vertices_.size() + element->GetVertexCount());

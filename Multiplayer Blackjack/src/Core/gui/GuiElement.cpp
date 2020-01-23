@@ -17,22 +17,22 @@ namespace blackjack::core {
 		vertices_[0] = x_;
 		vertices_[1] = y_;
 		vertices_[2] = 0;
-		vertices_[3] = 0;
+		vertices_[3] = 1;
 
 		vertices_[4] = x_ + width_;
 		vertices_[5] = y_;
 		vertices_[6] = 1;
-		vertices_[7] = 0;
+		vertices_[7] = 1;
 
 		vertices_[8] = x_ + width_;
 		vertices_[9] = y_ + height_;
 		vertices_[10] = 1;
-		vertices_[11] = 1;
+		vertices_[11] = 0;
 
 		vertices_[12] = x_;
 		vertices_[13] = y_ + height_;
 		vertices_[14] = 0;
-		vertices_[15] = 1;
+		vertices_[15] = 0;
 
 		indices_[0] = 0;
 		indices_[1] = 1;
@@ -51,10 +51,12 @@ namespace blackjack::core {
 	}
 	void GuiElement::SetY(const float y) {
 		y_ = y;
-		vertices_[1] = y;
-		vertices_[5] = y;
-		vertices_[9] = y + height_;
-		vertices_[13] = y + height_;
+		if (vertex_count_ != 0) {
+			vertices_[1] = y;
+			vertices_[5] = y;
+			vertices_[9] = y + height_;
+			vertices_[13] = y + height_;
+		}
 	}	
 	void GuiElement::SetWidth(const float width) {
 		width_ = width;
@@ -65,6 +67,22 @@ namespace blackjack::core {
 		height_ = height;
 		vertices_[9] = y_ + height;
 		vertices_[13] = y_ + height;
+	}
+
+	const float GuiElement::GetX() const {
+		return x_;
+	}
+
+	const float GuiElement::GetY() const {
+		return y_;
+	}
+
+	const float GuiElement::GetWidth() const {
+		return width_;
+	}
+
+	const float GuiElement::GetHeight() const {
+		return height_;
 	}
 
 	Material* GuiElement::GetMaterial() {

@@ -10,6 +10,8 @@ namespace blackjack::core {
 		Texture(const std::string& file_path);
 		~Texture();
 
+		Texture(bool test);
+
 		void Bind(unsigned int slot = 0) const;
 
 		unsigned int* GetId();

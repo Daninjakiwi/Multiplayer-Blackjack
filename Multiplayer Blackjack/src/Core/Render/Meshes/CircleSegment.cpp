@@ -1,17 +1,15 @@
+#define _USE_MATH_DEFINES
 #include <cmath>
 #include <iostream>
 #include <glm/glm.hpp>
 
 #include "CircleSegment.hpp"
 
-#define PI 3.14159265
-
 namespace blackjack::core {
-	CircleSegment::CircleSegment(float radius, float degrees, unsigned int segments) : Mesh(((segments + 2) * 8 * 2) + ((segments+2) * 32), (segments * 3 * 2) + (6*(segments+2))) {
-		float d = PI * degrees / segments / 180;
+	CircleSegment::CircleSegment(float radius, float degrees, int segments) : Mesh(((segments + 2) * 8 * 2) + ((segments+2) * 32), (segments * 3 * 2) + (6*(segments+2))) {
+		float d = (float)M_PI * degrees / segments / 180;
 
 		int face_vertices = segments + 2;
-
 
 		float mapy = 0.8f / 2.0f;
 		float mapx = -1.0f / 2.0f;
@@ -43,10 +41,10 @@ namespace blackjack::core {
 				indices_[i] = 0;
 			}
 			if (i % 3 == 1) {
-				indices_[i] = ceil(((float)i) / 3);
+				indices_[i] = (int)ceil(((float)i) / 3);
 			}
 			if (i % 3 == 2) {
-				indices_[i] = 1 + ceil(((float)i) / 3);
+				indices_[i] = 1 + (int)ceil(((float)i) / 3);
 			}
 		}
 
@@ -70,8 +68,8 @@ namespace blackjack::core {
 			vertices_[(8 * i) + 3 + offset] = 0;
 			vertices_[(8 * i) + 4 + offset] = 1;
 			vertices_[(8 * i) + 5 + offset] = 0;
-			vertices_[(8 * i) + 6 + offset] = mapx * (cos(d * (i - 1)) - 1);//abs(cos(d * (i - 1)));//abs((d * (i - 1)) / (d * segments / 2) - 1);
-			vertices_[(8 * i) + 7 + offset] = mapy * (sin(d * (i - 1)) + 1);//(sin(d * (i - 1)) / 2) + 0.5f;
+			vertices_[(8 * i) + 6 + offset] = mapx * (cos(d * (i - 1)) - 1);
+			vertices_[(8 * i) + 7 + offset] = mapy * (sin(d * (i - 1)) + 1);
 		}
 
 		int nuvertices_ = segments + 2;
@@ -82,10 +80,10 @@ namespace blackjack::core {
 				indices_[offset + i] = nuvertices_;
 			}
 			if (i % 3 == 1) {
-				indices_[offset + i] = nuvertices_ + ceil(((float)i) / 3);
+				indices_[offset + i] = nuvertices_ + (int)ceil(((float)i) / 3);
 			}
 			if (i % 3 == 2) {
-				indices_[offset + i] = nuvertices_ + 1 + ceil(((float)i) / 3);
+				indices_[offset + i] = nuvertices_ + 1 + (int)ceil(((float)i) / 3);
 			}
 		}
 
@@ -105,7 +103,7 @@ namespace blackjack::core {
 
 			Vertex v = GetVertex(original);
 
-			int vert = floor((i % vert_start) / 2);
+			int vert = (int)floor((i % vert_start) / 2);
 			float angle = 0;
 
 			if (vert == 0) {

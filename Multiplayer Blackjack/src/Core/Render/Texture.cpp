@@ -2,12 +2,11 @@
 
 #include <iostream>
 
+#include "Core/Log.hpp"
 #include "glad/glad.h"
 #include "stb_image/stb_image.h"
 
-#include "Core/Log.hpp"
 #include "Texture.hpp"
-
 
 namespace blackjack::core {
 
@@ -34,7 +33,27 @@ namespace blackjack::core {
 		}
 	}
 
-	Texture::~Texture() {
+	Texture::Texture(bool test): width_(2), height_(2) {
+		glGenTextures(1, &id_);
+		glBindTexture(GL_TEXTURE_2D, id_);
+
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+
+
+		float data[] = {
+			1.0f,0.0f,0.0f,
+			0.0f,1.0f,0.0f,
+			0.0f,0.0f,1.0f,
+			1.0f,1.0f,1.0f
+		};
+
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, 2, 2, 0, GL_RGB , GL_FLOAT, data);
+	}
+
+	Texture::~Texture() {	
 		glDeleteTextures(1, &id_);
 	}
 

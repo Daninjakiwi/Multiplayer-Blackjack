@@ -1,9 +1,9 @@
-#include "Card.hpp"
 #include <math.h>
 #include <iostream>
+#include "Card.hpp"
 
 namespace blackjack {
-	Card::Card(unsigned int value) : Quad(0,0,0,1,1.53f) {
+	Card::Card(int value) : Quad(0,0,0,1,1.53f) {
 		setValue(value);
 	}
 
@@ -11,12 +11,12 @@ namespace blackjack {
 		setValue(0);
 	}
 
-	void Card::setValue(unsigned int value) {
+	void Card::setValue(int value) {
 		float xstep = 1 / 10.0f;
 		float ystep = 1 / 8.0f;
 
-		float row = floor(value / 10);
-		float col = value % 10;
+		float row = (float)floor(value / 10);
+		float col = (float)(value % 10);
 
 		vertices_[6] = col * xstep;
 		vertices_[7] = 1 - ((row+1) * ystep);

@@ -17,6 +17,9 @@ namespace blackjack::core {
 	
 		static void ProccessKey(unsigned int code);
 
+		void SetSelected(bool selected = true);
+		const bool GetSelected() const;
+
 		void Update();
 		void Draw(RendererUI& renderer);
 	};

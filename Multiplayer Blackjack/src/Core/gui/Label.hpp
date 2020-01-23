@@ -7,12 +7,13 @@ namespace blackjack::core {
 	private:
 		std::string text_;
 		std::string display_text_;
-		Font* font_;
+		Font font_;
 		float offset_;
 		bool hidden_;
 	public:
 		friend class Label;
 		Text(const float x, const float y,const std::string& text, Font* font, bool hidden=false);
+		Text(const float x, const float y, const std::string& text, Font font, bool hidden = false);
 
 		void SetText(const std::string& text);
 		void Append(const std::string& text);
@@ -26,7 +27,7 @@ namespace blackjack::core {
 		virtual ~Text() = default;
 
 		inline float GetOffset() { return offset_; };
-		inline Font* GetFont() { return font_; };
+		inline Font* GetFont() { return &font_; };
 	private:
 		void CreateQuad(const int char_num, Character& character);
 	};
@@ -42,6 +43,9 @@ namespace blackjack::core {
 		void Draw(RendererUI& renderer);
 
 		void SetText(const std::string& text);
+
+		void SetX(const float x);
+		void SetY(const float y);
 
 		void SetTextHidden(bool value);
 

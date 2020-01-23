@@ -36,21 +36,23 @@ namespace blackjack::core {
 	}
 
 
-	const float& Mesh::GetVertexAt(int index) const {
+	const float Mesh::GetVertexAt(int index) const {
 		if (index < vertex_count_) {
 			return vertices_[index];
 		}
 		else {
 			COREERROR(INVALID_ARGUMENT_ERROR);
+			return 0.0f;
 		}
 	}
 
-	const unsigned int& Mesh::GetIndexAt(int index) const {
+	const unsigned int Mesh::GetIndexAt(int index) const {
 		if (index < indices_count_) {
 			return indices_[index];
 		}
 		else {
 			COREERROR(INVALID_ARGUMENT_ERROR);
+			return 0;
 		}
 	}
 
