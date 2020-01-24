@@ -4,6 +4,8 @@
 #include "Font.hpp"
 
 namespace blackjack::core {
+	constexpr auto FONT_PATH = "res/fonts/";
+
 	std::unordered_map<std::string, std::unique_ptr<FontData>> Font::fonts_;
 
 	FontData::FontData(const std::string& font_name) : texture(nullptr), base_size(0), name(font_name) {
@@ -18,9 +20,10 @@ namespace blackjack::core {
 
 			getline(file, line);
 
-			std::string t = FONT_PATH + line.substr(16, line.length() - 17);
+			std::string t = line.substr(16, line.length() - 17);
 
-			texture = Resources::CreateTexture(font_name, t);
+			Texture::Load(t);
+			texture = Texture::Get(t);
 
 			getline(file, line);
 			int num_characters = std::stoi(line.substr(12, 2));
@@ -83,7 +86,7 @@ namespace blackjack::core {
 
 	Font::Font(FontData* font, int size, const Colour colour) : font_(font), size_(size), material_(nullptr) {
 		std::string name = font->name + "_" + size + "_" + colour;
-		material_ = Resources::CreateMaterial(name, Resources::GetShader("text"));
+		material_ = Material::Create(name, "text");
 		material_->SetUniform("u_texture", UniformType::TEXTURE2D, font->texture);
 		material_->SetUniform3f("u_colour", colour.r, colour.g, colour.b);
 	}

@@ -9,6 +9,17 @@
 #include "Texture.hpp"
 
 namespace blackjack::core {
+	constexpr auto TEXTURE_PATH = "res/textures/";
+
+	std::unordered_map<std::string, std::unique_ptr<Texture>> Texture::textures_;
+
+	void Texture::Load(const std::string& name) {
+		textures_[name] = std::make_unique<Texture>(TEXTURE_PATH + name);
+	}
+
+	Texture* Texture::Get(const std::string& name) {
+		return textures_[name].get();
+	}
 
 	Texture::Texture(const std::string& file_path) : id_(0), width_(0), height_(0) {
 		stbi_set_flip_vertically_on_load(true);

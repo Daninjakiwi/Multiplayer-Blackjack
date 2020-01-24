@@ -5,6 +5,18 @@
 #include "Shader.hpp"
 
 namespace blackjack::core {
+	constexpr auto SHADER_PATH = "res/shaders/";
+
+	std::unordered_map<std::string, std::unique_ptr<Shader>> Shader::shaders_;
+	
+	void Shader::Load(const std::string& name) {
+		shaders_[name] = std::make_unique<Shader>(SHADER_PATH + name);
+	}
+
+	Shader* Shader::Get(const std::string& name) {
+		return shaders_[name].get();
+	}
+
 	Shader::Shader(const std::string& filepath) : id_(0) {
 		id_ = glCreateProgram();
 

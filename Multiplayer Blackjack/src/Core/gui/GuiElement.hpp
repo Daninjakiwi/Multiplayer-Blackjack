@@ -10,6 +10,7 @@ namespace blackjack::core {
 	protected:
 		float x_, y_, width_, height_;
 		Material* material_;
+		bool draw_;
 	public:
 		friend class RendererUI;
 		GuiElement(const float x, const float y, const float width, const float height, const Colour colour = {});
@@ -21,6 +22,9 @@ namespace blackjack::core {
 		virtual void SetY(const float y);
 		void SetWidth(const float width);
 		void SetHeight(const float height);
+
+		void Show();
+		void Hide();
 
 		const float GetX() const;
 		const float GetY() const;

@@ -2,6 +2,7 @@
 #include <string>
 #include <unordered_map>
 #include "Core/Render/Texture.hpp"
+#include "Core/Render/Material.hpp"
 #include "Colour.hpp"
 
 namespace blackjack::core {

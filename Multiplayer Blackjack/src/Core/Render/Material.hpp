@@ -40,9 +40,16 @@ namespace blackjack::core {
 	class Material {
 		friend class Renderer3D;
 	private:
+		static std::unordered_map<std::string, std::unique_ptr<Material>> materials_;
+
 		Shader* shader_;
 		std::unordered_map<std::string, std::unique_ptr<Uniform>> uniform_;
 	public:
+		static Material* Create(const std::string& name, const std::string& shader);
+		static Material* Create(const std::string& name, Shader* shader);
+		static Material* Get(const std::string& name);
+
+
 		Material(Shader* s);
 
 		void Bind() const;

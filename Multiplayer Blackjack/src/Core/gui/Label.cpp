@@ -1,42 +1,27 @@
+#include "Core/Log.hpp"
 #include "Label.hpp"
 
 namespace blackjack::core {
-	Text::Text(const float x, const float y, const std::string& text, Font* font, bool hidden) : GuiElement(x,y,100,100, font->GetMaterial()),text_(text), display_text_() ,font_(*font), offset_(0), hidden_(hidden) {
+	Text::Text(const float x, const float y, const std::string& text, Font* font) : GuiElement(x,y,100,100, font->GetMaterial()),text_(text),font_(*font), offset_(0) {
 		SetText(text);
 	}
 
-	Text::Text(const float x, const float y, const std::string& text, Font font, bool hidden) : GuiElement(x, y, 100, 100, font.GetMaterial()), text_(text), display_text_(), font_(font), offset_(0), hidden_(hidden) {
+	Text::Text(const float x, const float y, const std::string& text, Font font) : GuiElement(x, y, 100, 100, font.GetMaterial()), text_(text), font_(font), offset_(0) {
 		SetText(text);
 	}
+
 
 	void Text::SetText(const std::string& text) {
 		offset_ = 0;
 		text_ = text;
-		if (hidden_) {
-			display_text_ = "";
-			for (int i = 0; i < text.length(); i++) {
-				display_text_ += '*';
-			}
-		}
-		else {
-			display_text_ = text_;
-		}
 
-
-		ResizeVertices((int)display_text_.length() * 16);
-		ResizeIndices((int)display_text_.length() * 6);
+		ResizeVertices((int)text_.length() * 16);
+		ResizeIndices((int)text_.length() * 6);
 
 		float ratio = font_.GetScale();
 
-		for (int i = 0; i < display_text_.length(); i++) {
-			char c;
-			if (hidden_) {
-				c = '*';
-			}
-			else {
-				c = display_text_.at(i);
-			}
-
+		for (int i = 0; i < text_.length(); i++) {
+			const char c = text_.at(i);
 			if (c == ' ') {
 				offset_ += 80 * ratio;
 			}
@@ -49,28 +34,13 @@ namespace blackjack::core {
 	}
 	void Text::Append(const std::string& text) {
 		text_ += text;
-		if (hidden_) {
-			for (int i = 0; i < text.length(); i++) {
-				display_text_ += '*';
-			}
-		}
-		else {
-			display_text_ = text_;
-		}
-
 
 		ResizeVertices((int)text_.length() * 16);
 		ResizeIndices((int)text_.length() * 6);
 
 		float ratio = font_.GetScale();
-		for (int i = (int)display_text_.length() - (int)text.length(); i < display_text_.length(); i++) {
-			char c;
-			if (hidden_) {
-				c = '*';
-			}
-			else {
-				c = display_text_.at(i);
-			}
+		for (int i = text_.length() - text.length(); i < text_.length(); i++) {
+			const char c = text_.at(i);
 			if (c == ' ') {
 				offset_ += 80 * ratio;
 			}
@@ -83,10 +53,6 @@ namespace blackjack::core {
 	}
 	void Text::Append(char c) {
 		text_ += c;
-		if (hidden_) {
-			c = '*';
-		}
-		display_text_ += c;
 
 		ResizeVertices((int)text_.length() * 16);
 		ResizeIndices((int)text_.length() * 6);
@@ -105,13 +71,7 @@ namespace blackjack::core {
 		int val = (int)text_.length() - 1;
 		int val2 = (int)text_.length() - num_characters - 1;
 		for (int i = val; i > val2; i--) {
-			char c;
-			if (hidden_) {
-				c = '*';
-			}
-			else {
-				c = display_text_.at(i);
-			}
+			const char c = text_.at(i);
 			if (c == ' ') {
 				offset_ -= 80 * font_.GetScale();
 			}
@@ -123,7 +83,6 @@ namespace blackjack::core {
 
 		}
 		text_ = text_.substr(0, text_.length() - num_characters);
-		display_text_ = display_text_.substr(0, display_text_.length() - num_characters);
 		ResizeVertices((int)text_.length() * 16);
 		ResizeIndices((int)text_.length() * 6);
 	}
@@ -163,24 +122,27 @@ namespace blackjack::core {
 		return text_;
 	}
 
-	void Text::SetHidden(bool value) {
-		if (value != hidden_) {
-			hidden_ = value;
-			SetText(text_);
-		}
+	Label::Label(const float x, const float y, const float width, const float height, const std::string& text, Font* font, const Colour colour) : GuiElement(x, y, width, height, colour), text_(x + (width/5), y + ((height - font->GetSize()) / 2) - (font->GetSize()/5),  text, font), padx_(0), pady_(0) {
+
 	}
 
-	Label::Label(const float x, const float y, const float width, const float height, const std::string& text, Font* font, const Colour colour) : GuiElement(x, y, width, height, colour), text_(x + (width/5), y + ((height - font->GetSize()) / 2) - (font->GetSize()/5),  text, font) {
+	void Label::SetPadX(float value) {
+		text_.SetX(x_ + value);
+		text_.SetText(text_.GetText());
+		padx_ = value;
+	}
 
+	void Label::SetPadY(float value) {
+		text_.SetY(y_ + value);
+		text_.SetText(text_.GetText());
+		pady_ = value;
 	}
 
 	void Label::Draw(RendererUI& renderer) {
-		renderer.Push(&text_);
-		renderer.Push(this);
-	}
-
-	void Label::SetTextHidden(bool value) {
-		text_.SetHidden(value);
+		if (draw_) {
+			renderer.Push(&text_);
+			renderer.Push(this);
+		}
 	}
 
 	void Label::SetText(const std::string& text) {
@@ -193,7 +155,8 @@ namespace blackjack::core {
 	}
 
 	void Label::SetY(const float y) {	
-		text_.SetY(y + ((height_ - text_.GetFont()->GetSize()) / 2) - (text_.GetFont()->GetSize() / 5));
+		text_.SetY(text_.GetY() + (y-y_));
+		text_.SetText(text_.GetText());
 		GuiElement::SetY(y);
 	}
 

@@ -1,8 +1,33 @@
+#include "Core/Log.hpp"
 #include "Material.hpp"
 #include <iostream>
-#include "Core/Log.hpp"
 
 namespace blackjack::core {
+	std::unordered_map<std::string, std::unique_ptr<Material>> Material::materials_;
+
+	Material* Material::Create(const std::string& name, const std::string& shader) {
+		Material* mat = materials_[name].get();
+		if (mat == nullptr) {
+			materials_[name] = std::make_unique<Material>(Shader::Get(shader));
+			return materials_[name].get();
+		}
+		return mat;
+	}
+	
+	Material* Material::Create(const std::string& name, Shader* shader) {
+		Material* mat = materials_[name].get();
+		if (mat == nullptr) {
+			materials_[name] = std::make_unique<Material>(shader);
+			return materials_[name].get();
+		}
+		return mat;
+	}
+	Material* Material::Get(const std::string& name) {
+		return materials_[name].get();
+	}
+
+
+
 	Material::Material(Shader* s) : shader_(s) {
 	}
 

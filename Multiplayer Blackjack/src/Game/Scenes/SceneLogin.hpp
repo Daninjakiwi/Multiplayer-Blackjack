@@ -2,25 +2,32 @@
 #include "Core/Core.hpp"
 #include "Core/Scene.hpp"
 #include "../Environment.hpp"
+#include "Core/Network/Network.h"
 
 namespace blackjack {
 	class SceneLogin : public core::Scene {
 	private:
 		core::RendererUI ui;
-		core::Font input_font;
-		core::Font btn_font;
-		core::InputBox username;
-		core::InputBox password;
 		core::GuiElement background;
-		core::Text title;
-		core::Button submit;
+		core::GuiElement form_background;
+		core::Button login;
+		core::Button create_account;
+		core::InputBox username_input;
+		core::InputBox password_input;
+		core::Button btn_back;
 		Environment& env_;
+		unsigned char selected;
+		core::Network net;
 	public:
 		SceneLogin(Environment& env);
 
 		void Update(float delta);
 		void Draw();
 
-		void SubmitClicked();
+		void CreateAccountClicked();
+		void LoginClicked();
+
+		void BtnBackClicked();
+
 	};
 }

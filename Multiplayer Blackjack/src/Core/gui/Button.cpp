@@ -31,14 +31,14 @@ namespace blackjack::core {
 	}
 
 	void Button::SetMaterial(const Colour colour) {
-		default_ = Resources::CreateMaterial("gui_" + colour, Resources::GetShader("gui"));
+		default_ = Material::Create("gui_" + colour, "gui");
 		default_->SetUniform4f("u_colour", (float)colour.r / 255, (float)colour.g / 255, (float)colour.b / 255, (float)colour.a / 255);
 	}
 	void Button::SetMaterial(Material* material) {
 		default_ = material;
 	}
 	void Button::SetHoverMaterial(const Colour colour) {
-		hover_ = Resources::CreateMaterial("gui_" + colour, Resources::GetShader("gui"));
+		hover_ = Material::Create("gui_" + colour, "gui");
 		hover_->SetUniform4f("u_colour", (float)colour.r / 255, (float)colour.g / 255, (float)colour.b / 255, (float)colour.a / 255);
 	}
 
@@ -47,16 +47,13 @@ namespace blackjack::core {
 	}
 
 	void Button::SetClickMaterial(const Colour colour) {
-		click_ = Resources::CreateMaterial("gui_" + colour, Resources::GetShader("gui"));
+		click_ = Material::Create("gui_" + colour, "gui");
 		click_->SetUniform4f("u_colour", (float)colour.r / 255, (float)colour.g / 255, (float)colour.b / 255, (float)colour.a / 255);
 	}
 
 	void Button::SetClickMaterial(Material* material) {
 		click_ = material;
 	}
-	//void Button::SetOnClick(CallbackFunction function) {
-	//	on_click_ = function;
-	//}
 
 	void Button::SetOnClick(std::function<void()> function) {
 		on_click_ = function;

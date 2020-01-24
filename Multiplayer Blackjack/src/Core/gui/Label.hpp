@@ -6,21 +6,17 @@ namespace blackjack::core {
 	class Text : public GuiElement {
 	private:
 		std::string text_;
-		std::string display_text_;
 		Font font_;
 		float offset_;
-		bool hidden_;
 	public:
 		friend class Label;
-		Text(const float x, const float y,const std::string& text, Font* font, bool hidden=false);
-		Text(const float x, const float y, const std::string& text, Font font, bool hidden = false);
+		Text(const float x, const float y,const std::string& text, Font* font);
+		Text(const float x, const float y, const std::string& text, Font font);
 
 		void SetText(const std::string& text);
 		void Append(const std::string& text);
 		void Append(char c);
 		void Remove(int num_characters=1);
-
-		void SetHidden(bool value);
 
 		const std::string& GetText() const;
 
@@ -35,6 +31,7 @@ namespace blackjack::core {
 	class Label : public GuiElement {
 	protected:
 		Text text_;
+		float padx_, pady_;
 	public:
 		Label(const float x, const float y, const float width, const float height, const std::string& text, Font* font, const Colour colour = {});
 
@@ -44,11 +41,12 @@ namespace blackjack::core {
 
 		void SetText(const std::string& text);
 
+		void SetPadX(float value);
+		void SetPadY(float value);
+
 		void SetX(const float x);
 		void SetY(const float y);
 
-		void SetTextHidden(bool value);
-
-		const std::string& GetText() const;
+		virtual const std::string& GetText() const;
 	};
 }

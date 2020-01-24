@@ -15,55 +15,45 @@ void updateDelta() {
 
 int main() {
 	blackjack::Environment e;
-	e.window_width = 1280;
-	e.window_height = 720;
+	e.base_width = 1920;
+	e.base_height = 1080;
+	e.window_width = 1024;
+	e.window_height = 576;
+	e.scale_width = (float)e.window_width/(float)e.base_width;
+	e.scale_height = (float)e.window_height / (float)e.base_height;
+	e.state = 0;
+
+	e.server_url = "https://student.csc.liv.ac.uk/~sgkbaker/blackjack/blackjack.php";
 
 	blackjack::core::Window window(e.window_width, e.window_height, "Blackjack");
 	window.MakePrimary();
 
 	blackjack::core::Input::AttachWindow(&window);
 
-	blackjack::core::Resources::LoadShader("text");
-	blackjack::core::Resources::LoadShader("gui");
-	blackjack::core::Resources::LoadShader("gui_texture");
+	blackjack::core::Shader::Load("text");
+	blackjack::core::Shader::Load("gui");
+	blackjack::core::Shader::Load("gui_texture");
+	blackjack::core::Shader::Load("texture");
 
 	blackjack::core::Font::Load("Monospaced");
+	blackjack::core::Font::Load("OpenSans");
 
 	blackjack::SceneLogin login(e);
 	blackjack::SceneMainMenu menu(e);
 	blackjack::SceneGame game;
 
-	blackjack::core::Network net;
-	net.SetUrl("https://student.csc.liv.ac.uk/~sgkbaker/blackjack/blackjack.php");
-
 	while (!window.ShouldClose()) {
 		updateDelta();
 		window.Clear();
 
-		if (blackjack::core::Scene::GetState() == 0) {
+		if (e.state == 0) {
 			login.Update(deltaTime);
 			login.Draw();
 		}
-		else if (blackjack::core::Scene::GetState() == 1){
-			blackjack::core::RequestData r;
-			r.add("action", "login");
-			r.add("username", e.username);
-			r.add("password", e.password);
-			e.token = net.MakeRequest(r);
-			if (e.token.compare("invlogin")) {
-				blackjack::core::Scene::SetState(2);
-				COREINFO("Logged in as '" + e.username + "'.");
-			}
-			else {
-				blackjack::core::Scene::SetState(0);
-				COREERROR("Invalid login entered.");
-			}
-		}
-		else if (blackjack::core::Scene::GetState() == 2) {
+		else if (e.state == 1){
 			menu.Update(deltaTime);
-			menu.Draw();
+			menu.Draw();		
 		}
-
 
 		window.Update();
 	}
