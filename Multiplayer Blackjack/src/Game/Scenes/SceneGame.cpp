@@ -1,7 +1,8 @@
 #include "SceneGame.hpp"
+#include <cstdlib>
 
 namespace blackjack {
-	SceneGame::SceneGame() : Scene(), renderer(), light(), camera(45.0f, 16.0f/9.0f), table(), card(), card_mesh(0), table_mesh(1,180) {
+	SceneGame::SceneGame() : Scene(), renderer(), light(), camera(45.0f, 16.0f/9.0f), table(), card(), table_mesh(1,180) {
 		renderer.SetCamera(camera);
 		renderer.SetLight(light);
 
@@ -15,19 +16,10 @@ namespace blackjack {
 		light.SetSpecular(0.3f, 0.3f, 0.3f);
 		light.SetPosition(2.5f, 10, -10.0f);
 
-		core::Texture::Load("Cards.png");
-
-		core::Material* card_material = core::Material::Create("CardMaterial", "texture");
-		card_material->SetUniform("u_material.diffuse", core::UniformType::TEXTURE2D, core::Texture::Get("Cards.png"));
-		card_material->SetUniform1f("u_material.shininess", 32.0f);
-
-		card.SetMesh(&card_mesh);
-		card.SetMaterial(card_material);
+		core::Texture::Load("table.png");
 
 		card.GetTransform().SetRotation(-90, 0, 0);
 		card.GetTransform().SetPosition(3, 0.15f, 5);
-
-		core::Texture::Load("table.png");
 
 		core::Material* table_material = core::Material::Create("TableMaterial", "texture");
 		table_material->SetUniform("u_material.diffuse", core::UniformType::TEXTURE2D, core::Texture::Get("table.png"));
@@ -43,6 +35,8 @@ namespace blackjack {
 
 	void SceneGame::Update(float delta) {
 		table.GetTransform().Rotate(0, 360 * delta, 0);
+		int val = rand() % 53;
+		card.SetValue(val);
 	}
 
 	void SceneGame::Draw() {

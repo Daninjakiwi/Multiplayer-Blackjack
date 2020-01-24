@@ -6,7 +6,7 @@
 namespace blackjack::core {
 	class RenderObject {
 		friend class Renderer3D;
-	private:
+	protected:
 		Mesh* mesh_;
 		Material* material_;
 		Transform transform_;
@@ -15,7 +15,7 @@ namespace blackjack::core {
 		RenderObject(Mesh* mesh);
 		RenderObject(Material* material);
 		RenderObject(Mesh* mesh, Material* material);
-		~RenderObject() = default;
+		virtual ~RenderObject() = default;
 
 		Mesh* GetMesh() const;
 		Transform& GetTransform();

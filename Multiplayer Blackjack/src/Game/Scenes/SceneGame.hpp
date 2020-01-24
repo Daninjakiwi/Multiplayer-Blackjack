@@ -12,9 +12,10 @@ namespace blackjack {
 		core::Camera camera;
 		
 		core::RenderObject table;
-		core::RenderObject card;
+		//core::RenderObject card;
+		Card card;
 
-		Card card_mesh;
+		//Card card_mesh;
 		core::CircleSegment table_mesh;
 	public:
 		SceneGame();

@@ -33,6 +33,7 @@ namespace blackjack {
 		create_account.SetPadX(0.005 * create_account.GetWidth());
 
 		core::Texture::Load("background.png");
+		core::Texture::Load("form_background.png");
 		core::Texture::Load("button.png");
 		core::Texture::Load("button_hover.png");
 		core::Texture::Load("button_click.png");
@@ -43,6 +44,10 @@ namespace blackjack {
 		core::Material* mat = core::Material::Create("login_background", "gui_texture");
 		mat->SetUniform("u_texture", core::UniformType::TEXTURE2D, core::Texture::Get("background.png"));
 		background.SetMaterial(mat);
+
+		mat = core::Material::Create("form_background", "gui_texture");
+		mat->SetUniform("u_texture", core::UniformType::TEXTURE2D, core::Texture::Get("form_background.png"));
+		form_background.SetMaterial(mat);
 
 		mat = core::Material::Create("btn_default", "gui_texture");
 		mat->SetUniform("u_texture", core::UniformType::TEXTURE2D, core::Texture::Get("button.png"));
@@ -190,4 +195,5 @@ namespace blackjack {
 		password_input.Hide();
 		btn_back.Hide();
 	}
+
 }

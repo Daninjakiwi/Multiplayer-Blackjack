@@ -19,6 +19,19 @@ namespace blackjack::core {
 
 	}
 
+	void Mesh::SetVertex(int index, float value) {
+		if (index < vertex_count_ && index > 0) {
+			vertices_[index] = value;
+		}
+	}
+
+	void Mesh::SetIndex(int index, unsigned int value) {
+		if (index < indices_count_ && index > 0) {
+			indices_[index] = value;
+		}
+	}
+
+
 	float* Mesh::GetVertices() {
 		return vertices_;
 	}

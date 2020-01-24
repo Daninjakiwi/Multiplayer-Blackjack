@@ -3,6 +3,7 @@
 #include "Core/Scene.hpp"
 #include "../Environment.hpp"
 #include "Core/Network/Network.h"
+#include <thread>
 
 namespace blackjack {
 	class SceneLogin : public core::Scene {
